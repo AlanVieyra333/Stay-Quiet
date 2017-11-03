@@ -15,4 +15,8 @@
 \contentsline {subsection}{\numberline {2.2.1}Descripci\IeC {\'o}n completa}{6}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Atributos importantes}{6}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}Trayectorias del Caso de Uso}{6}{subsection.2.2.3}
-\contentsline {section}{\numberline {2.3}Catalogo de Mensajes}{8}{section.2.3}
+\contentsline {section}{\numberline {2.3}CU1.3 Editar Protector}{8}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Descripci\IeC {\'o}n completa}{8}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Atributos importantes}{8}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Trayectorias del Caso de Uso}{8}{subsection.2.3.3}
+\contentsline {section}{\numberline {2.4}Catalogo de Mensajes}{11}{section.2.4}
