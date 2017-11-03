@@ -1,0 +1,32 @@
+%--------Se especifica el tipo de documento
+\documentclass[oneside,10pt]{book}
+%--------Se importan las librerías que usaremos
+\usepackage{cdtBook}
+\usepackage{usecases}
+
+%-------- Datos del documento
+\title{SOFTWARE ENGINEERING FOR MOBILE DEVICES}
+\subtitle{Stay Quiet}
+\author{Androides}
+\organization{Escuela Superior de Cómputo, IPN}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+\frontmatter
+\tableofcontents
+\mainmatter
+%%=========================================================
+\chapter{Modelo de negocios}
+\cfinput{brReglas}
+\newpage
+%%=========================================================
+\chapter{Modelo de comportamiento}
+
+	\cfinput{cu/CU1.1}
+	\cfinput{pantallas/IU1.1}
+	\cfinput{cu/CU1.2}
+
+\newpage
+\cfinput{messages/msg}
+\end{document}

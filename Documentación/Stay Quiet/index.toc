@@ -1,0 +1,18 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}Modelo de negocios}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Reglas de Negocio}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}Modelo de comportamiento}{2}{chapter.2}
+\contentsline {section}{\numberline {2.1}CU1.1 Iniciar Sesi\IeC {\'o}n}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Descripci\IeC {\'o}n completa}{3}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Atributos importantes}{3}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Trayectorias del Caso de Uso}{3}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}IU1.1 Pantalla Principal}{5}{subsection.2.1.4}
+\contentsline {subsubsection}{Objetivo}{5}{section*.2}
+\contentsline {subsubsection}{Dise\IeC {\~n}o}{5}{section*.3}
+\contentsline {subsubsection}{Entradas}{5}{section*.4}
+\contentsline {subsubsection}{Salidas}{5}{section*.5}
+\contentsline {section}{\numberline {2.2}CU2.1 Registrar usuario}{6}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Descripci\IeC {\'o}n completa}{6}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Atributos importantes}{6}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Trayectorias del Caso de Uso}{6}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Catalogo de Mensajes}{8}{section.2.3}

@@ -1,0 +1,13 @@
+\BOOKMARK [0][-]{chapter.1}{Modelo de negocios}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Reglas de Negocio}{chapter.1}% 2
+\BOOKMARK [0][-]{chapter.2}{Modelo de comportamiento}{}% 3
+\BOOKMARK [1][-]{section.2.1}{CU1.1 Iniciar Sesi\363n}{chapter.2}% 4
+\BOOKMARK [2][-]{subsection.2.1.1}{Descripci\363n completa}{section.2.1}% 5
+\BOOKMARK [2][-]{subsection.2.1.2}{Atributos importantes}{section.2.1}% 6
+\BOOKMARK [2][-]{subsection.2.1.3}{Trayectorias del Caso de Uso}{section.2.1}% 7
+\BOOKMARK [2][-]{subsection.2.1.4}{IU1.1 Pantalla Principal}{section.2.1}% 8
+\BOOKMARK [1][-]{section.2.2}{CU2.1 Registrar usuario}{chapter.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.1}{Descripci\363n completa}{section.2.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.2}{Atributos importantes}{section.2.2}% 11
+\BOOKMARK [2][-]{subsection.2.2.3}{Trayectorias del Caso de Uso}{section.2.2}% 12
+\BOOKMARK [1][-]{section.2.3}{Catalogo de Mensajes}{chapter.2}% 13

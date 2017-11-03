@@ -1,0 +1,66 @@
+\begin{UseCase}{CU1.1}{Iniciar Sesión}{
+	Se describe el comportamiento y funcionamiento de la aplicación para el inicio de sesión mediante la autentificación.
+}
+		\UCitem{Versión}{1.0}
+		\UCitem{Actor}{Protector, Protegido.}
+		\UCitem{Propósito}{Tener un control del ingreso de los diferentes usuarios que hacen uso de la aplicación y así poder hacer uso de sus funciones permitidas.}
+		\UCitem{Entradas}{
+			Se ingresa la información:
+			\begin{itemize}	
+				\item Correo Electrónico.
+				\item Contraseña y/o PIN.
+			\end{itemize}
+		 }
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ1.1}{Campos Incompletos}
+				\item \MSGref{MSJ1.2}{Valor no válido}
+				\item \MSGref{MSJ1.3}{Error en conexión}
+				\item \MSGref{MSJ1.4}{Autentificación}
+			\end{itemize}				
+		}
+		\UCitem{Precondiciones}{El usuario debe estar registrado en el sistema.
+		}
+		\UCitem{Postcondiciones}{
+			El usuario podrá hacer uso de la aplicación según sea su perfil.
+		}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Salas Hernández Abiran Natanael
+			\end{itemize}
+		}
+		\UCitem{Estatus}{Revisión}
+	\end{UseCase}
+	%-------------------------------------- COMIENZA descripción Trayectoria Crear
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCactor] Pulsa en el icono de la aplicación.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.1}{Pantalla Principal}.
+		\UCpaso[\UCactor] Captura los datos necesarios en la misma pantalla.
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{ENTRAR} de la pantalla.
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato de Correo Electrónico}. \Trayref{B}
+		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{D}		
+		\UCpaso[\UCsist] Muestra la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+	\end{UCtrayectoria}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{A}{Condición: Faltan datos en el formulario.}
+		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ1.1}{Campos Incompletos}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{B}{Condición: El actor ingresa formato de correo incorrecto.}
+		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ1.2}{Formato de correo incorrecto}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal} 
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{C}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.3}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+		\begin{UCtrayectoriaA}{D}{Condición: Usuario no registrado o correo y/o contraseña incorrectos}
+			\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.3}{Autentificación}
+			\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}	
+	%-------------------------------------Trayectoras alternativas

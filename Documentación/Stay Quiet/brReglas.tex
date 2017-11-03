@@ -1,0 +1,28 @@
+\section{Reglas de Negocio}
+
+\begin{BussinesRule}{RN1.1}{Campos nulos} 
+	\BRitem[Descripción:] Ningún dato en el formulario puede ser nulo.
+	\BRitem[Tipo:] Restricción (validación).
+	\BRitem[Nivel:] Obligatorio.
+\end{BussinesRule}
+
+\begin{BussinesRule}{RN1.2}{Formato de Correo Electrónico} 
+	\BRitem[Descripción:] El formato del correo esta compuesto por 3 partes:
+		\begin{itemize} 
+			\item ID
+			\item @, es el identificador del correo.
+			\item el servidor del correo o empresa donde se crea la cuenta de mail. 
+		\end{itemize}
+		Ejemplo: example@mail.com
+	\BRitem[Tipo:] Restricción (validación).
+	\BRitem[Nivel:] Obligatorio.
+\end{BussinesRule}
+
+\begin{BussinesRule}{RN1.3}{Usuario registrado en el sistema} 
+	%\BRitem[Autor:] Miguel Ángel Castañeda Sánchez.
+	\BRitem[Descripción:] Verificar que el usuario este dado de alta en la aplicación.
+	\BRitem[Tipo:] Restricción (validación).
+	\BRitem[Nivel:] Obligatorio.
+\end{BussinesRule}
+
+
