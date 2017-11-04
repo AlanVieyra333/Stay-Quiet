@@ -1,0 +1,188 @@
+      \documentclass[10pt]{article}  
+
+%%%%%%%% PREÁMBULO %%%%%%%%%%%%
+\title{Plantilla para prácticas de ESCOM}
+\usepackage[spanish]{babel} %Indica que escribiermos en español
+\usepackage[utf8]{inputenc} %Indica qué codificación se está usando ISO-8859-1(latin1)  o utf8  
+\usepackage{amsmath} % Comandos extras para matemáticas (cajas para ecuaciones,
+% etc)
+\usepackage{amssymb} % Simbolos matematicos (por lo tanto)
+\usepackage{graphicx} % Incluir imágenes en LaTeX
+\usepackage{color} % Para colorear texto
+\usepackage{subfigure} % subfiguras
+\usepackage{float} %Podemos usar el especificador [H] en las figuras para que se
+% queden donde queramos
+\usepackage{capt-of} % Permite usar etiquetas fuera de elementos flotantes
+% (etiquetas de figuras)
+\usepackage{sidecap} % Para poner el texto de las imágenes al lado
+    \sidecaptionvpos{figure}{c} % Para que el texto se alinie al centro vertical
+\usepackage{caption} % Para poder quitar numeracion de figuras
+\usepackage{commath} % funcionalidades extras para diferenciales, integrales,
+% etc (\od, \dif, etc)
+\usepackage{cancel} % para cancelar expresiones (\cancelto{0}{x})
+ 
+\usepackage{anysize}                    % Para personalizar el ancho de  los márgenes
+\marginsize{2cm}{2cm}{2cm}{2cm} % Izquierda, derecha, arriba, abajo
+
+\usepackage{appendix}
+\renewcommand{\appendixname}{Apéndices}
+\renewcommand{\appendixtocname}{Apéndices}
+\renewcommand{\appendixpagename}{Apéndices} 
+
+% Para que las referencias sean hipervínculos a las figuras o ecuaciones y
+% aparezcan en color
+\usepackage[colorlinks=true,plainpages=true,citecolor=blue,linkcolor=blue]{hyperref}
+%\usepackage{hyperref} 
+% Para agregar encabezado y pie de página
+\usepackage{fancyhdr} 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize ESCOM} %encabezado izquierda
+\fancyhead[R]{\footnotesize IPN}   % dereecha
+\fancyfoot[R]{\footnotesize Propuesta Inicial}  % Pie derecha
+\fancyfoot[C]{\thepage}  % centro
+\fancyfoot[L]{\footnotesize S.E For Mobile Devices}  %izquierda
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\usepackage{listings} % Para usar código fuente
+\definecolor{dkgreen}{rgb}{0,0.6,0} % Definimos colores para usar en el código
+\definecolor{gray}{rgb}{0.5,0.5,0.5} 
+% configuración para el lenguaje que queramos utilizar
+\lstset{language=Matlab,
+   keywords={break,case,catch,continue,else,elseif,end,for,function,
+      global,if,otherwise,persistent,return,switch,try,while},
+   basicstyle=\ttfamily,
+   keywordstyle=\color{blue},
+   commentstyle=\color{red},
+   stringstyle=\color{dkgreen},
+   numbers=left,
+   numberstyle=\tiny\color{gray},
+   stepnumber=1,
+   numbersep=10pt,
+   backgroundcolor=\color{white},
+   tabsize=4,
+   showspaces=false,
+   showstringspaces=false}
+
+\newcommand{\sen}{\operatorname{\sen}}  % Definimos el comando \sen para el seno
+%en español
+
+\title{Plantilla para trabajo terminal I de UPIITA}
+
+%%%%%%%% TERMINA PREÁMBULO %%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PORTADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                                                                    %%%
+\begin{center}                                                                      %%%
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}                                   %%%\left
+                                                                                    %%%
+\begin{minipage}{0.48\textwidth} \begin{flushleft}
+\includegraphics[scale = 0.1]{Imagen/ESCOM-LOGO}
+\end{flushleft}\end{minipage}
+\begin{minipage}{0.48\textwidth} \begin{flushright}
+\includegraphics[scale = 0.35]{Imagen/IPN-LOGO}
+\end{flushright}\end{minipage}
+
+                                                                                    %%%
+\vspace*{-1.5cm}                                %%%
+                                                                                    %%% 
+\textsc{\huge Instituto Polit\'ecnico\\ \vspace{5px} Nacional}\\[1.5cm] 
+
+\textsc{\LARGE Escuela superior de c\'omputo}\\[1.5cm]                                                   %%%
+
+\begin{minipage}{0.9\textwidth} 
+\begin{center}                                                                                  %%%
+\textsc{\LARGE Propuesta Inicial}
+\end{center}
+\end{minipage}\\[0.5cm]
+%%%
+                                                                                    %%%
+            \vspace*{1cm}                                                                       %%%
+                                                                                    %%%
+\HRule \\[0.4cm]                                                                    %%%
+{ \huge \bfseries APP - State Quiet}\\[0.4cm]  %%%
+                                                                                    %%%
+\HRule \\[1.5cm]                                                                    %%%
+                                                                                %%%
+                                                                                    %%%
+\begin{minipage}{0.46\textwidth}                                                    %%%
+\begin{flushleft} \large                                                            %%%
+\emph{Autores:}\\ 
+Hernandez Soriano Gerardo  \\
+Moreno Sánchez José Rodolfo\\
+Perez Montiel Ulises\\
+Salas Hernandez Abiran Natanael\\ 
+Rincón Vieyra Alan 
+%%%
+            %\vspace*{2cm}  
+                                                                %%%
+                                                                %%%
+\end{flushleft}                                                                     %%%
+\end{minipage}      
+                                                                %%%
+\begin{minipage}{0.52\textwidth}        
+\vspace{-0.6cm}                                         %%%
+\begin{flushright} \large                                                           %%%
+\emph{Asesor:} \\                                                                 %%%
+Ulises Vélez Saldaña 1\\                                             %%%
+\end{flushright}                                                                    %%%
+\end{minipage}  
+\vspace*{1cm}
+%\begin{flushleft}
+    
+%\end{flushleft}
+%%%
+        \flushleft{\textbf{\Large S.E For Mobile Devices} }\\                                                                     %%%
+\vspace{2cm}                                                                                
+\begin{center}                                                                                  
+{\large \today}                                                                 %%%
+            \end{center}                                                                        
+\end{center}                                                                        
+                                                                                    
+\newpage                                                                        
+%%%%%%%%%%%%%%%%%%%% TERMINA PORTADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents 
+
+\newpage
+
+
+
+\section{Contexto.}
+Para reportar una persona desaparecida o extraviada se requiere esperar 72 horas. \\
+
+Tiempo durante el cual una familia o un conjunto de personas designadas al cuidado de alguien requieren valerse de sus recursos para localizar a la persona de quien no saben donde se encuentra. \\
+
+La señal de GPS cubre grandes áreas donde gran numero de personas habitan, por lo cual es altamente probable que se extravié un ser humano dentro de esta área   
+ 
+
+
+\section{Problema.}
+Hay seres humanos propensos a extraviarse o sufrir secuestro, por ejemplo, niños, ancianos o personas que padecen de sus facultades mentales
+
+\section{Solución propuesta.}
+Desarrollar una app móvil que mediante el uso de GPS apoye a supervisar la ubicación de una persona dentro de un área pre establecida  
+
+\section{Requerimientos.}
+\subsection{Uso de GPS.} 
+La aplicación utiliza el servicio de GPS del celular para establecer la ubicación en un mapa  
+\subsection{Dos Perfiles.}
+- El perfil de usuario, permite tener contactos con los cuales puede compartir su ubicación cada determinado tiempo, y se llama observador cuando se vincula a un perfil protegido\\
+
+El perfil de protegido, pensado para las personas que se quiere cuidar, la aplicación se mantiene funcionando como GPS, se requiere introducir un password para acceder a la aplicación 
+
+\subsection{Selección de área de cuidado .}
+
+El observador puede establecer una zona geografica entorno a un punto fijo en el mapa ó a una distancia de una trayectoria 
+
+\subsection{Mensajes de alerta.}
+
+Si el dispositivo con el perfil protegido sale del área de cuidado el observador recibe una alerta y puede iniciar una llamada 
+
+Si el dispositivo con el perfil protegido tiene batería baja, pocos datos o señal débil, se envía un mensaje al observador
+
+
+\end{document}
