@@ -14,7 +14,7 @@
 		\UCitem{Salidas}{
 			\begin{itemize}
 				\item \MSGref{MSJ1.1}{Campos Incompletos}
-				\item \MSGref{MSJ1.2}{Valor no válido}
+				\item \MSGref{MSJ1.2}{Formato de correo incorrecto}
 				\item \MSGref{MSJ1.3}{Error en conexión}
 				\item \MSGref{MSJ1.4}{Autentificación}
 			\end{itemize}				
@@ -60,7 +60,7 @@
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
 		\begin{UCtrayectoriaA}{D}{Condición: Usuario no registrado o correo y/o contraseña incorrectos}
-			\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.3}{Autentificación}
+			\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.4}{Autentificación}
 			\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}	
 	%-------------------------------------Trayectoras alternativas

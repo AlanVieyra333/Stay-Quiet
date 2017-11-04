@@ -17,9 +17,9 @@
 		\UCitem{Salidas}{
 			\begin{itemize}
 				\item \MSGref{MSJ1.1}{Campos Incompletos}
-				\item \MSGref{MSJ1.2}{Valor no válido}
+				\item \MSGref{MSJ1.2}{Formato de correo incorrecto}
 				\item \MSGref{MSJ1.3}{Error en conexión}
-				\item \MSGref{MSJ1.4}{Autentificación}
+				\item \MSGref{MSJ1.6}{Contraseña incorrecta}
 			\end{itemize}
 		}
 		\UCitem{Precondiciones}{El usuario debe estar registrado en el sistema.
@@ -55,8 +55,8 @@
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato de Correo Electrónico}. \Trayref{B}
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.5}{Ingresa Contraseña}.
 		\UCpaso[\UCactor] Captura su contraseña en la pantalla.
-		\UCpaso[\UCactor] Pulsa en el  \IUbutton{CONTINUAR}. 
-		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C}
+		\UCpaso[\UCactor] Pulsa en el  \IUbutton{CONTINUAR}.
+		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C} \Trayref{D}
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
 	\end{UCtrayectoria}
 	%-------------------------------------Trayectoras alternativas
@@ -75,8 +75,8 @@
 		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
-		\begin{UCtrayectoriaA}{D}{Condición: Usuario no registrado o correo y/o contraseña incorrectos}
-			\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.3}{Autentificación}
-			\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
-	\end{UCtrayectoriaA}	
+	\begin{UCtrayectoriaA}{D}{Condición: Contraseña incorrecta}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Contraseña incorrecta}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas

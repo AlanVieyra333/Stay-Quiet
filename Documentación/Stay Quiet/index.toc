@@ -15,8 +15,23 @@
 \contentsline {subsection}{\numberline {2.2.1}Descripci\IeC {\'o}n completa}{6}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Atributos importantes}{6}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}Trayectorias del Caso de Uso}{6}{subsection.2.2.3}
-\contentsline {section}{\numberline {2.3}CU1.3 Editar Protector}{8}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Descripci\IeC {\'o}n completa}{8}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Atributos importantes}{8}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Trayectorias del Caso de Uso}{8}{subsection.2.3.3}
-\contentsline {section}{\numberline {2.4}Catalogo de Mensajes}{11}{section.2.4}
+\contentsline {subsection}{\numberline {2.2.4}IU1.2 Registrar Usuario}{8}{subsection.2.2.4}
+\contentsline {subsubsection}{Objetivo}{8}{section*.6}
+\contentsline {subsubsection}{Dise\IeC {\~n}o}{8}{section*.7}
+\contentsline {subsubsection}{Entradas}{8}{section*.8}
+\contentsline {subsubsection}{Salidas}{8}{section*.9}
+\contentsline {section}{\numberline {2.3}CU1.3 Editar Protector}{9}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Descripci\IeC {\'o}n completa}{9}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Atributos importantes}{9}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Trayectorias del Caso de Uso}{9}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}IU1.4 Perfil Usuario}{12}{subsection.2.3.4}
+\contentsline {subsubsection}{Objetivo}{12}{section*.10}
+\contentsline {subsubsection}{Dise\IeC {\~n}o}{12}{section*.11}
+\contentsline {subsubsection}{Entradas}{12}{section*.12}
+\contentsline {subsubsection}{Salidas}{12}{section*.13}
+\contentsline {subsection}{\numberline {2.3.5}IU1.5 Ingresa Contrase\IeC {\~n}a}{13}{subsection.2.3.5}
+\contentsline {subsubsection}{Objetivo}{13}{section*.14}
+\contentsline {subsubsection}{Dise\IeC {\~n}o}{13}{section*.15}
+\contentsline {subsubsection}{Entradas}{13}{section*.16}
+\contentsline {subsubsection}{Salidas}{13}{section*.17}
+\contentsline {section}{\numberline {2.4}Catalogo de Mensajes}{14}{section.2.4}
