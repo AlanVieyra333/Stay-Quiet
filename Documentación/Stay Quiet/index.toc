@@ -34,4 +34,8 @@
 \contentsline {subsubsection}{Dise\IeC {\~n}o}{13}{section*.15}
 \contentsline {subsubsection}{Entradas}{13}{section*.16}
 \contentsline {subsubsection}{Salidas}{13}{section*.17}
-\contentsline {section}{\numberline {2.4}Catalogo de Mensajes}{14}{section.2.4}
+\contentsline {section}{\numberline {2.4}CU1.5 Agregar Protegido}{14}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Descripci\IeC {\'o}n completa}{14}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Atributos importantes}{14}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Trayectorias del Caso de Uso}{14}{subsection.2.4.3}
+\contentsline {section}{\numberline {2.5}Catalogo de Mensajes}{17}{section.2.5}
