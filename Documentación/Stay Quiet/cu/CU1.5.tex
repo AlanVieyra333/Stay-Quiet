@@ -1,16 +1,16 @@
-\begin{UseCase}{CU1.4}{Agregar Protegido}{
-	Se describe el comportamiento y funcionamiento de la aplicación para agregar Protegidos a un catalogo de contactos de un Protector y generar un PIN de ingreso.
+\begin{UseCase}{CU1.5}{Editar Protegido}{
+	Se describe el comportamiento y funcionamiento de la aplicación para editar los datos de un Protegido.
 }
 		\UCitem{Versión}{1.0}
 		\UCitem{Actor}{Protector.}
-		\UCitem{Propósito}{Agregar a un catalogo de contactos a un Protegido y generar su PIN }
+		\UCitem{Propósito}{Editar los datos de un Protegido del un catalago.}
 		\UCitem{Entradas}{
-			Se ingresa la información:
+			Se podrá modificar la información:
 			\begin{itemize}
 				\item Nombre Completo.
 				\item Correo Electrónico.
 				\item Numero de Celular.
-				\item Generar PIN.
+				\item Generar nuevo PIN.
 			\end{itemize}
 		 }
 		\UCitem{Salidas}{
@@ -26,7 +26,7 @@
 			El usuario debe estar registrado en el sistema.
 		}
 		\UCitem{Postcondiciones}{
-			El usuario Protector podrá monitorear al usuario Protegido.
+			El usuario Protector podrá tener actualizada la información del usuario Protegido.
 		}
 		\UCitem{Autor}{
 			\begin{itemize}
@@ -44,21 +44,18 @@
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato de Correo Electrónico}. \Trayref{B}
 		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{E}		
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{D}		
 		\UCpaso[\UCsist] Muestra la pantalla \IUref{IU1.3}{Pantalla Inicial}.
-		\UCpaso[\UCactor] Pulsa en el icono \IUbutton{AgregarContacto}.
-		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.6}{Agregar Protegido}.
-		\UCpaso[\UCactor] Captura los datos necesarios en la misma pantalla.
-		\UCpaso[\UCactor] Pulsa en el boton \IUbutton{Generar PIN}.
-		\UCpaso[\UCsist] Genera un PIN de 4  y lo muestra en el campo.
-		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{REGISTRAR} de la pantalla.
+		\UCpaso[\UCactor] Selecciona de la lista de contactos el Protegido a modificar.
+		\UCpaso[\UCactor] Despliega la pantalla \IUref{IU1.7}{Contacto Protegido}		
+		\UCpaso[\UCactor] Selecciona el campo a modificar.
+		\UCpaso[\UCactor] Pulsa en el  \IUbutton{GUARDAR}.
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato de Correo Electrónico}. \Trayref{B}
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.5}{Ingresa Contraseña}.
 		\UCpaso[\UCactor] Captura su contraseña en la pantalla.
-		\UCpaso[\UCactor] Pulsa en el  \IUbutton{CONTINUAR}.
-		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C} \Trayref{D}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{E}	
+		\UCpaso[\UCactor] Pulsa en el \IUbutton{CONTINUAR}.
+		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C} \Trayref{D} \Trayref{E}
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
 	\end{UCtrayectoria}
 	%-------------------------------------Trayectoras alternativas

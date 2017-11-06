@@ -56,7 +56,7 @@
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.5}{Ingresa Contraseña}.
 		\UCpaso[\UCactor] Captura su contraseña en la pantalla.
 		\UCpaso[\UCactor] Pulsa en el  \IUbutton{CONTINUAR}.
-		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C} \Trayref{D}
+		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C} \Trayref{D} \Trayref{E}
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
 	\end{UCtrayectoria}
 	%-------------------------------------Trayectoras alternativas
@@ -78,5 +78,10 @@
 	\begin{UCtrayectoriaA}{D}{Condición: Contraseña incorrecta}
 		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Contraseña incorrecta}
 		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{E}{Condición: Usuario ya registrado y/o correo y/o teléfono ya utilizados}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.5}{Datos ya utilizados}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso 4 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas

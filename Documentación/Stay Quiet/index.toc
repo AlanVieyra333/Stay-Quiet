@@ -11,7 +11,7 @@
 \contentsline {subsubsection}{Dise\IeC {\~n}o}{5}{section*.3}
 \contentsline {subsubsection}{Entradas}{5}{section*.4}
 \contentsline {subsubsection}{Salidas}{5}{section*.5}
-\contentsline {section}{\numberline {2.2}CU2.1 Registrar usuario}{6}{section.2.2}
+\contentsline {section}{\numberline {2.2}CU1.2 Registrar usuario}{6}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Descripci\IeC {\'o}n completa}{6}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Atributos importantes}{6}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}Trayectorias del Caso de Uso}{6}{subsection.2.2.3}
@@ -34,8 +34,12 @@
 \contentsline {subsubsection}{Dise\IeC {\~n}o}{13}{section*.15}
 \contentsline {subsubsection}{Entradas}{13}{section*.16}
 \contentsline {subsubsection}{Salidas}{13}{section*.17}
-\contentsline {section}{\numberline {2.4}CU1.5 Agregar Protegido}{14}{section.2.4}
+\contentsline {section}{\numberline {2.4}CU1.4 Agregar Protegido}{14}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}Descripci\IeC {\'o}n completa}{14}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}Atributos importantes}{14}{subsection.2.4.2}
 \contentsline {subsection}{\numberline {2.4.3}Trayectorias del Caso de Uso}{14}{subsection.2.4.3}
-\contentsline {section}{\numberline {2.5}Catalogo de Mensajes}{17}{section.2.5}
+\contentsline {section}{\numberline {2.5}CU1.5 Editar Protegido}{17}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Descripci\IeC {\'o}n completa}{17}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Atributos importantes}{17}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Trayectorias del Caso de Uso}{17}{subsection.2.5.3}
+\contentsline {section}{\numberline {2.6}Catalogo de Mensajes}{20}{section.2.6}
