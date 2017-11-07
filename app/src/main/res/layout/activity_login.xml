@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="ENTRAR"
-            android:textColor="#0077C7"
+            android:textColor="@color/colorAccent"
             android:background="#000000"
             android:layout_below="@+id/checkBox"
             android:layout_centerHorizontal="true" />
@@ -68,7 +68,7 @@
             android:checked="true"
             android:text="Recordar contrasenia"
             android:textColor="#696969"
-            android:textColorLink="#0077C7"
+            android:textColorLink="@color/colorAccent"
             android:layout_below="@+id/etLogin_password"
             android:layout_alignEnd="@+id/etLogin_password" />
 
@@ -81,7 +81,7 @@
             android:layout_marginTop="26dp"
             android:background="#000000"
             android:text="REGISTRATE"
-            android:textColor="#0077C7"
+            android:textColor="@color/colorAccent"
             android:textSize="24sp" />
 
         <Button

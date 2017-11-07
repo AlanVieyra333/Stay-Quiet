@@ -13,8 +13,18 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="46dp"
+            android:layout_marginEnd="36dp"
+            app:srcCompat="@drawable/add" />
+
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageProfile"
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:srcCompat="@drawable/boy"
@@ -24,24 +34,14 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="46dp"
-            android:layout_marginEnd="36dp"
-            android:background="#000000"
-            app:srcCompat="@drawable/add" />
-
         <TextView
             android:id="@+id/tvEmailMine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView3"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBottom="@+id/imageProfile"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/imageView3"
+            android:layout_toEndOf="@+id/imageProfile"
             android:text="Email"
             android:textColor="@android:color/background_light"
             android:textSize="10sp" />
@@ -50,10 +50,11 @@
             android:id="@+id/tvNameMine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="15dp"
-            android:layout_toEndOf="@+id/imageView3"
+            android:layout_toEndOf="@+id/imageProfile"
             android:text="Name"
             android:textColor="@android:color/background_light" />
 
@@ -61,12 +62,11 @@
             android:id="@+id/btn_mapExample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/imageButton3"
-            android:layout_alignParentEnd="true"
-            android:layout_alignStart="@+id/imageView3"
-            android:layout_marginBottom="79dp"
-            android:text="MapaEjemplo" />
-
+            android:layout_marginBottom="48dp"
+            android:text="Mapa Ejemplo"
+            android:layout_above="@+id/add"
+            android:layout_alignEnd="@+id/add"
+            android:layout_marginEnd="29dp" />
 
     </RelativeLayout>
 

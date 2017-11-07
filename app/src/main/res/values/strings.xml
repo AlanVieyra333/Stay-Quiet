@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Stay Quiet</string>
     <string name="title_activity_maps">Map</string>
+    <string name="menu_settings">Configuración</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_close_session">Cerrar sesión</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="activity_profile_text_1">Aquí podrás modificar tus datos</string>
 </resources>

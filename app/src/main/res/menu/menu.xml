@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HomeActivity" >
+    <item android:id="@+id/menu_profile"
+        android:title="@string/menu_profile"
+        android:orderInCategory="1"/>
+    <item android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
+        android:orderInCategory="2"/>
+    <item android:id="@+id/menu_close_session"
+        android:title="@string/menu_close_session"
+        android:orderInCategory="100"/>
+</menu>
