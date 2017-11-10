@@ -4,6 +4,11 @@
     <string name="menu_settings">Configuración</string>
     <string name="menu_profile">Perfil</string>
     <string name="menu_close_session">Cerrar sesión</string>
-    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_profile">MI PERFIL</string>
     <string name="activity_profile_text_1">Aquí podrás modificar tus datos</string>
+    <string name="text_name">Nombre</string>
+    <string name="text_lastName">Apellidos</string>
+    <string name="text_email">Email</string>
+    <string name="text_email_confirmation">Confirmar email</string>
+    <string name="btn_save">GUARDAR</string>
 </resources>
