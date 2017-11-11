@@ -1,6 +1,8 @@
 package androides.stayquiet;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,9 +13,10 @@ import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private String firstName, lastName, phoneNumber, email;
+    private String name, phoneNumber, email;
     private TextView tvNameMine, tvEmailMine;
     private Button btnMapExample;
+    private Bitmap bm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
 
         getParams();
 
-        tvNameMine.setText(firstName + " " + lastName);
+        tvNameMine.setText(name);
         tvEmailMine.setText(email);
 
         btnMapExample = (Button)findViewById(R.id.btn_mapExample);
@@ -66,9 +69,11 @@ public class HomeActivity extends AppCompatActivity {
     private void getParams(){
         User user = (User) getIntent().getExtras().getSerializable("user");
 
-        firstName = user.getFirstName();
-        lastName = user.getLastName();
+        name = user.getName();
         phoneNumber = user.getPhoneNumber();
         email = user.getEmail();
+        if(user.getByteArray() != null) {
+            bm = BitmapFactory.decodeByteArray(user.getByteArray(), 0, user.getByteArray().length);
+        }
     }
 }

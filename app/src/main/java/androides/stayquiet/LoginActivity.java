@@ -33,19 +33,20 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getValues();
 
-                Account account = new User(email, password);
-                User user = dbManager.getUser(account);
+                if(isValid()){
+                    Account account = new User(email, password);
+                    User user = dbManager.getUser(account);
 
-                if ( user != null ) {
-                    intentLogin.putExtra("user", user);
+                    // RN1.3
+                    if ( user != null ) {
+                        intentLogin.putExtra("user", user);
 
-                    startActivity(intentLogin);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Datos inválidos.",
-                            Toast.LENGTH_LONG).show();
+                        startActivity(intentLogin);
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.MSJ1_7,
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
-
-                etPassword.setText("");
             }
         });
 
@@ -60,5 +61,19 @@ public class LoginActivity extends AppCompatActivity {
     private void getValues() {
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
+    }
+
+    private boolean isValid() {
+        if (email.isEmpty() || password.isEmpty()) {    // RN1,1
+            Toast.makeText(getApplicationContext(), R.string.MSJ1_1,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }else if(android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {    // RN1,2
+            Toast.makeText(getApplicationContext(), R.string.MSJ1_10,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 }

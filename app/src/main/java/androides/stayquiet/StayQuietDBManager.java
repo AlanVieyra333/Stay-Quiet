@@ -22,8 +22,7 @@ public class StayQuietDBManager {
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(dbHelper.USER_COLUMN_FIRST_NAME, user.getFirstName());
-        values.put(dbHelper.USER_COLUMN_LAST_NAME, user.getLastName());
+        values.put(dbHelper.USER_COLUMN_NAME, user.getName());
         values.put(dbHelper.USER_COLUMN_PHONE_NUMBER, user.getPhoneNumber());
         values.put(dbHelper.USER_COLUMN_EMAIL, user.getEmail());
         values.put(dbHelper.USER_COLUMN_PASSWORD, user.getPassword());
@@ -38,10 +37,10 @@ public class StayQuietDBManager {
         Cursor cursor = null;
         User user = null;
         String[] columns = {
-                dbHelper.USER_COLUMN_FIRST_NAME,
-                dbHelper.USER_COLUMN_LAST_NAME,
+                dbHelper.USER_COLUMN_NAME,
                 dbHelper.USER_COLUMN_PHONE_NUMBER,
-                dbHelper.USER_COLUMN_EMAIL};
+                dbHelper.USER_COLUMN_EMAIL,
+                dbHelper.USER_COLUMN_IMAGE};
         String[] selectionArgs = {
                 account.getEmail(),
                 account.getPassword()};
@@ -54,7 +53,7 @@ public class StayQuietDBManager {
 
         if (cursor.moveToFirst()){
             user = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3), "");
+                    "", cursor.getBlob(3));
         }
 
         db.close();

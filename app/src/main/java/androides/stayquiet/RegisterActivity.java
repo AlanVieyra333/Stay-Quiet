@@ -16,7 +16,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Button btnSave;
     private EditText etFirstName, etLastName, etPhoneNumber, etEmail, etPassword, etPhoneNumberConf, etPasswordConf;
-    private String firstName, lastName, phoneNumber, email, password, phoneNumberConf, passwordConf;
+    private String name, phoneNumber, email, password, phoneNumberConf, passwordConf;
     private StayQuietDBManager dbManager;
 
     @Override
@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if ((phoneNumber.compareTo(phoneNumberConf) == 0 &&
                         password.compareTo(passwordConf) == 0)) {
-                    User user = new User(firstName, lastName, phoneNumber, email, password);
+                    User user = new User(name, phoneNumber, email, password, null);
                     long status;
 
                     if (!dbManager.existsAccount(user)) {
@@ -72,8 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void getValues() {
-        firstName = etFirstName.getText().toString();
-        lastName = etLastName.getText().toString();
+        name = etFirstName.getText().toString();
         phoneNumber = etPhoneNumber.getText().toString();
         phoneNumberConf = etPhoneNumberConf.getText().toString();
         email = etEmail.getText().toString();

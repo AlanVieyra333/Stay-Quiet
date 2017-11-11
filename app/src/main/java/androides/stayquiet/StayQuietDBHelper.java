@@ -14,20 +14,20 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
 
     public static final String USER_TABLE = "user";
     public static final String USER_COLUMN_ID = "id";
-    public static final String USER_COLUMN_FIRST_NAME = "firstName";
-    public static final String USER_COLUMN_LAST_NAME = "lastName";
+    public static final String USER_COLUMN_NAME = "name";
     public static final String USER_COLUMN_PHONE_NUMBER = "phoneNumber";
     public static final String USER_COLUMN_EMAIL = "email";
     public static final String USER_COLUMN_PASSWORD = "password";
+    public static final String USER_COLUMN_IMAGE = "image";
 
     private final String DROP_USER_TABLE = "DROP TABLE IF EXIST " + USER_TABLE;
     private final String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE +" (" +
             USER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            USER_COLUMN_FIRST_NAME + " TEXT," +
-            USER_COLUMN_LAST_NAME + " TEXT," +
-            USER_COLUMN_PHONE_NUMBER + " TEXT," +
-            USER_COLUMN_EMAIL + " TEXT," +
-            USER_COLUMN_PASSWORD + " TEXT" +
+            USER_COLUMN_NAME + " TEXT NOT NULL," +
+            USER_COLUMN_PHONE_NUMBER + " TEXT NOT NULL," +
+            USER_COLUMN_EMAIL + " TEXT NOT NULL," +
+            USER_COLUMN_PASSWORD + " TEXT NOT NULL," +
+            USER_COLUMN_IMAGE + " BLOB" +
             ")";
 
     public StayQuietDBHelper(Context context) {
@@ -45,3 +45,13 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 }
+
+/* DB Postgres
+create table "user" (
+    id SERIAL PRIMARY KEY,
+    name TEXT not null,
+    phoneNumber TEXT not null,
+    email TEXT not null,
+    password TEXT not null,
+    image BYTEA);
+* */

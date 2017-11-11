@@ -14,4 +14,6 @@
     <string name="MSJ1.1">ERROR. No se han ingresado todos los datos requeridos.</string>
     <string name="MSJ1.2">ERROR. El correo tiene el siguiente formato: example@mail.com.</string>
     <string name="MSJ1.3">ERROR. No se puede conectar a la base de datos.</string>
+    <string name="MSJ1.10">ERROR. Solo el formato de correo incorrecto: example@mail.com.</string>
+    <string name="MSJ1.7">Advertencia. Correo electrónico y/o contraseña incorrectos.</string>
 </resources>

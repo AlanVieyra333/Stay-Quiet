@@ -1,5 +1,7 @@
 package androides.stayquiet;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 /**
@@ -7,22 +9,21 @@ import java.io.Serializable;
  */
 
 public class User implements Account, Serializable {
-    private String firstName, lastName, phoneNumber, email, password;
+    private String name, phoneNumber, email, password;
+    private byte[] byteArray;
 
-    public User(String firstName, String lastName, String phoneNumber, String email,
-                String password) {
+    public User(String name, String phoneNumber, String email, String password, byte[] byteArray) {
         super();
-        setFirstName(firstName);
-        setLastName(lastName);
+        setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setPassword(password);
+        setByteArray(byteArray);
     }
 
     public User(String email, String password) {
         super();
-        setFirstName("");
-        setLastName("");
+        setName("");
         setPhoneNumber("");
         setEmail(email);
         setPassword(password);
@@ -53,20 +54,12 @@ public class User implements Account, Serializable {
         return 0;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
+    public String getName() {
+        return this.name;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -75,5 +68,13 @@ public class User implements Account, Serializable {
 
     public String getPhoneNumber() {
         return this.phoneNumber;
+    }
+
+    public void setByteArray(byte[]  byteArray) {
+        this.byteArray = byteArray;
+    }
+
+    public byte[]  getByteArray() {
+        return this.byteArray;
     }
 }
