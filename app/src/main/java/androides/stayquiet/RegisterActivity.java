@@ -40,8 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getValues();
 
-                if ((phoneNumber.compareTo(phoneNumberConf) == 0 &&
-                        password.compareTo(passwordConf) == 0)) {
+                if ( validateForm()) {
                     User user = new User(name, phoneNumber, email, password, null);
                     long status;
 
@@ -53,16 +52,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                             startActivity(intentHome);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Error al intentar registrar. " + status,
+                            Toast.makeText(getApplicationContext(), "ERROR. No se puede conectar a la base de datos",
                                     Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "El usuario ya existe.",
+                        Toast.makeText(getApplicationContext(), "ERROR. Correo y/o teléfono ya han sido registrados anteriormente.",
                                 Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(), "El telefono o la contaseña no coinciden.",
-                            Toast.LENGTH_LONG).show();
                 }
 
                 etPassword.setText("");
@@ -78,5 +74,67 @@ public class RegisterActivity extends AppCompatActivity {
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
         passwordConf = etPasswordConf.getText().toString();
+    }
+
+    private  boolean validateForm() {
+        if (name.compareTo("") == 0 || phoneNumber.compareTo("") == 0 || phoneNumberConf.compareTo("") == 0
+                || email.compareTo("") == 0 || password.compareTo("") == 0 || passwordConf.compareTo("") == 0) {
+            Toast.makeText(getApplicationContext(), "ERROR. Campos incompletos.",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!(validName(name))) {
+            Toast.makeText(getApplicationContext(), "ERROR. Solo se permiten letras",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!(validateNumber(phoneNumber)) || phoneNumber.length() != 10) {
+            Toast.makeText(getApplicationContext(), "ERROR. Solo se permiten letras",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }else if(!(validPassword(password)) || !(password.length() >8 || password.length()< 16 ) ){
+            Toast.makeText(getApplicationContext(), "ERROR. La contraseña es débil.",
+                    Toast.LENGTH_LONG).show();
+            return  false;
+        }else if(!(validEmail(email))){
+            Toast.makeText(getApplicationContext(), "ERROR.El formato de correo incorrecto, Solo: example@mail.com.",
+                    Toast.LENGTH_LONG).show();
+            return  false;
+        }else if((phoneNumber.compareTo(phoneNumberConf) == 0)){
+            Toast.makeText(getApplicationContext(), "ERROR. No coincide el Numero..",
+                    Toast.LENGTH_LONG).show();
+            return  false;
+        }else if( password.compareTo(passwordConf) == 0){
+            Toast.makeText(getApplicationContext(), "ERROR. No coincide la contraseña.",
+                    Toast.LENGTH_LONG).show();
+            return  false;
+        }else{
+            return true;
+        }
+
+
+    }
+
+    private boolean validName(String name){
+
+        String regex = "\\p{Alpha}" ;
+
+        return  name.matches(regex);
+    }
+
+    private boolean validateNumber(String number){
+        String regex = "\\D" ;
+
+        return  number.matches(regex);
+    }
+
+
+    private boolean validPassword(String password){
+        String regex ="(\\p{Upper})+ (\\p{Lower})+ (\\D)+ (\\p{Punct})+";
+        return password.matches(regex);
+
+    }
+
+    public boolean validEmail(String email){
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email)
+                .matches();
     }
 }
