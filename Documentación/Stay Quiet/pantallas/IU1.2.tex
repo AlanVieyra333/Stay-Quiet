@@ -2,7 +2,7 @@
 \subsection{IU1.2 Registrar Usuario}
 
 \subsubsection{Objetivo}
-	El usuario se  registrara en la aplicación llenando el formulario.  
+	El usuario se  registrara en la aplicación llenando el formulario.
 
 \subsubsection{Diseño}
 	Se despliega al dar clic en el \IUbutton{REGISTRATE}.
@@ -11,18 +11,21 @@
 
 \subsubsection{Entradas}
 Los datos del usuario requeridos:
-\begin{itemize}	
-	\item Nombre.
-	\item Apellidos.
+\begin{itemize}
+	\item Nombre completo.
 	\item Correo Electrónico.
 	\item Numero de Celular.
-	\item Contraseña y/o PIN.
+	\item Contraseña.
 \end{itemize}
 
 \subsubsection{Salidas}
 \begin{Citemize}
 	\item \MSGref{MSJ1.1}{Campos Incompletos}
-	\item \MSGref{MSJ1.2}{Valor no válido}
-	\item \MSGref{MSJ1.3}{Error en conexión}
-	\item \MSGref{MSJ1.5}{Datos ya utilizados}
-\end{Citemize} 
+	\item \MSGref{MSJ1.2}{Formato de nombre incorrecto}
+	\item \MSGref{MSJ1.3}{Formato de teléfono incorrecto}
+	\item \MSGref{MSJ1.4}{Formato de contraseña incorrecto}
+	\item \MSGref{MSJ1.5}{Contraseña no coincide}
+	\item \MSGref{MSJ1.6}{Error en conexión}
+	\item \MSGref{MSJ1.8}{Datos utilizados}
+	\item \MSGref{MSJ1.10}{Formato de correo incorrecto}
+\end{Citemize}

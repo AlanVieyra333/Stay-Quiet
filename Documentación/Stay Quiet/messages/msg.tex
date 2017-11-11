@@ -1,37 +1,61 @@
 \section{Catalogo de Mensajes}
-	
+
 	\begin{Message}{MSJ1.1}{Campos Incompletos}
-		\MSGitem[Tipo:] Error	
+		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar cuando no se han proporcionado todos los datos que el sistema necesita.
-		\MSGitem[Redacción: ] ERROR. No se han ingresado todos los datos requeridos.
-	\end{Message}
-	
-	\begin{Message}{MSJ1.2}{Formato de correo incorrecto}
-		\MSGitem[Tipo:] Error	
-		\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
-		\MSGitem[Redacción: ] ERROR. El correo tiene el siguiente formato: example@mail.com .
+		\MSGitem[Redacción: ] ERROR. Campos incompletos.
 	\end{Message}
 
-	\begin{Message}{MSJ1.3}{Error en conexión}
-		\MSGitem[Tipo:] Error	
-		\MSGitem[Objetivo: ] Notificar al actor que no hay conexión en ese momento con la base de datos.
-		\MSGitem[Redacción: ] ERROR. No se puede conectar a la base de datos
+	\begin{Message}{MSJ1.2}{Formato de nombre incorrecto}
+		\MSGitem[Tipo:] Error
+		\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
+		\MSGitem[Redacción: ] ERROR. Solo se permiten letras.
 	\end{Message}
-	
-	\begin{Message}{MSJ1.4}{Autentificación}
-		\MSGitem[Tipo:] Advertencia	
+
+		\begin{Message}{MSJ1.3}{Formato de teléfono incorrecto}
+		\MSGitem[Tipo:] Error
+		\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
+		\MSGitem[Redacción: ] ERROR. Solo se permiten números.
+	\end{Message}
+
+	\begin{Message}{MSJ1.4}{Formato de contraseña incorrecto}
+		\MSGitem[Tipo:] Error
+		\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
+		\MSGitem[Redacción: ] ERROR. La contraseña es débil.
+	\end{Message}
+
+	\begin{Message}{MSJ1.5}{Contraseña no coincide}
+		\MSGitem[Tipo:] Error
+		\MSGitem[Objetivo: ] Notificar al actor que la contraseña no coincide.
+		\MSGitem[Redacción: ] ERROR. No coincide la contraseña.
+		\end{Message}
+
+	\begin{Message}{MSJ1.6}{Error en conexión}
+		\MSGitem[Tipo:] Error
+		\MSGitem[Objetivo: ] Notificar al actor que no hay conexión en ese momento con la base de datos.
+		\MSGitem[Redacción: ] ERROR. No se puede conectar a la base de datos.
+	\end{Message}
+
+	\begin{Message}{MSJ1.7}{Autentificación}
+		\MSGitem[Tipo:] Advertencia
 		\MSGitem[Objetivo: ] Notificar al actor que el correo electrónico o la contraseña son inválidos.
 		\MSGitem[Redacción: ] Advertencia. Correo electrónico y/o contraseña incorrectos.
 	\end{Message}
-	
-	\begin{Message}{MSJ1.5}{Datos ya utilizados}
+
+	\begin{Message}{MSJ1.8}{Datos utilizados}
 		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar al actor que el correo y/o telefono capturados anteriormente ya están registrados.
 		\MSGitem[Redacción: ] ERROR. Correo y/o teléfono ya han sido registrados anteriormente.
 	\end{Message}
-	
-	\begin{Message}{MSJ1.6}{Contraseña incorrecta}
-		\MSGitem[Tipo:] Advertencia	
+
+	\begin{Message}{MSJ1.9}{Contraseña incorrecta}
+		\MSGitem[Tipo:] Advertencia
 		\MSGitem[Objetivo: ] Notificar al actor que la contraseña es incorrecta.
 		\MSGitem[Redacción: ] Advertencia. Contraseña incorrecta.
 	\end{Message}
+
+	\begin{Message}{MSJ1.10}{Formato de correo incorrecto}
+	\MSGitem[Tipo:] Error
+	\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
+	\MSGitem[Redacción: ] ERROR. Solo el formato de correo incorrecto: example@mail.com .
+\end{Message}

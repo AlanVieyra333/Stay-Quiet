@@ -6,20 +6,23 @@
 		\UCitem{Propósito}{Tener un control de los usuarios nuevos para así poder entrar a su perfil correspondiente y pueda hacer uso de la funciones de la aplicación.}
 		\UCitem{Entradas}{
 			Se ingresa la información:
-			\begin{itemize}	
-				\item Nombre.
-				\item Apellidos.
+			\begin{itemize}
+				\item Nombre completo.
 				\item Correo Electrónico.
 				\item Numero de Celular.
-				\item Contraseña y/o PIN.
+				\item Contraseña.
 			\end{itemize}
 		 }
 		\UCitem{Salidas}{
 			\begin{itemize}
 				\item \MSGref{MSJ1.1}{Campos Incompletos}
-				\item \MSGref{MSJ1.2}{Formato de correo incorrecto}
-				\item \MSGref{MSJ1.3}{Error en conexión}
-				\item \MSGref{MSJ1.5}{Datos ya utilizados}
+				\item \MSGref{MSJ1.2}{Formato de nombre incorrecto}
+				\item \MSGref{MSJ1.3}{Formato de teléfono incorrecto}
+				\item \MSGref{MSJ1.4}{Formato de contraseña incorrecto}
+				\item \MSGref{MSJ1.5}{Contraseña no coincide}
+				\item \MSGref{MSJ1.6}{Error en conexión}
+				\item \MSGref{MSJ1.8}{Datos utilizados}
+				\item \MSGref{MSJ1.10}{Formato de correo incorrecto}
 			\end{itemize}
 		}
 		\UCitem{Precondiciones}{La aplicación debe estar instalada en el celular.
@@ -29,7 +32,7 @@
 		}
 		\UCitem{Autor}{
 			\begin{itemize}
-				\item Salas Hernandez Abiran
+				\item Salas Hernández Abiran Natanael
 			\end{itemize}
 		}
 		\UCitem{Estatus}{Revisión}
@@ -43,7 +46,7 @@
 		\UCpaso[\UCactor] Captura los datos necesarios en la misma pantalla.
 		\UCpaso[\UCactor] Pulsar el botón \IUbutton{REGISTRATE} de la pantalla.
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato de Correo Electrónico}. \Trayref{B}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{RN1.2}{Formato general para el registro de un Protector}. \Trayref{B}
 		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C}
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{D}
 		\UCpaso[\UCsist] Muestra la pantalla \IUref{IU1.3}{Pantalla Inicial}.
@@ -51,21 +54,28 @@
 	%-------------------------------------Trayectoras alternativas
 	\begin{UCtrayectoriaA}{A}{Condición: Faltan datos en el formulario.}
 		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ1.1}{Campos Incompletos}
-		\UCpaso[\UCsist] Continúa trayectoria en el paso  4 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
-	\begin{UCtrayectoriaA}{B}{Condición: El actor ingresa formato de correo incorrecto.}
-		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ1.2}{Formato de correo incorrecto}
-		\UCpaso[\UCsist] Continúa trayectoria en el paso 4 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal} 
+	\begin{UCtrayectoriaA}{B}{Condición: El actor captura la informacion de manera incorrecta.}
+		\UCpaso[\UCsist] Dependiendo del error sera el mensaje:
+			\begin{itemize}
+			\item \MSGref{MSJ1.2}{Formato de nombre incorrecto}
+			\item \MSGref{MSJ1.3}{Formato de teléfono incorrecto}
+			\item \MSGref{MSJ1.4}{Formato de contraseña incorrecto}
+			\item \MSGref{MSJ1.5}{Contraseña no coincide}
+			\item \MSGref{MSJ1.10}{Formato de correo incorrecto}
+			\end{itemize}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
 	\begin{UCtrayectoriaA}{C}{Condición: Falló la conexión en la base de datos}
-		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.3}{Error en conexión}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
 		\UCpaso[\UCsist] Regresa al paso 4 de la trayectoria principal. \Trayref{Principal}
-	\end{UCtrayectoriaA}	
+	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
 		\begin{UCtrayectoriaA}{D}{Condición: Usuario ya registrado y/o correo y/o teléfono ya utilizados}
-			\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.5}{Datos ya utilizados}
+			\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.8}{Datos ya utilizados}
 			\UCpaso[\UCsist] Continúa trayectoria en el paso 4 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
