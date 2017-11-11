@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">Stay Quiet</string>
     <string name="title_activity_maps">Map</string>
-    <string name="menu_settings">Configuración</string>
-    <string name="menu_profile">Perfil</string>
-    <string name="menu_close_session">Cerrar sesión</string>
     <string name="title_activity_profile">MI PERFIL</string>
-    <string name="activity_profile_text_1">Aquí podrás modificar tus datos</string>
+    <string name="text_activity_profile_1">Aquí podrás modificar tus datos</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_settings">Seguridad</string>
+    <string name="menu_close_session">Cerrar sesión</string>
     <string name="text_name">Nombre</string>
-    <string name="text_lastName">Apellidos</string>
-    <string name="text_email">Email</string>
-    <string name="text_email_confirmation">Confirmar email</string>
+    <string name="text_email">Correo Electrónico</string>
+    <string name="text_phoneNumber">Número de Celular</string>
+    <string name="text_password">Contraseña y/o PIN</string>
     <string name="btn_save">GUARDAR</string>
+    <string name="MSJ1.1">ERROR. No se han ingresado todos los datos requeridos.</string>
+    <string name="MSJ1.2">ERROR. El correo tiene el siguiente formato: example@mail.com.</string>
+    <string name="MSJ1.3">ERROR. No se puede conectar a la base de datos.</string>
 </resources>
