@@ -44,9 +44,9 @@
 		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{ENTRAR} de la pantalla.
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato general para el registro de un Protector}  para el formato del correo. \Trayref{B}
-		\UCpaso[\UCsist] Verifica la regla de negocio (Checkbox). \Trayref{C}
+		\UCpaso[\UCsist] Verifica la regla de negocio (Checkbox). \Trayref{G}
 		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{D}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{E}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{F}
 		\UCpaso[\UCsist] Muestra la pantalla \IUref{IU1.3}{Pantalla Inicial}.
 		\UCpaso[\UCactor] Pulsa en el menú superior derecho.
 		\UCpaso[\UCsist] Despliega el menú con tres opciones \IUbutton{Perfil},\IUbutton{Seguridad} y \IUbutton{Cerrar Sesión}.
@@ -95,3 +95,13 @@
 		\UCpaso[\UCsist] Continúa trayectoria en el paso 4 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{F}{Condición: Usuario no registrado o correo y/o contraseña incorrectos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.7}{Autentificación}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+\end{UCtrayectoriaA}
+%-------------------------------------Trayectoras alternativas
+\begin{UCtrayectoriaA}{G}{Condición: No se pulso el checkbox}
+	\UCpaso[\UCsist] El sistema no guardara el usuario y contraseña.
+	\UCpaso[\UCsist] Continúa trayectoria en el paso siguiente de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+\end{UCtrayectoriaA}
+%-------------------------------------Trayectoras alternativas

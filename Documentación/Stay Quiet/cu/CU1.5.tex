@@ -3,34 +3,39 @@
 }
 		\UCitem{Versión}{1.0}
 		\UCitem{Actor}{Protector.}
-		\UCitem{Propósito}{Editar los datos de un Protegido del un catalago.}
+		\UCitem{Propósito}{Editar los datos de un Protegido.}
 		\UCitem{Entradas}{
 			Se podrá modificar la información:
 			\begin{itemize}
 				\item Nombre Completo.
 				\item Correo Electrónico.
 				\item Numero de Celular.
-				\item Generar nuevo PIN.
+				\item Contrasena.
 			\end{itemize}
 		 }
 		\UCitem{Salidas}{
 			\begin{itemize}
 				\item \MSGref{MSJ1.1}{Campos Incompletos}
-				\item \MSGref{MSJ1.2}{Formato de correo incorrecto}
-				\item \MSGref{MSJ1.3}{Error en conexión}
-				\item \MSGref{MSJ1.5}{Datos ya utilizados}
-				\item \MSGref{MSJ1.6}{Contraseña incorrecta}
+				\item \MSGref{MSJ1.2}{Formato de nombre incorrecto}
+				\item \MSGref{MSJ1.3}{Formato de teléfono incorrecto}
+				\item \MSGref{MSJ1.4}{Formato de contraseña incorrecto}
+				\item \MSGref{MSJ1.5}{Contraseña no coincide}
+				\item \MSGref{MSJ1.10}{Formato de correo incorrecto}
+				\item \MSGref{MSJ1.6}{Error en conexión}
+				\item \MSGref{MSJ1.9}{Contraseña incorrecta}
+				\item \MSGref{MSJ1.8}{Datos ya utilizados}
+				\item \MSGref{MSJ1.7}{Autentificación}
 			\end{itemize}
 		}
 		\UCitem{Precondiciones}{
-			El usuario debe estar registrado en el sistema.
+			El usuario Protector solo podra modificar los datos.
 		}
 		\UCitem{Postcondiciones}{
 			El usuario Protector podrá tener actualizada la información del usuario Protegido.
 		}
 		\UCitem{Autor}{
 			\begin{itemize}
-				\item Salas Hernandez Abiran
+				\item Salas Hernández Abiran Natanael
 			\end{itemize}
 		}
 		\UCitem{Estatus}{Revisión}
@@ -40,23 +45,26 @@
 		\UCpaso[\UCactor] Pulsa en el icono de la aplicación.
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.1}{Pantalla Principal}.
 		\UCpaso[\UCactor] Captura los datos necesarios en la misma pantalla.
+		\UCpaso[\UCactor] Pulsa en el checkbox para recordar los datos.
 		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{ENTRAR} de la pantalla.
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato de Correo Electrónico}. \Trayref{B}
-		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{D}		
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato general para el registro de un Protector} para el formato del correo. \Trayref{B}
+		\UCpaso[\UCsist] Verifica la regla de negocio (Checkbox). \Trayref{G}
+		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{D}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{F}
 		\UCpaso[\UCsist] Muestra la pantalla \IUref{IU1.3}{Pantalla Inicial}.
 		\UCpaso[\UCactor] Selecciona de la lista de contactos el Protegido a modificar.
-		\UCpaso[\UCactor] Despliega la pantalla \IUref{IU1.7}{Contacto Protegido}		
+		\UCpaso[\UCactor] Despliega la pantalla \IUref{IU1.7}{Editar Protegido}
 		\UCpaso[\UCactor] Selecciona el campo a modificar.
 		\UCpaso[\UCactor] Pulsa en el  \IUbutton{GUARDAR}.
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato de Correo Electrónico}. \Trayref{B}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato general para el registro de un Protector}. \Trayref{B}
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.5}{Ingresa Contraseña}.
 		\UCpaso[\UCactor] Captura su contraseña en la pantalla.
-		\UCpaso[\UCactor] Pulsa en el \IUbutton{CONTINUAR}.
-		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C} \Trayref{D} \Trayref{E}
-		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+		\UCpaso[\UCactor] Pulsa en el  \IUbutton{CONTINUAR}.
+		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C} \Trayref{D}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{E}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial} con el usuario Protegido modificado.
 	\end{UCtrayectoria}
 	%-------------------------------------Trayectoras alternativas
 	\begin{UCtrayectoriaA}{A}{Condición: Faltan datos en el formulario.}
@@ -64,23 +72,40 @@
 		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
-	\begin{UCtrayectoriaA}{B}{Condición: El actor ingresa formato de correo incorrecto.}
-		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ1.2}{Formato de correo incorrecto}
-		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal} 
+	\begin{UCtrayectoriaA}{B}{Condición: El actor captura la informacion de manera incorrecta.}
+		\UCpaso[\UCsist] Dependiendo del error sera el mensaje:
+			\begin{itemize}
+			\item \MSGref{MSJ1.2}{Formato de nombre incorrecto}
+			\item \MSGref{MSJ1.3}{Formato de teléfono incorrecto}
+			\item \MSGref{MSJ1.4}{Formato de contraseña incorrecto}
+			\item \MSGref{MSJ1.5}{Contraseña no coincide}
+			\item \MSGref{MSJ1.10}{Formato de correo incorrecto}
+			\end{itemize}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
 	\begin{UCtrayectoriaA}{C}{Condición: Falló la conexión en la base de datos}
-		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.3}{Error en conexión}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
 		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
 	\begin{UCtrayectoriaA}{D}{Condición: Contraseña incorrecta}
-		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Contraseña incorrecta}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.9}{Contraseña incorrecta}
 		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
 	\begin{UCtrayectoriaA}{E}{Condición: Usuario ya registrado y/o correo y/o teléfono ya utilizados}
-			\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.5}{Datos ya utilizados}
-			\UCpaso[\UCsist] Continúa trayectoria en el paso 4 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.8}{Datos ya utilizados}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso 4 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{F}{Condición: Usuario no registrado o correo y/o contraseña incorrectos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.7}{Autentificación}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{G}{Condición: No se pulso el checkbox}
+		\UCpaso[\UCsist] El sistema no guardara el usuario y contraseña.
+		\UCpaso[\UCsist] Continúa trayectoria en el paso siguiente de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
 	%-------------------------------------Trayectoras alternativas
