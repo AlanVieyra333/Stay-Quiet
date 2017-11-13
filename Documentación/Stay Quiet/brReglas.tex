@@ -1,23 +1,29 @@
 \section{Reglas de Negocio}
 
+%-------- REGLA DE NEGOCIO: 	RN1.1	CAMPOS NULOS
 \begin{BussinesRule}{RN1.1}{Campos nulos}
 	\BRitem[Descripción:] Ningún dato en el formulario puede ser nulo.
 	\BRitem[Tipo:] Restricción (validación).
 	\BRitem[Nivel:] Obligatorio.
 \end{BussinesRule}
 
+
+%-------- REGLA DE NEGOCIO: 	RN1.2	FORMATO GENERAL PARA EL REGISTRO DE UN PROTECTOR
 \begin{BussinesRule}{RN1.2}{Formato general para el registro de un Protector}
+
+%-------- 	NOMBRE
 	\BRitem[Nombre:] Formato del nombre.
 	\BRitem[Descripción:] El nombre esta compuesto por:
 		\begin{itemize}
 			\item Nombre Completo.
 		\end{itemize}
-		Todo el nombre debe estar compuesto por letras.\\\\
+	Todo el nombre debe estar compuesto por letras.\\\\
 	Ejemplo \\
 	Nombre: Luis Ángel Martínez Gómez.\\
 	\BRitem[Tipo:] Restricción(validación)
 	\BRitem[Nivel:] Obligatorio.\\\\
 
+%--------	TELÉFONO	
 	\BRitem[Teléfono:] Formato del teléfono.
 	\BRitem[Descripción:] El teléfono debe estar formado solamente con números.\\\\
 	Ejemplo \\
@@ -25,13 +31,15 @@
 	\BRitem[Tipo:] Restricción (validación).
 	\BRitem[Nivel:] Obligatorio.\\\\
 
-	\BRitem[Teléfono:] Formato del correo.
+%--------	CORREO
+	\BRitem[Correo:] Formato del correo.
 	\BRitem[Descripción:] El correo tiene el siguiente formato: example@mail.com .\\\\
 	Ejemplo \\
 	correo: example@mail.com
 	\BRitem[Tipo:] Restricción (validación).
 	\BRitem[Nivel:] Obligatorio.\\\\
 
+%--------	CONTRASEÑA
 	\BRitem[Contraseña:] Introduce la contraseña con la que tendrá acceso a la gestión del personal.
 	\BRitem[Descripción:] La contraseña debe tener un tamaño mínimo de 8 caracteres, y un máximo de 16 caracteres, la cual está compuesta por:
 		\begin{itemize}
@@ -43,14 +51,185 @@
 	\BRitem[Tipo:] Restricción (validación).
 	\BRitem[Nivel:] Obligatorio.\\\\
 
+%--------	REPETIR CONTRASEÑA
 	\BRitem[Repetir contraseña:] Introduce la misma contraseña que ingresó en el paso anterior.
 	\BRitem[Descripción:] La contraseña escrita deberá ser la misma para confirmar que es la correcta.
 	\BRitem[Tipo:] Restricción (validación).
 	\BRitem[Nivel:] Obligatorio.
 \end{BussinesRule}
 
+
+%-------- REGLA DE NEGOCIO: 	RN1.3	USUARIO REGISTRADO EN EL SISTEMA
 \begin{BussinesRule}{RN1.3}{Usuario registrado en el sistema}
-	\BRitem[Descripción:] Verificar que el usuario este dado de alta en la aplicación.
+	\BRitem[Descripción:] Verificar que el usuario esté dado de alta en la aplicación.
 	\BRitem[Tipo:] Restricción (validación).
 	\BRitem[Nivel:] Obligatorio.
 \end{BussinesRule}
+
+
+
+
+%--------	ACTUALIZACIÓN
+%--------
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Registro exitoso}
+	\BRitem[Descripción:] Verificar que el usuario se haya registrado satisfactoriamente mediante la pulsación del checkbox.
+	\BRitem[Tipo:] Validación
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Monitorización de protegido}
+	\BRitem[Descripción:] El protector sólo podrá monitorizar a un protegido a la vez.
+	\BRitem[Tipo:] Validación
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Ingreso al sistema del protegido}
+	\BRitem[Descripción:] El protegido sólo podrá ingresar al sistema mediante una contraseña proporcionada por el protector.
+	\BRitem[Tipo:] Validación
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
+
+
+
+%-------- NUEVAS
+%--------
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Generar contraseña}
+	\BRitem[Descripción:] El sistema deberá generar contraseñas temporales para el ingreso de los protegidos.
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Términos y Condiciones de uso}
+	\BRitem[Descripción:] El usuario deberá aceptar los términos y condiciones de uso del sistema.
+	\BRitem[Tipo:] Validación
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Política de Privacidad}
+	\BRitem[Descripción:] El usuario deberá aceptar la Política de privacidad del sistema.
+	\BRitem[Tipo:] Validación
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Mayoría de edad}
+	\BRitem[Descripción:] El usuario deberá ser mayor de edad para poder tener el rol de protector.
+	\BRitem[Tipo:] Validación
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Conexión}
+	\BRitem[Descripción:] Deberá existir una conexión a internet tanto por parte del protector como del protegido para que el sistema pueda funcionar de manera óptima.
+	\BRitem[Tipo:] Usabilidad
+	\BRitem[Nivel:] Critico
+\end{BussinesRule}
+
+
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Google Maps Android API}
+	\BRitem[Descripción:] Las funciones de mapas y ubicación deberán estar implementadas bajo la API de Google Maps.
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Critico
+\end{BussinesRule}
+
+
+%-------- 	REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{API de envío de SMS}
+	\BRitem[Descripción:] La notificación de alerta cuando un protegido salga de la zona preestablecida, deberá ser  implementada con una API SMS.
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Normal
+\end{BussinesRule}
+
+
+
+
+
+
+%--------	REQUERIMIENTOS FUNCIONALES
+%--------
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Ubicación geográfica de protegidos}
+	\BRitem[Descripción:] El sistema deberá mostrar la ubicación geográfica de los protegidos que haya registrado con anterioridad.
+	[Tipo:] Usabilidad
+	\BRitem[Nivel:] Crítico
+\end{BussinesRule}
+
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Alerta y Notificación}
+	\BRitem[Descripción:] Se deberá alertar al usuario mediante una notificación sobre la irregularidad en la localización de sus contactos.
+	\BRitem[Tipo:] Usabilidad
+	\BRitem[Nivel:] Crítico
+\end{BussinesRule}
+
+	
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Sensibilidad en monitoreo}
+	\BRitem[Descripción:] Presentar alta sensibilidad a los cambios de ubicación de los usuarios protegidos.
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Crítico
+\end{BussinesRule}
+
+	
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Actualización de Ubicación geográfica}
+	\BRitem[Descripción:] El sistema debe actualizar los datos en intervalos menores de 1 minuto y menor de 5 segundos dependiendo del estado en que se encuentre.
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Crítico
+\end{BussinesRule}
+
+	
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Alerta de Riesgos}
+	\BRitem[Descripción:] Se deberá notificar al usuario si surgen imprevistos para el óptimo funcionamiento del sistema.
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+	
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Comunicación con protegido}
+	\BRitem[Descripción:] El sistema proporciona comunicación entre los usuarios, ésta puede ser llamada telefónica y/o mensajes.
+	\BRitem[Tipo:] Usabilidad
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+	
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Rango de Protección}
+	\BRitem[Descripción:] Brindar al protector la opción de definir un rango o una zona preestablecida de protección.
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Crítico.
+\end{BussinesRule}
+
+	
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{Agregar Protegidos}
+	\BRitem[Descripción:] El sistema brinda al protector  la opción de  agregar n número de protegidos a su cuenta
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
+%-------- REGLA DE NEGOCIO: 	RN1.
+\begin{BussinesRule}{RN1.}{El usuario protector podrá agregar n número de protegidos}
+	\BRitem[Descripción:] El sistema debe implementar un sistema de control de acceso a los usuarios que tengan el rol de protegido, vía pin y correo electrónico  proporcionados por el protector.
+	\BRitem[Tipo:] Diseño
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+
