@@ -45,13 +45,3 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 }
-
-/* DB Postgres
-create table "user" (
-    id SERIAL PRIMARY KEY,
-    name TEXT not null,
-    phoneNumber TEXT not null,
-    email TEXT not null,
-    password TEXT not null,
-    image BYTEA);
-* */

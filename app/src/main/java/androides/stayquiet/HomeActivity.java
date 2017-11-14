@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomeActivity extends AppCompatActivity {
 
     private String name, phoneNumber, email;
@@ -59,7 +61,9 @@ public class HomeActivity extends AppCompatActivity {
                 // Change it.
                 return true;
             case R.id.menu_close_session:
-                // Change it.
+                FirebaseAuth.getInstance().signOut();
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -72,8 +76,8 @@ public class HomeActivity extends AppCompatActivity {
         name = user.getName();
         phoneNumber = user.getPhoneNumber();
         email = user.getEmail();
-        if(user.getByteArray() != null) {
-            bm = BitmapFactory.decodeByteArray(user.getByteArray(), 0, user.getByteArray().length);
+        if(user.getPhoto() != null) {
+            bm = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
         }
     }
 }

@@ -9,16 +9,25 @@ import java.io.Serializable;
  */
 
 public class User implements Account, Serializable {
-    private String name, phoneNumber, email, password;
-    private byte[] byteArray;
+    private String name, phoneNumber, email, password, photoUrl;
+    private byte[] photo;
 
-    public User(String name, String phoneNumber, String email, String password, byte[] byteArray) {
+    public User(String name, String phoneNumber, String email, String password, String photoUrl) {
         super();
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setPassword(password);
-        setByteArray(byteArray);
+        setPhotoUrl(photoUrl);
+    }
+
+    public User(String name, String phoneNumber, String email, String password, byte[] photo) {
+        super();
+        setName(name);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setPassword(password);
+        setPhoto(photo);
     }
 
     public User(String email, String password) {
@@ -27,6 +36,14 @@ public class User implements Account, Serializable {
         setPhoneNumber("");
         setEmail(email);
         setPassword(password);
+    }
+
+    public User() {
+        super();
+        setName("");
+        setPhoneNumber("");
+        setEmail("");
+        setPassword("");
     }
 
     @Override
@@ -70,11 +87,19 @@ public class User implements Account, Serializable {
         return this.phoneNumber;
     }
 
-    public void setByteArray(byte[]  byteArray) {
-        this.byteArray = byteArray;
+    public void setPhotoUrl(String  photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public byte[]  getByteArray() {
-        return this.byteArray;
+    public String  getPhotoUrl() {
+        return this.photoUrl;
+    }
+
+    public void setPhoto(byte[]  photo) {
+        this.photo = photo;
+    }
+
+    public byte[] getPhoto() {
+        return this.photo;
     }
 }

@@ -4,6 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * Created by developer on 15/10/17.
@@ -12,9 +21,13 @@ import android.database.sqlite.SQLiteDatabase;
 public class StayQuietDBManager {
     private StayQuietDBHelper dbHelper;
     private SQLiteDatabase db;
+    private AppCompatActivity activity;
+    private FirebaseAuth mAuth;
 
-    public StayQuietDBManager(Context context) {
-        dbHelper = new StayQuietDBHelper(context);
+    public StayQuietDBManager(AppCompatActivity activity, FirebaseAuth mAuth) {
+        this.activity = activity;
+        this.mAuth = mAuth;
+        dbHelper = new StayQuietDBHelper(activity.getApplicationContext());
     }
 
     public long insertUser(User user) {
@@ -81,5 +94,35 @@ public class StayQuietDBManager {
         db.close();
         cursor.close();
         return existsAccount;
+    }
+
+    public void login(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnFailureListener(activity, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(e.getMessage().indexOf("user") != -1)
+                            Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_7,
+                                    Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
+                                    Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    public void signUp(User user) {
+        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+                .addOnFailureListener(activity, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(e.getMessage().indexOf("user") != -1)
+                            Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_7,
+                                    Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
+                                    Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

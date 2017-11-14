@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "63077206745",
+    "firebase_url": "https://stay-quiet.firebaseio.com",
+    "project_id": "stay-quiet",
+    "storage_bucket": "stay-quiet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63077206745:android:f8eb5896e52011ef",
+        "android_client_info": {
+          "package_name": "androides.stayquiet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63077206745-u1utud80fn2ljrso0c9ndj6cno9tgokl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "androides.stayquiet",
+            "certificate_hash": "c189d86c51338d46e1057d93dafd9a69e5839a45"
+          }
+        },
+        {
+          "client_id": "63077206745-2havmpu1f07ukchhu2rcvt2me7ncjb9h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9LK1w4g1zqCDFR2hnvVF3ao7bIipEP5k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63077206745-2havmpu1f07ukchhu2rcvt2me7ncjb9h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
