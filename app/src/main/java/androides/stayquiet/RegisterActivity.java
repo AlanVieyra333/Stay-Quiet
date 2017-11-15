@@ -126,8 +126,12 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "ERROR. Solo se permiten letras",
                     Toast.LENGTH_LONG).show();
             return false;
-        } else if (!(validateNumber(phoneNumber)) || phoneNumber.length() != 10) {
-            Toast.makeText(getApplicationContext(), "ERROR. Solo se permiten letras",
+        } else if (!(validateNumber(phoneNumber))) {
+            Toast.makeText(getApplicationContext(), "ERROR. Solo se permiten Numeros",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }else if( phoneNumber.length() != 10){
+            Toast.makeText(getApplicationContext(), "ERROR. El telefono debe tener 10 digitos ",
                     Toast.LENGTH_LONG).show();
             return false;
         }else if(!(validPassword(password)) || !(password.length() >8 || password.length()< 16 ) ){
@@ -138,11 +142,11 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "ERROR.El formato de correo incorrecto, Solo: example@mail.com.",
                     Toast.LENGTH_LONG).show();
             return  false;
-        }else if((phoneNumber.compareTo(phoneNumberConf) == 0)){
-            Toast.makeText(getApplicationContext(), "ERROR. No coincide el Numero..",
+        }else if((phoneNumber.compareTo(phoneNumberConf) != 0)){
+            Toast.makeText(getApplicationContext(), "ERROR. No coincide el Numero.",
                     Toast.LENGTH_LONG).show();
             return  false;
-        }else if( password.compareTo(passwordConf) == 0){
+        }else if( password.compareTo(passwordConf) != 0){
             Toast.makeText(getApplicationContext(), "ERROR. No coincide la contraseña.",
                     Toast.LENGTH_LONG).show();
             return  false;
@@ -155,22 +159,22 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean validName(String name){
 
-        String regex = "\\p{Alpha}" ;
-
-        return  name.matches(regex);
+        String regex =   "^[a-zA-Z\\s]+" ;
+        boolean valid=name.matches(regex);
+        return  valid;
     }
 
     private boolean validateNumber(String number){
-        String regex = "\\D" ;
+        String regex = "[0-9]+" ;
 
         return  number.matches(regex);
     }
 
 
     private boolean validPassword(String password){
-        String regex ="(\\p{Upper})+ (\\p{Lower})+ (\\D)+ (\\p{Punct})+";
-        return password.matches(regex);
-
+        String regex ="(/^(?=.*[a-z]).+$/)(/^(?=.*[A-Z]).+$/)(/^(?=.*[0-9_\\W]).+$/)";
+       // boolean valid = password.matches(regex);
+        return true;
     }
 
     public boolean validEmail(String email){
