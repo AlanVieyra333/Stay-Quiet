@@ -5,14 +5,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatCallback;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by gerardo on 17/09/17.
@@ -26,7 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     private StayQuietDBManager dbManager;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    //private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseUser userDB;
+    private AppCompatActivity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,32 +46,20 @@ public class RegisterActivity extends AppCompatActivity {
 
         final Intent intentHome = new Intent(RegisterActivity.this, HomeActivity.class);
         mAuth = FirebaseAuth.getInstance();
-        //mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 if (user != null) {
-                    // User is signed in
-                    // Name, email address, and profile photo Url
-                    String name = user.getDisplayName();
-                    String phoneNumber = user.getPhoneNumber();
-                    String email = user.getEmail();
-                    Uri photoUrl = user.getPhotoUrl();
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                            phoneNumber,        // Phone number to verify
+                            1,                  // Timeout duration
+                            TimeUnit.MINUTES,   // Unit of timeout
+                            activity,               // Activity (for callback binding)
+                            mCallbacks);        // OnVerificationStateChangedCallbacks
 
-                    // The user's ID, unique to the Firebase project. Do NOT use this value to
-                    // authenticate with your backend server, if you have one. Use
-                    // FirebaseUser.getToken() instead.
-                    // String uid = user.getUid();
-
-                    //User myUser = new User(name, phoneNumber, email, "", photoUrl.toString());
-                    User myUser = new User();
-
-                    intentHome.putExtra("user", myUser);
-                    intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intentHome);
                 }
             }
         };
@@ -81,9 +80,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if ( validateForm()) {
                     User user = new User(name, phoneNumber, email, password, "");
-                    long status;
+                    //long status;
 
-                    if (!dbManager.existsAccount(user)) {
+                    //if (!dbManager.existsAccount(user)) {
                         dbManager.signUp(user);
                         //status = dbManager.insertUser(user);
 
@@ -95,10 +94,10 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "ERROR. No se puede conectar a la base de datos",
                                     Toast.LENGTH_LONG).show();
                         }*/
-                    } else {
-                        Toast.makeText(getApplicationContext(), "ERROR. Correo y/o teléfono ya han sido registrados anteriormente.",
-                                Toast.LENGTH_LONG).show();
-                    }
+                    //} else {
+                    //    Toast.makeText(getApplicationContext(), "ERROR. Correo y/o teléfono ya han sido registrados anteriormente.",
+                    //            Toast.LENGTH_LONG).show();
+                    //}
                 }
 
                 etPassword.setText("");
@@ -155,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean validName(String name){
 
-        String regex = "\\p{Alpha}" ;
+        String regex = "^[a-zA-Z\\s]+" ;
 
         return  name.matches(regex);
     }
@@ -165,7 +164,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         return  number.matches(regex);
     }
-
 
     private boolean validPassword(String password){
         String regex ="(\\p{Upper})+ (\\p{Lower})+ (\\D)+ (\\p{Punct})+";
@@ -177,4 +175,84 @@ public class RegisterActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email)
                 .matches();
     }
+
+    public PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+        @Override
+        public void onVerificationCompleted(PhoneAuthCredential credential) {
+            // This callback will be invoked in two situations:
+            // 1 - Instant verification. In some cases the phone number can be instantly
+            //     verified without needing to send or enter a verification code.
+            // 2 - Auto-retrieval. On some devices Google Play services can automatically
+            //     detect the incoming verification SMS and perform verificaiton without
+            //     user action.
+            Toast.makeText(getApplicationContext(), "Codigo Verificado",
+                    Toast.LENGTH_LONG).show();
+
+            /*mAuth.signInWithCredential(credential)
+                    .addOnFailureListener(activity, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), R.string.MSJ1_31,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .setPhotoUri(Uri.parse(StayQuietDBHelper.STORAGE_URL + "images/add_camera.png"))
+                    .build();
+            userDB.updatePhoneNumber(credential)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "User email address updated.");
+                            }
+                        }
+                    });
+
+            userDB.updateProfile(profile);
+
+            // User is signed in
+            // Name, email address, and profile photo Url
+            String name = userDB.getDisplayName();
+            String phoneNumber = userDB.getPhoneNumber();
+            Uri photoUrl = userDB.getPhotoUrl();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getToken() instead.
+            // String uid = user.getUid();
+
+            //User myUser = new User(name, phoneNumber, email, "", photoUrl.toString());
+            User myUser = new User();
+
+            intentHome.putExtra("user", myUser);
+            intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentHome);*/
+        }
+
+        @Override
+        public void onVerificationFailed(FirebaseException e) {
+            Toast.makeText(getApplicationContext(), R.string.MSJ1_32,
+                    Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onCodeSent(String verificationId,
+                               PhoneAuthProvider.ForceResendingToken token) {
+            // The SMS verification code has been sent to the provided phone number, we
+            // now need to ask the user to enter the code and then construct a credential
+            // by combining the code with a verification ID.
+            //Log.d(TAG, "onCodeSent:" + verificationId);
+
+            // Save verification ID and resending token so we can use them later
+            //mVerificationId = verificationId;
+            //mResendToken = token;
+            Toast.makeText(getApplicationContext(), "Codigo enviado: " + verificationId + " : " + token,
+                    Toast.LENGTH_LONG).show();
+        }
+    };
 }

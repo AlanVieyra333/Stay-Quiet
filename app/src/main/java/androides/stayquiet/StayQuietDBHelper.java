@@ -20,6 +20,8 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
     public static final String USER_COLUMN_PASSWORD = "password";
     public static final String USER_COLUMN_IMAGE = "image";
 
+    public static final String STORAGE_URL = "https://storage.googleapis.com/staging.stay-quiet.appspot.com/";
+
     private final String DROP_USER_TABLE = "DROP TABLE IF EXIST " + USER_TABLE;
     private final String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE +" (" +
             USER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
