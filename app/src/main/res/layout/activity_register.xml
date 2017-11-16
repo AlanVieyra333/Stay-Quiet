@@ -31,15 +31,6 @@
         android:textAlignment="textStart" />
 
     <EditText
-        android:id="@+id/etRegister_LastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:ems="10"
-        android:hint="Apellidos"
-        android:inputType="textPersonName" />
-
-    <EditText
         android:id="@+id/etRegister_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

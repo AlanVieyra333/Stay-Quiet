@@ -3,6 +3,7 @@ package androides.stayquiet;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -19,13 +21,16 @@ public class HomeActivity extends AppCompatActivity {
     private TextView tvNameMine, tvEmailMine;
     private Button btnMapExample;
     private Bitmap bm;
+    private Intent intentLogin, intentMaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        final Intent intentMaps = new Intent(HomeActivity.this, MapsActivity.class);
+        intentMaps = new Intent(this, MapsActivity.class);
+        intentLogin = new Intent(this, LoginActivity.class);
+
         tvNameMine = (TextView) findViewById(R.id.tvNameMine);
         tvEmailMine = (TextView) findViewById(R.id.tvEmailMine);
 
@@ -51,6 +56,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        changeActivity(user);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_profile:
@@ -62,8 +74,10 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_close_session:
                 FirebaseAuth.getInstance().signOut();
-                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(login);
+                intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intentLogin);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -78,6 +92,15 @@ public class HomeActivity extends AppCompatActivity {
         email = user.getEmail();
         if(user.getPhoto() != null) {
             bm = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
+        }
+    }
+
+    private void changeActivity(FirebaseUser currentUser) {
+        if (currentUser == null) {
+            intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentLogin);
+            finish();
         }
     }
 }

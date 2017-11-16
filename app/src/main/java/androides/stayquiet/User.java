@@ -9,17 +9,8 @@ import java.io.Serializable;
  */
 
 public class User implements Account, Serializable {
-    private String name, phoneNumber, email, password, photoUrl;
+    private String name, phoneNumber, email, password;
     private byte[] photo;
-
-    public User(String name, String phoneNumber, String email, String password, String photoUrl) {
-        super();
-        setName(name);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
-        setPassword(password);
-        setPhotoUrl(photoUrl);
-    }
 
     public User(String name, String phoneNumber, String email, String password, byte[] photo) {
         super();
@@ -48,7 +39,10 @@ public class User implements Account, Serializable {
 
     @Override
     public void setEmail(String email) {
-        this.email = email;
+        if(email != null)
+            this.email = email;
+        else
+            this.email = "";
     }
 
     @Override
@@ -58,7 +52,10 @@ public class User implements Account, Serializable {
 
     @Override
     public void setPassword(String password) {
-        this.password = password;
+        if(password != null)
+            this.password = password;
+        else
+            this.password = "";
     }
 
     @Override
@@ -66,13 +63,11 @@ public class User implements Account, Serializable {
         return this.password;
     }
 
-    @Override
-    public int createAccount() {
-        return 0;
-    }
-
     public void setName(String name) {
-        this.name = name;
+        if(name != null)
+            this.name = name;
+        else
+            this.name = "";
     }
 
     public String getName() {
@@ -80,19 +75,14 @@ public class User implements Account, Serializable {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if(phoneNumber != null)
+            this.phoneNumber = phoneNumber;
+        else
+            this.phoneNumber = "";
     }
 
     public String getPhoneNumber() {
         return this.phoneNumber;
-    }
-
-    public void setPhotoUrl(String  photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
-    public String  getPhotoUrl() {
-        return this.photoUrl;
     }
 
     public void setPhoto(byte[]  photo) {

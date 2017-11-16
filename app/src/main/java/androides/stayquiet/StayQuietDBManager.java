@@ -121,6 +121,9 @@ public class StayQuietDBManager {
                 .addOnFailureListener(activity, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(activity.getApplicationContext(), "Error: Registrar " + e,
+                                Toast.LENGTH_LONG).show();
+
                         if(e.getMessage().indexOf("user") != -1)
                             Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_7,
                                     Toast.LENGTH_LONG).show();

@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private String email, password;
     private StayQuietDBManager dbManager;
+    private Intent intentHome;
+    private Intent intentRegister;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -27,43 +29,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final Intent intentHome = new Intent(LoginActivity.this, HomeActivity.class);
-        final Intent intentRegister = new Intent(LoginActivity.this,RegisterActivity.class);
+        intentHome = new Intent(this, HomeActivity.class);
+        intentRegister = new Intent(this, RegisterActivity.class);
+
         etEmail = (EditText) findViewById(R.id.etLogin_email);
         etPassword = (EditText) findViewById(R.id.etLogin_password);
         btnLogin = (Button)findViewById(R.id.btnLogin_login);
         btnRegister =(Button)findViewById(R.id.btnLogin_register);
-        mAuth = FirebaseAuth.getInstance();
-        dbManager = new StayQuietDBManager(this, mAuth);
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                if (user != null) {
-                    // User is signed in
-                    // Name, email address, and profile photo Url
-                    String name = user.getDisplayName();
-                    String phoneNumber = user.getPhoneNumber();
-                    String email = user.getEmail();
-                    Uri photoUrl = user.getPhotoUrl();
-
-                    // The user's ID, unique to the Firebase project. Do NOT use this value to
-                    // authenticate with your backend server, if you have one. Use
-                    // FirebaseUser.getToken() instead.
-                    // String uid = user.getUid();
-
-                    //User myUser = new User(name, phoneNumber, email, "", photoUrl.toString());
-                    User myUser = new User();
-
-                    intentHome.putExtra("user", myUser);
-                    intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intentHome);
-                }
-            }
-        };
-        mAuth.addAuthStateListener(mAuthListener);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +52,27 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(intentRegister);
+                finish();
             }
         });
+
+        mAuth = FirebaseAuth.getInstance();
+        dbManager = new StayQuietDBManager(this, mAuth);
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                changeActivity(user);
+            }
+        };
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected  void onStart() {
+        super.onStart();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        changeActivity(user);
     }
 
     private void getValues() {
@@ -103,4 +94,21 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    private void changeActivity(FirebaseUser currentUser) {
+        if (currentUser != null) {
+            String name = currentUser.getDisplayName();
+            String phoneNumber = currentUser.getPhoneNumber();
+            String email = currentUser.getEmail();
+            //Uri photoUrl = currentUser.getPhotoUrl();
+            byte[] photo = null;
+
+            User user = new User(name, phoneNumber, email, "", photo);
+
+            intentHome.putExtra("user", user);
+            intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentHome);
+            finish();
+        }
+    }
 }

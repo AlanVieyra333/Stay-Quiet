@@ -9,5 +9,4 @@ public interface Account {
     String getEmail();
     void setPassword(String password);
     String getPassword();
-    int createAccount();
 }
