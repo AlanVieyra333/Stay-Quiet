@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,7 +19,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class HomeActivity extends AppCompatActivity {
 
     private String name, phoneNumber, email;
-    private TextView tvNameMine, tvEmailMine;
+    private TextView tvNameMine, tvEmailMine, tvPhoneNumber;
+    private ImageView ivPhoto;
     private Button btnMapExample;
     private Bitmap bm;
     private Intent intentLogin, intentMaps;
@@ -33,11 +35,15 @@ public class HomeActivity extends AppCompatActivity {
 
         tvNameMine = (TextView) findViewById(R.id.tvNameMine);
         tvEmailMine = (TextView) findViewById(R.id.tvEmailMine);
+        tvPhoneNumber = (TextView) findViewById(R.id.tvPhoneNumber);
+        ivPhoto = (ImageView)findViewById(R.id.imageProfile);
 
         getParams();
 
         tvNameMine.setText(name);
+        tvPhoneNumber.setText(phoneNumber);
         tvEmailMine.setText(email);
+        ivPhoto.setImageBitmap(bm);
 
         btnMapExample = (Button)findViewById(R.id.btn_mapExample);
         btnMapExample.setOnClickListener(new View.OnClickListener() {

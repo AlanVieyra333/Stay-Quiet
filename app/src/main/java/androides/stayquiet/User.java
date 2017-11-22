@@ -38,6 +38,17 @@ public class User implements Account, Serializable {
     }
 
     @Override
+    public String toString() {
+        String toString = "";
+        toString += getName() + ", ";
+        toString += getPhoneNumber() + ", ";
+        toString += getEmail() + ", ";
+        toString += getPassword();
+
+        return toString;
+    }
+
+    @Override
     public void setEmail(String email) {
         if(email != null)
             this.email = email;

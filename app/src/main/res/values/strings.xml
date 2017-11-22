@@ -2,7 +2,6 @@
     <string name="app_name">Stay Quiet</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_profile">MI PERFIL</string>
-    <string name="text_activity_profile_1">Aquí podrás modificar tus datos</string>
     <string name="menu_profile">Perfil</string>
     <string name="menu_settings">Seguridad</string>
     <string name="menu_close_session">Cerrar sesión</string>
@@ -10,7 +9,11 @@
     <string name="text_email">Correo Electrónico</string>
     <string name="text_phoneNumber">Número de Celular</string>
     <string name="text_password">Contraseña y/o PIN</string>
+    <string name="text_activity_profile_1">Aquí podrás modificar tus datos</string>
+    <string name="text_activity_verify_phone_1">Ingrese el código de verificación que se envió a su teléfono</string>
+    <string name="text_code">Código</string>
     <string name="btn_save">GUARDAR</string>
+    <string name="btn_verify">VERIFICAR</string>
     <string name="MSJ1.1">ERROR. Campos incompletos.</string>
     <string name="MSJ1.2">ERROR. Solo se permiten letras.</string>
     <string name="MSJ1.3">ERROR. Solo se permiten números.</string>
@@ -19,5 +22,6 @@
     <string name="MSJ1.10">ERROR. Solo el formato de correo incorrecto: example@mail.com.</string>
     <string name="MSJ1.31">ERROR. Código de verificación inválido.</string>
     <string name="MSJ1.32">ERROR. No fué posible realizar la verificación del teléfono.</string>
+    <string name="MSJ1.33">ERROR. No fué posible asociar su número de celular.</string>
 
 </resources>

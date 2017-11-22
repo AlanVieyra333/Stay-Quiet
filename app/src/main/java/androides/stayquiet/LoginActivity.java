@@ -1,6 +1,8 @@
 package androides.stayquiet;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,18 +68,24 @@ public class LoginActivity extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser user = firebaseAuth.getCurrentUser();
                 changeActivity(user);
             }
         };
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     protected  void onStart() {
         super.onStart();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        changeActivity(user);
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     private void getValues() {
@@ -95,14 +108,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void changeActivity(FirebaseUser currentUser) {
-        if (currentUser != null) {
-            String name = currentUser.getDisplayName();
-            String phoneNumber = currentUser.getPhoneNumber();
-            String email = currentUser.getEmail();
-            //Uri photoUrl = currentUser.getPhotoUrl();
-            byte[] photo = null;
+        if (currentUser != null && currentUser.getPhoneNumber() != null) {
+            User user = StayQuietDBManager.FirebaseUserToUser(currentUser);
 
-            User user = new User(name, phoneNumber, email, "", photo);
+            Toast.makeText(getApplicationContext(), "Change: " + user,
+                    Toast.LENGTH_LONG).show();
 
             intentHome.putExtra("user", user);
             intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |

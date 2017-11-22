@@ -1,74 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="androides.stayquiet.HomeActivity"
     android:background="#000000">
 
-    <RelativeLayout
-        android:layout_width="344dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+    <ImageView
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="46dp"
-            android:layout_marginEnd="36dp"
-            app:srcCompat="@drawable/add" />
 
         <ImageView
             android:id="@+id/imageProfile"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:srcCompat="@drawable/boy"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp"
-            android:layout_marginStart="18dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:id="@+id/tvEmailMine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_alignBottom="@+id/imageProfile"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/imageProfile"
-            android:text="Email"
-            android:textColor="@android:color/background_light"
-            android:textSize="10sp" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/tvNameMine"
+            android:layout_width="291dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Name"
+            android:textColor="@android:color/background_light"
+            app:layout_constraintLeft_toRightOf="@+id/imageProfile"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:text="Email"
+            android:id="@+id/tvEmailMine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp"
-            android:layout_toEndOf="@+id/imageProfile"
-            android:text="Name"
-            android:textColor="@android:color/background_light" />
+            android:textColor="@android:color/background_light"
+            android:textSize="10sp"
+            tools:layout_editor_absoluteY="33dp"
+            tools:layout_editor_absoluteX="68dp" />
+
+        <TextView
+            android:id="@+id/tvPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/background_light"
+            android:textSize="10sp"
+            android:text="1234567890"
+            tools:layout_editor_absoluteY="48dp"
+            tools:layout_editor_absoluteX="68dp" />
 
         <Button
             android:id="@+id/btn_mapExample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
             android:text="Mapa Ejemplo"
             android:layout_above="@+id/add"
             android:layout_alignEnd="@+id/add"
-            android:layout_marginEnd="29dp" />
-
-    </RelativeLayout>
-
+            android:layout_marginEnd="29dp"
+            tools:layout_editor_absoluteY="376dp"
+            tools:layout_editor_absoluteX="127dp" />
 
 </android.support.constraint.ConstraintLayout>
