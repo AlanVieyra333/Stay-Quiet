@@ -21,7 +21,6 @@ public class HomeActivity extends AppCompatActivity {
     private String name, phoneNumber, email;
     private TextView tvNameMine, tvEmailMine, tvPhoneNumber;
     private ImageView ivPhoto;
-    private Button btnMapExample;
     private Bitmap bm;
     private Intent intentLogin, intentMaps;
 
@@ -44,14 +43,6 @@ public class HomeActivity extends AppCompatActivity {
         tvPhoneNumber.setText(phoneNumber);
         tvEmailMine.setText(email);
         ivPhoto.setImageBitmap(bm);
-
-        btnMapExample = (Button)findViewById(R.id.btn_mapExample);
-        btnMapExample.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intentMaps);
-            }
-        });
     }
 
     @Override
