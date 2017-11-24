@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="androides.stayquiet.VerifyPhoneActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/textHight"
+            android:layout_marginTop="20dp"
+            android:text="@string/text_activity_change_1"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="15dp" />
+
+        <RelativeLayout
+            android:id="@+id/lyCode"
+            style="@style/element"
+            android:layout_height="50dp"
+            android:background="@drawable/layout_border"
+            tools:layout_editor_absoluteX="15dp"
+            tools:layout_editor_absoluteY="85dp">
+
+            <EditText
+                android:id="@+id/etCode"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_remove_circle"
+                android:hint="@string/text_pwd"
+                android:inputType="phone"
+                app:layout_constraintRight_toRightOf="@+id/tvCode" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lyCode"
+            style="@style/element"
+            android:layout_height="50dp"
+            android:background="@drawable/layout_border"
+            tools:layout_editor_absoluteX="15dp"
+            tools:layout_editor_absoluteY="239dp">
+
+            <EditText
+                android:id="@+id/etCode"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="0dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_remove_circle"
+                android:hint="@string/text_pwd_2"
+                android:inputType="phone"
+                app:layout_constraintRight_toRightOf="@+id/tvCode" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lyCode"
+            style="@style/element"
+            android:layout_height="50dp"
+            android:background="@drawable/layout_border"
+            tools:layout_editor_absoluteX="15dp"
+            tools:layout_editor_absoluteY="160dp">
+
+            <EditText
+                android:id="@+id/etCode"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="0dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_remove_circle"
+                android:hint="@string/text_pwd_1"
+                android:inputType="phone"
+                app:layout_constraintRight_toRightOf="@+id/tvCode" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnVerify"
+            style="@style/element"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="142dp"
+            android:background="@drawable/layout_border_blue"
+            android:text="@string/btn_recovery"
+            app:layout_constraintTop_toBottomOf="@+id/lyCode"
+            tools:layout_editor_absoluteX="25dp" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
