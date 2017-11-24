@@ -1,33 +1,28 @@
-\begin{UseCase}{CU1.3}{Editar Protector}{
-	Se describe el comportamiento y funcionamiento de la aplicación para la modificación de los datos del Protector.
+\begin{UseCase}{CU1.7}{Cambiar contraseña}{
+	Se describe el comportamiento y funcionamiento de la aplicación para la modificación de la contraseña del Protector.
 }
 		\UCitem{Actor}{Protector}
 		\UCitem{Propósito}{
-		Poder actualizar, modificar los datos del usuario
+		Poder cambiar la contraseña del usuario Protector
 		}
 		\UCitem{Entradas}{
 			Seleccionar el campo a modificar:
 			\begin{itemize}
-				\item Nombre.
-				\item Correo Electrónico.
-				\item Numero de Celular.
+				\item Contraseña.
 			\end{itemize}
 		 }
 		\UCitem{Salidas}{
 			\begin{itemize}
 				\item \MSGref{MSJ1.1}{Campos Incompletos}
-				\item \MSGref{MSJ1.2}{Formato de nombre incorrecto}
-				\item \MSGref{MSJ1.3}{Formato de teléfono incorrecto}
+				\item \MSGref{MSJ1.4}{Formato de contraseña incorrecto}
 				\item \MSGref{MSJ1.6}{Error en conexión}
-				\item \MSGref{MSJ1.8}{Datos utilizados}
 				\item \MSGref{MSJ1.9}{Contraseña incorrecta}
-				\item \MSGref{MSJ1.10}{Formato de correo incorrecto}
 			\end{itemize}
 		}
 		\UCitem{Precondiciones}{El usuario debe estar registrado en el sistema.
 		}
 		\UCitem{Postcondiciones}{
-			El usuario podrá modificar sus datos la veces que sean necesarias.
+			El usuario podrá modificar su contraseña la veces que sean necesarias.
 		}
 		\UCitem{Autor}{
 			\begin{itemize}
@@ -40,16 +35,14 @@
 		\UCpaso Reproducir el \UCref{CU1.1}
 		\UCpaso[\UCactor] Pulsa en el menú superior derecho.
 		\UCpaso[\UCsist] Despliega el menú con tres opciones \IUbutton{Perfil},\IUbutton{Seguridad} y \IUbutton{Cerrar Sesión}.
-		\UCpaso[\UCactor] Pulsa en el  \IUbutton{Perfil}.
-		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.4}{Perfil Usuario}.
-		\UCpaso[\UCactor] Selecciona el campo a modificar.
-		\UCpaso[\UCactor] Pulsa en el  \IUbutton{GUARDAR}.
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato general de registro}. \Trayref{B}
-		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.5}{Seguridad}.
-		\UCpaso[\UCactor] Captura su contraseña en la pantalla.
+		\UCpaso[\UCactor] Pulsa en el  \IUbutton{Seguridad}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.9}{Nueva contraseña}.
+		\UCpaso[\UCactor] Captura los datos necesarios.
 		\UCpaso[\UCactor] Pulsa en el  \IUbutton{CONTINUAR}.
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato general de registro} para el formato de contraseña. \Trayref{B}
 		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{C} \Trayref{D} \Trayref{E}
+		\UCpaso[\UCsist] Muestra el mensaje \MSGref{MSJ1.12}{Cambio contraseña}.		
 		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
 	\end{UCtrayectoria}
 	%-------------------------------------Trayectoras alternativas
@@ -61,9 +54,7 @@
 	\begin{UCtrayectoriaA}{B}{Condición: El actor captura la información de manera incorrecta.}
 		\UCpaso[\UCsist] Dependiendo del error sera el mensaje:
 			\begin{itemize}
-			\item \MSGref{MSJ1.2}{Formato de nombre incorrecto}
-			\item \MSGref{MSJ1.3}{Formato de teléfono incorrecto}
-			\item \MSGref{MSJ1.10}{Formato de correo incorrecto}
+				\item \MSGref{MSJ1.4}{Formato de contraseña incorrecto}
 			\end{itemize}
 		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
@@ -76,9 +67,4 @@
 	\begin{UCtrayectoriaA}{D}{Condición: Contraseña incorrecta}
 		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.9}{Contraseña incorrecta}
 		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
-	\end{UCtrayectoriaA}
-	%-------------------------------------Trayectoras alternativas
-	\begin{UCtrayectoriaA}{E}{Condición: Usuario ya registrado y/o correo y/o teléfono ya utilizados}
-		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.8}{Datos utilizados}
-		\UCpaso[\UCsist] Continúa trayectoria en el paso 6 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}

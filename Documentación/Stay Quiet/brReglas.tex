@@ -2,37 +2,33 @@
 
 \begin{BussinesRule}{RN1.1}{Campos nulos}
 	\BRitem[Descripción:] Ningún dato en el formulario puede ser nulo.
-	\BRitem[Tipo:] Restricción (validación).
 	\BRitem[Nivel:] Obligatorio.
 \end{BussinesRule}
 
-\begin{BussinesRule}{RN1.2}{Formato general para el registro de un Protector}
+\begin{BussinesRule}{RN1.2}{Formato general de registro}
 	\BRitem[Nombre:] Formato del nombre.
 	\BRitem[Descripción:] El nombre esta compuesto por:
 		\begin{itemize}
 			\item Nombre Completo.
 		\end{itemize}
-		Todo el nombre debe estar compuesto por letras.\\\\
-	Ejemplo \\
-	Nombre: Luis Ángel Martínez Gómez.\\
-	\BRitem[Tipo:] Restricción(validación)
+		Todo el nombre debe estar compuesto por letras.
+		Ejemplo 
+		Nombre: Luis Ángel Martínez Gómez.
 	\BRitem[Nivel:] Obligatorio.\\\\
 
 	\BRitem[Teléfono:] Formato del teléfono.
-	\BRitem[Descripción:] El teléfono debe estar formado solamente con números.\\\\
-	Ejemplo \\
-	Teléfono: 58601859 o 5572753650
-	\BRitem[Tipo:] Restricción (validación).
+	\BRitem[Descripción:] El teléfono debe estar formado solamente con números.
+		Ejemplo
+		Teléfono: 58601859 o 5572753650
 	\BRitem[Nivel:] Obligatorio.\\\\
 
 	\BRitem[Teléfono:] Formato del correo.
-	\BRitem[Descripción:] El correo tiene el siguiente formato: example@mail.com .\\\\
-	Ejemplo \\
-	correo: example@mail.com
-	\BRitem[Tipo:] Restricción (validación).
+	\BRitem[Descripción:] El correo tiene el siguiente formato: example@mail.com.
+		Ejemplo
+		Correo: example@mail.com
 	\BRitem[Nivel:] Obligatorio.\\\\
 
-	\BRitem[Contraseña:] Introduce la contraseña con la que tendrá acceso a la gestión del personal.
+	\BRitem[Contraseña:] Formato de la contraseña.
 	\BRitem[Descripción:] La contraseña debe tener un tamaño mínimo de 8 caracteres, y un máximo de 16 caracteres, la cual está compuesta por:
 		\begin{itemize}
 			\item Letras mayúsculas.
@@ -40,17 +36,19 @@
 			\item Dígitos.
 			\item Caracteres especiales.
 		\end{itemize}
-	\BRitem[Tipo:] Restricción (validación).
 	\BRitem[Nivel:] Obligatorio.\\\\
 
 	\BRitem[Repetir contraseña:] Introduce la misma contraseña que ingresó en el paso anterior.
 	\BRitem[Descripción:] La contraseña escrita deberá ser la misma para confirmar que es la correcta.
-	\BRitem[Tipo:] Restricción (validación).
+	\BRitem[Nivel:] Obligatorio.\\\\
+\end{BussinesRule}
+
+\begin{BussinesRule}{RN1.3}{Usuario registrado}
+	\BRitem[Descripción:] Verificar que el usuario este dado de alta en la aplicación.
 	\BRitem[Nivel:] Obligatorio.
 \end{BussinesRule}
 
-\begin{BussinesRule}{RN1.3}{Usuario registrado en el sistema}
-	\BRitem[Descripción:] Verificar que el usuario este dado de alta en la aplicación.
-	\BRitem[Tipo:] Restricción (validación).
-	\BRitem[Nivel:] Obligatorio.
+\begin{BussinesRule}{RN1.4}{Checkbox}
+	\BRitem[Descripción:] Verificar que el usuario quiera guardar sus credenciales en el login y entrar automáticamente a la aplicación.
+	\BRitem[Nivel:] Opcional
 \end{BussinesRule}

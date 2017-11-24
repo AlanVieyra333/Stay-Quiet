@@ -44,7 +44,7 @@
 
 	\begin{Message}{MSJ1.8}{Datos utilizados}
 		\MSGitem[Tipo:] Error
-		\MSGitem[Objetivo: ] Notificar al actor que el correo y/o telefono capturados anteriormente ya están registrados.
+		\MSGitem[Objetivo: ] Notificar al actor que el correo y/o teléfono capturados anteriormente ya están registrados.
 		\MSGitem[Redacción: ] ERROR. Correo y/o teléfono ya han sido registrados anteriormente.
 	\end{Message}
 
@@ -58,4 +58,16 @@
 	\MSGitem[Tipo:] Error
 	\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
 	\MSGitem[Redacción: ] ERROR. Solo el formato de correo incorrecto: example@mail.com .
-\end{Message}
+	\end{Message}
+
+	\begin{Message}{MSJ1.11}{Envío correo}
+	\MSGitem[Tipo:] Afirmación
+	\MSGitem[Objetivo: ] Notificar al actor que se le envió un correo.
+	\MSGitem[Redacción: ] Confirmación. Se envió un correo con tus datos. 
+	\end{Message}
+	
+		\begin{Message}{MSJ1.12}{Cambio contraseña}
+	\MSGitem[Tipo:] Afirmación
+	\MSGitem[Objetivo: ] Notificar al actor que el cambio fue un exito.
+	\MSGitem[Redacción: ] Confirmación. Se a guardado tu nueva contraseña con éxito. 
+	\end{Message}

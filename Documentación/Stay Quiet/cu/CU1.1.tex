@@ -1,14 +1,17 @@
 \begin{UseCase}{CU1.1}{Iniciar Sesión}{
 	Se describe el comportamiento y funcionamiento de la aplicación para el inicio de sesión mediante la autentificación.
 }
-		\UCitem{Versión}{1.0}
-		\UCitem{Actor}{Protector, Protegido.}
-		\UCitem{Propósito}{Tener un control del ingreso de los diferentes usuarios que hacen uso de la aplicación y así poder hacer uso de sus funciones permitidas.}
+		\UCitem{Actor}{
+			Protector, Protegido
+		}
+		\UCitem{Propósito}{
+			Tener un control del ingreso de los diferentes usuarios que hacen uso de la aplicación y así poder hacer uso de sus funciones permitidas.
+		}
 		\UCitem{Entradas}{
 			Se ingresa la información:
 			\begin{itemize}
 				\item Correo Electrónico.
-				\item Contraseña y/o PIN.
+				\item Contraseña.
 			\end{itemize}
 		 }
 		\UCitem{Salidas}{
@@ -19,7 +22,8 @@
 				\item \MSGref{MSJ1.10}{Formato de correo incorrecto}
 			\end{itemize}
 		}
-		\UCitem{Precondiciones}{El usuario debe estar registrado en el sistema.
+		\UCitem{Precondiciones}{
+			El usuario debe estar registrado en el sistema.
 		}
 		\UCitem{Postcondiciones}{
 			El usuario podrá hacer uso de la aplicación según sea su perfil.
@@ -29,8 +33,7 @@
 				\item Salas Hernández Abiran Natanael
 			\end{itemize}
 		}
-		\UCitem{Estatus}{Revisión}
-	\end{UseCase}
+\end{UseCase}
 	%-------------------------------------- COMIENZA descripción Trayectoria Crear
 	\begin{UCtrayectoria}{Principal}
 		\UCpaso[\UCactor] Pulsa en el icono de la aplicación.
@@ -39,35 +42,34 @@
 		\UCpaso[\UCactor] Pulsa en el checkbox para recordar los datos.
 		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{ENTRAR} de la pantalla.
 		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Campos nulos}. \Trayref{A}
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato general para el registro de un Protector}  para el formato del correo. \Trayref{B}
-		\UCpaso[\UCsist] Verifica la regla de negocio (Checkbox). \Trayref{C}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Formato general de registro}  para el formato del correo. \Trayref{B}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.4}{Checkbox}. \Trayref{C}
 		\UCpaso[\UCsist] Entra a la base de datos con los datos ingresados. \Trayref{D}		
-		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado en el sistema}. \Trayref{E}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.3}{Usuario registrado}. \Trayref{E}
 		\UCpaso[\UCsist] Muestra la pantalla \IUref{IU1.3}{Pantalla Inicial}.
 	\end{UCtrayectoria}
-	%-------------------------------------Trayectoras alternativas
+	%-------------------------------------Trayectorias alternativas
 	\begin{UCtrayectoriaA}{A}{Condición: Faltan datos en el formulario.}
 		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ1.1}{Campos Incompletos}
 		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
-	%-------------------------------------Trayectoras alternativas
+	%-------------------------------------Trayectorias alternativas
 	\begin{UCtrayectoriaA}{B}{Condición: El actor ingresa formato de correo incorrecto.}
 		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ1.10}{Formato de correo incorrecto}
 		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
-	%-------------------------------------Trayectoras alternativas
-	\begin{UCtrayectoriaA}{C}{Condición: No se pulso el checkbox}
+	%-------------------------------------Trayectorias alternativas
+	\begin{UCtrayectoriaA}{C}{Condición: No se activo el checkbox}
 		\UCpaso[\UCsist] El sistema no guardara el usuario y contraseña. 
 		\UCpaso[\UCsist] Continúa trayectoria en el paso siguiente de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
-	%-------------------------------------Trayectoras alternativas
+	%-------------------------------------Trayectorias alternativas
 	\begin{UCtrayectoriaA}{D}{Condición: Falló la conexión en la base de datos}
 		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
 		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
 	\end{UCtrayectoriaA}
-	%-------------------------------------Trayectoras alternativas
+	%-------------------------------------Trayectorias alternativas
 		\begin{UCtrayectoriaA}{E}{Condición: Usuario no registrado o correo y/o contraseña incorrectos}
 			\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.7}{Autentificación}
 			\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
 	\end{UCtrayectoriaA}
-	%-------------------------------------Trayectoras alternativas

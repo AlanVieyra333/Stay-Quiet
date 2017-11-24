@@ -25,4 +25,16 @@
 \BOOKMARK [2][-]{subsection.2.5.1}{Descripci\363n completa}{section.2.5}% 25
 \BOOKMARK [2][-]{subsection.2.5.2}{Atributos importantes}{section.2.5}% 26
 \BOOKMARK [2][-]{subsection.2.5.3}{Trayectorias del Caso de Uso}{section.2.5}% 27
-\BOOKMARK [1][-]{section.2.6}{Catalogo de Mensajes}{chapter.2}% 28
+\BOOKMARK [1][-]{section.2.6}{CU1.6 Recuperar Contrase\361a}{chapter.2}% 28
+\BOOKMARK [2][-]{subsection.2.6.1}{Descripci\363n completa}{section.2.6}% 29
+\BOOKMARK [2][-]{subsection.2.6.2}{Atributos importantes}{section.2.6}% 30
+\BOOKMARK [2][-]{subsection.2.6.3}{Trayectorias del Caso de Uso}{section.2.6}% 31
+\BOOKMARK [1][-]{section.2.7}{CU1.7 Cambiar contrase\361a}{chapter.2}% 32
+\BOOKMARK [2][-]{subsection.2.7.1}{Descripci\363n completa}{section.2.7}% 33
+\BOOKMARK [2][-]{subsection.2.7.2}{Atributos importantes}{section.2.7}% 34
+\BOOKMARK [2][-]{subsection.2.7.3}{Trayectorias del Caso de Uso}{section.2.7}% 35
+\BOOKMARK [1][-]{section.2.8}{CU1.8 Cerrar Sesi\363n}{chapter.2}% 36
+\BOOKMARK [2][-]{subsection.2.8.1}{Descripci\363n completa}{section.2.8}% 37
+\BOOKMARK [2][-]{subsection.2.8.2}{Atributos importantes}{section.2.8}% 38
+\BOOKMARK [2][-]{subsection.2.8.3}{Trayectorias del Caso de Uso}{section.2.8}% 39
+\BOOKMARK [1][-]{section.2.9}{Catalogo de Mensajes}{chapter.2}% 40
