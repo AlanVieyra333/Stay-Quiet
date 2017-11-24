@@ -1,0 +1,50 @@
+\begin{UseCase}{CU1.16}{Llamar a Protector}{
+	Se describe el comportamiento de la opción de llamar al protector, por parte del protegido.}
+		\UCitem{Versión}{1.0}
+		\UCitem{Actor}{Protegido.}
+		\UCitem{Propósito}{Llamar por vía telefónica al protector.}
+		\UCitem{Entradas}{Ninguna}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ1.6}{Error en conexión}	
+				\item \MSGref{MSJ1.}{Confirmar llamada}		
+			\end{itemize}}
+		\UCitem{Precondiciones}{
+			\begin{itemize}
+				\item El usuario Protegido debe estar asociado a un protector.
+				\item El usuario Protector registró correctamente su número teléfonico.
+			\end{itemize}}
+		\UCitem{Postcondiciones}{
+			El usuario Protegido podrá contactar rapidamente al protector en caso de que así lo requiera.}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Moreno Sánchez José Rodolfo
+			\end{itemize}}
+		\UCitem{Estatus}{Revisión}
+	\end{UseCase}
+
+	
+	%--------------------		Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{LLAMAR}.
+		\UCpaso[\UCsist] Despliega mensaje \MSGref{MSJ1.1}{Confirmar llamada} \Trayref{A}
+		\UCpaso[\UCsist] Realiza llamada al número registrado por parte del protector. \Trayref{B}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial} 
+	\end{UCtrayectoria}
+
+
+	%--------------------		Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{A}{Condición: Usuario ha cancelado la operación}
+		\UCpaso[\UCactor] Pulsó la opción \IUbutton{Cancelar}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. [Trayectoria Principal]
+	\end{UCtrayectoriaA}
+
+	%--------------------		Trayectoria ALTERNATIVA B
+	\begin{UCtrayectoriaA}{B}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+
+	

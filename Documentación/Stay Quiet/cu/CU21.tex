@@ -1,0 +1,40 @@
+\begin{UseCase}{CU1.21}{Ver Ubicación}{
+		Se describe el comportamiento y funcionameiento de la aplicación para ver la ubicación del protegido.}
+		\UCitem{Versión}{1.0}
+		\UCitem{Actor}{Protector.}
+		\UCitem{Propósito}{Ver ubicación geográfica del usuario protegido}
+		\UCitem{Entradas}{Ninguna}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ1.6}{Error en conexión}
+				\item \MSGref{MSJ1.}{Ubicación no disponible}	
+			\end{itemize}}
+		\UCitem{Precondiciones}{
+			\begin{itemize}
+				\item El usuario Protector debe estar registrado en el sistema.
+				\item El usuario Protegido deberá contar con todas las condiciones para que la localización se lleve de manera óptima.
+			\end{itemize}}
+		\UCitem{Postcondiciones}{
+			El usuario Protector podrá conocer la ubicación exacta del protegido.}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Moreno Sánchez José Rodolfo
+			\end{itemize}}
+		\UCitem{Estatus}{Revisión}
+	\end{UseCase}
+
+
+	%---------------------				Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+		\UCpaso[\UCactor] Selecciona de la lista de contactos al protegido.
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{VER UBICACIÓN}. \Trayref{A}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.10}{Mapa protegido} con la localización del protegido seleccionado.
+	\end{UCtrayectoria}
+
+
+	%---------------------				Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{B}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}

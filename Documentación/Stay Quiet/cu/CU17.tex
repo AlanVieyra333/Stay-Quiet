@@ -1,0 +1,49 @@
+\begin{UseCase}{CU1.17}{Llamar a Protegido}{
+	Se describe el comportamiento de la opción de llamar a un protegido por parte del protector.}
+		\UCitem{Versión}{1.0}
+		\UCitem{Actor}{Protector.}
+		\UCitem{Propósito}{Llamar por vía telefónica al protegido.}
+		\UCitem{Entradas}{Ninguna}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ1.6}{Error en conexión}
+				\item \MSGref{MSJ1.}{Confirmar llamada}			
+			\end{itemize}}
+		\UCitem{Precondiciones}{
+			\begin{itemize}
+				\item El usuario Protector debe estar registrado en el sistema.
+				\item Deberá estar registrado el número telefónico del protegido.
+			\end{itemize}}
+		\UCitem{Postcondiciones}{
+			El usuario Protector podrá contactar rapidamente al protegido en caso de que así lo requiera.}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Moreno Sánchez José Rodolfo
+			\end{itemize}}
+		\UCitem{Estatus}{Revisión}
+	\end{UseCase}
+
+
+	%--------------------		Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+		\UCpaso[\UCactor] Selecciona de la lista de contactos al protegido.
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{LLAMAR}.
+		\UCpaso[\UCsist] Despliega mensaje \MSGref{MSJ1.1}{Confirmar llamada} \Trayref{A}
+		\UCpaso[\UCsist] Realiza llamada al número registrado del protegido. \Trayref{B}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial} 
+	\end{UCtrayectoria}
+
+
+	%--------------------		Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{A}{Condición: Usuario ha cancelado la operación}
+		\UCpaso[\UCactor] Pulsó la opción \IUbutton{Cancelar}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. [Trayectoria Principal]
+	\end{UCtrayectoriaA}
+
+	%--------------------		Trayectoria ALTERNATIVA B
+	\begin{UCtrayectoriaA}{B}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}

@@ -1,0 +1,57 @@
+\begin{UseCase}{CU1.15}{Borrar Protegido}{
+	Se describe el comportamiento y funcionameiento de la aplicación para borrar a un protegido por parte del protector.}
+		\UCitem{Versión}{1.0}
+		\UCitem{Actor}{Protector.}
+		\UCitem{Propósito}{Borrar a protegido.}
+		\UCitem{Entradas}{Ninguna}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ1.6}{Error en conexión}
+				\item \MSGref{MSJ1.}{Error - Borrar}
+				\item \MSGref{MSJ1.}{Confirmar borrado}	
+			\end{itemize}}
+		\UCitem{Precondiciones}{
+			\begin{itemize}
+			\item El usuario Protector debe estar registrado en el sistema.
+			\item El usuario Protector registró al menos a un protegido.
+			\end{itemize}}
+		\UCitem{Postcondiciones}{
+			El usuario Protector podrá borrar al protegido seleccionado.}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Moreno Sánchez José Rodolfo
+			\end{itemize}}
+		\UCitem{Estatus}{Revisión}
+	\end{UseCase}
+
+
+	%--------------------			 Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+		\UCpaso[\UCactor] Selecciona de la lista de contactos al protegido.
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{BORRAR}.
+		\UCpaso[\UCsist] Despliega mensaje \MSGref{MSJ1.1}{Confirmar borrado} \Trayref{A}
+		\UCpaso[\UCsist] Entra a la base de datos con la solicitud de eliminar protegido. \Trayref{B}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.2}{Protegido registrado en el sistema} \Trayref{C}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial} con el usuario Protegido eliminado.
+	\end{UCtrayectoria}
+
+
+	%--------------------			Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{A}{Condición: Usuario ha cancelado la operación}
+		\UCpaso[\UCactor] Pulsó la opción \IUbutton{Cancelar}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. [Trayectoria Principal]
+	\end{UCtrayectoriaA}
+
+	%--------------------			Trayectoria ALTERNATIVA B
+	\begin{UCtrayectoriaA}{B}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+
+	%--------------------			Trayectoria ALTERNATIVA C
+	\begin{UCtrayectoriaA}{B}{Condición: Protegido no registrado en el sistema.}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.}{Error - Borrar}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}

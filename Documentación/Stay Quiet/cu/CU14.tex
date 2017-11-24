@@ -1,0 +1,47 @@
+\begin{UseCase}{CU1.14}{Concluir Protección}{
+	Se describe el comportamiento y funcionameiento de la aplicación para concluir la protección del protegido.}
+		\UCitem{Versión}{1.0}
+		\UCitem{Actor}{Protector.}
+		\UCitem{Propósito}{Concluir protección del protegido.}
+		\UCitem{Entradas}{Ninguna}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ1.6}{Error en conexión}
+				\item \MSGref{MSJ1.}{Confirmar concluir protección}	
+			\end{itemize}}
+		\UCitem{Precondiciones}{
+			\begin{itemize}
+			\item El usuario Protector debe estar registrado en el sistema.
+			\item El usuario Protector registró al menos a un protegido.
+			\end{itemize}}
+		\UCitem{Postcondiciones}{
+			El usuario Protector podrá finalizar la protección del protegido.}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Moreno Sánchez José Rodolfo
+			\end{itemize}}
+		\UCitem{Estatus}{Revisión}
+	\end{UseCase}
+
+
+	%---------------------				Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial}.\Trayref{A}
+		\UCpaso[\UCactor] Selecciona de la lista de contactos al protegido.
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{CONCLUIR PROTECCIÓN} del protegido.
+		\UCpaso[\UCsist] Despliega mensaje \MSGref{MSJ1.1}{Confirmar concluir protección} \Trayref{B}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.3}{Pantalla Inicial} con la finalización de la protección del protegido.
+	\end{UCtrayectoria}
+
+
+	%---------------------				Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{B}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%--------------------				Trayectoria ALTERNATIVA B
+	\begin{UCtrayectoriaA}{A}{Condición: Usuario ha cancelado la operación}
+		\UCpaso[\UCactor] Pulsó la opción \IUbutton{Cancelar}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.10}{Mapa protegido}.
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. [Trayectoria Principal]
+	\end{UCtrayectoriaA}

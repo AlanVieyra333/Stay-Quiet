@@ -1,0 +1,56 @@
+\begin{UseCase}{CU1.18}{Definir área de protección}{
+	Se describe el comportamiento y funcionameiento de la aplicación para definir un área de protección para el protegido.}
+		\UCitem{Versión}{1.0}
+		\UCitem{Actor}{Protector}
+		\UCitem{Propósito}{Definir un rango de protección y localización para el protegido por parte del usuario protector.}
+		\UCitem{Entradas}{Rango}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ1.6}{Error en conexión}
+				\item \MSGref{MSJ1.}{Rango no válido}	
+			\end{itemize}}
+		\UCitem{Precondiciones}{
+			\begin{itemize}
+				\item El usuario Protector debe estar registrado en el sistema.
+				\item El usuario Protector registró al menos a un protegido satisfactoriamente.
+			\end{itemize}}
+		\UCitem{Postcondiciones}{
+			El usuario Protector podrá definir un área de protección para el protegido.}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Moreno Sánchez José Rodolfo
+			\end{itemize}}
+		\UCitem{Estatus}{Revisión}
+	\end{UseCase}
+
+
+	%---------------------				Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.10}{Mapa protegido}. \Trayref{A}
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{ÁREA}.
+		\UCpaso[\UCactor] Ingresa el rango de área a proteger.
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{OK} \Trayref{B}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Rango del área}. \Trayref{C}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.10}{Mapa protegido} con el área actualizada. 
+	\end{UCtrayectoria}
+
+
+	%---------------------				Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{B}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	
+	%--------------------				Trayectoria ALTERNATIVA B
+	\begin{UCtrayectoriaA}{A}{Condición: Usuario ha cancelado la operación}
+		\UCpaso[\UCactor] Pulsó la opción \IUbutton{Cancelar}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.10}{Mapa protegido}.
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. [Trayectoria Principal]
+	\end{UCtrayectoriaA}
+
+	%---------------------				Trayectoria ALTERNATIVA C
+	\begin{UCtrayectoriaA}{B}{Condición: Los valores ingresados son incorrectos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Rango no válido}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+

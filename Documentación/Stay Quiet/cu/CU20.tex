@@ -1,0 +1,56 @@
+\begin{UseCase}{CU1.20}{Definir Alarma}{
+	Se describe el comportamiento y funcionameiento de la aplicación para establecer una alarma que notifique al usuario protector de irregularidades en la ubicación del protegido.}
+		\UCitem{Versión}{1.0}
+		\UCitem{Actor}{Protector.}
+		\UCitem{Propósito}{Establer alarma que notifique las irregularidades en la ubicación del protegido.}
+		\UCitem{Entradas}{Ninguna}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ1.6}{Error en conexión}
+				\item \MSGref{MSJ1.}{Alarma establecida exitosamente}	
+				\item \MSGref{MSJ1.}{Error - Alarma}	
+			\end{itemize}}
+		\UCitem{Precondiciones}{
+			\begin{itemize}
+				\item El usuario Protector debe estar registrado en el sistema.
+				\item Área y/o ruta establecida correctamente. 
+			\end{itemize}}
+		\UCitem{Postcondiciones}{
+			El usuario Protector podrá establecer una alarma que lo notificará en caso de que el protegido presente irregularidades en su ubicación.}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Moreno Sánchez José Rodolfo
+			\end{itemize}}
+		\UCitem{Estatus}{Revisión}
+	\end{UseCase}
+
+
+	%---------------------				Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.10}{Mapa protegido}. \Trayref{A}
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{ALARMA}.
+		\UCpaso[\UCactor] Selecciona \IUbutton{ÁREA} y/o \IUbutton{RUTA}. 
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{OK} \Trayref{B}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN1.1}{Área y/o ruta definida}. \Trayref{C}
+		\UCpaso[\UCsist] Despliega el mensaje \MSGref{MSJ1.}{Alarma establecida exitosamente}	
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.10}{Mapa protegido} con la alarma. actualizada. 
+	\end{UCtrayectoria}
+
+
+	%---------------------				Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{A}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%--------------------				Trayectoria ALTERNATIVA B
+	\begin{UCtrayectoriaA}{B}{Condición: Usuario ha cancelado la operación}
+		\UCpaso[\UCactor] Pulsó la opción \IUbutton{Cancelar}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU1.10}{Mapa protegido}.
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. [Trayectoria Principal]
+	\end{UCtrayectoriaA}
+
+	%---------------------				Trayectoria ALTERNATIVA C
+	\begin{UCtrayectoriaA}{C}{Condición: el usuario no ha registrado área y/o ruta}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ1.6}{Error Alarma}
+		\UCpaso[\UCsist] Regresa al paso 1 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
