@@ -10,17 +10,16 @@
 
     <ImageView
         android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/add"
+        android:layout_width="96dp"
+        android:layout_height="102dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="15dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="44dp"
+        android:clickable="true"
+        android:src="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="15dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 
         <ImageView
@@ -62,16 +61,5 @@
             android:text="1234567890"
             tools:layout_editor_absoluteY="48dp"
             tools:layout_editor_absoluteX="68dp" />
-
-        <Button
-            android:id="@+id/btn_mapExample"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mapa Ejemplo"
-            android:layout_above="@+id/add"
-            android:layout_alignEnd="@+id/add"
-            android:layout_marginEnd="29dp"
-            tools:layout_editor_absoluteY="376dp"
-            tools:layout_editor_absoluteX="127dp" />
 
 </android.support.constraint.ConstraintLayout>
