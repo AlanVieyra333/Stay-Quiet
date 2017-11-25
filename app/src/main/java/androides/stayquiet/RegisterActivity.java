@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+
+import androides.stayquiet.tools.Tools;
 
 /**
  * Created by gerardo on 17/09/17.
@@ -33,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser userDB;
     private AppCompatActivity activity = this;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etRegister_password);
         etPasswordConf = (EditText) findViewById(R.id.etRegister_passwordConf);
         btnSave = (Button) findViewById(R.id.btnRegister_save);
+        progressBar = (ProgressBar) findViewById(R.id.pbRegister);
+        progressBar.setVisibility(View.GONE);
+        progressBar.setIndeterminate(false);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,13 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
                 if (currentUser != null && currentUser.getPhoneNumber() != null) {
-                    User user = StayQuietDBManager.FirebaseUserToUser(currentUser);
-
-                    intentHome.putExtra("user", user);
-                    intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intentHome);
-                    finish();
+                    dbManager.saveProfileIntoCache(currentUser, progressBar, intentHome);
                 }
             }
         };
@@ -210,13 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            User user = StayQuietDBManager.FirebaseUserToUser(currentUser);
-
-                            intentHome.putExtra("user", user);
-                            intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intentHome);
-                            finish();
+                            dbManager.saveProfileIntoCache(currentUser, progressBar, intentHome);
                         }
                     }
                 })

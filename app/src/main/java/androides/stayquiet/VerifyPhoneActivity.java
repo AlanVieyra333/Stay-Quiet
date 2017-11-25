@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import androides.stayquiet.tools.Tools;
+
 public class VerifyPhoneActivity extends AppCompatActivity {
 
     private EditText etCode;
@@ -28,6 +31,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private AppCompatActivity activity;
     private StayQuietDBManager dbManager;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,9 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
         etCode = (EditText) findViewById(R.id.etCode);
         btnVerify = (Button) findViewById(R.id.btnVerify);
+        progressBar = (ProgressBar) findViewById(R.id.pbVerify);
+        progressBar.setVisibility(View.GONE);
+        progressBar.setIndeterminate(false);
 
         getParams();
 
@@ -89,13 +96,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            User user = StayQuietDBManager.FirebaseUserToUser(currentUser);
-
-                            intentHome.putExtra("user", user);
-                            intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intentHome);
-                            finish();
+                            dbManager.saveProfileIntoCache(currentUser, progressBar,intentHome);
                         }
                     }
                 })

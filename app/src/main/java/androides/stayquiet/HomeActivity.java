@@ -12,17 +12,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import androides.stayquiet.tools.Tools;
 
 public class HomeActivity extends AppCompatActivity {
 
     private String name, phoneNumber, email;
     private TextView tvNameMine, tvEmailMine, tvPhoneNumber;
     private ImageView ivPhoto;
-    private Bitmap bm;
+    private Bitmap photo;
     private Intent intentLogin, intentMaps;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +51,6 @@ public class HomeActivity extends AppCompatActivity {
         tvNameMine.setText(name);
         tvPhoneNumber.setText(phoneNumber);
         tvEmailMine.setText(email);
-        ivPhoto.setImageBitmap(bm);
     }
 
     @Override
@@ -55,26 +63,26 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        changeActivity(user);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        changeActivity(currentUser);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_profile:
-                Intent profile = new Intent(getApplicationContext(), ProfileActivity.class);
-                startActivity(profile);
+                Intent intentProfile = new Intent(getApplicationContext(), ProfileActivity.class);
+                //User user = new User(name, phoneNumber, email, "", Tools.bitmapToBytes(photo));
+                User user = new User(name, phoneNumber, email, "", null);
+
+                intentProfile.putExtra("user", user);
+                startActivity(intentProfile);
                 return true;
             case R.id.menu_settings:
                 // Change it.
                 return true;
             case R.id.menu_close_session:
-                FirebaseAuth.getInstance().signOut();
-                intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intentLogin);
-                finish();
+                logout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -88,7 +96,10 @@ public class HomeActivity extends AppCompatActivity {
         phoneNumber = user.getPhoneNumber();
         email = user.getEmail();
         if(user.getPhoto() != null) {
-            bm = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
+            photo = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
+            ivPhoto.setImageBitmap(photo);
+        } else{
+            logout();
         }
     }
 
@@ -99,5 +110,13 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intentLogin);
             finish();
         }
+    }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intentLogin);
+        finish();
     }
 }

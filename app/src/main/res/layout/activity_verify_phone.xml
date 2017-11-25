@@ -1,66 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context="androides.stayquiet.VerifyPhoneActivity">
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <ProgressBar
+            android:id="@+id/pbVerify"
+            android:layout_width="48dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
 
         <TextView
-            style="@style/textHight"
             android:id="@+id/tvTitle"
+            style="@style/textHight"
             android:layout_marginTop="20dp"
             android:text="@string/text_activity_verify_phone_1"
             android:textAlignment="center"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="15dp" />
 
         <RelativeLayout
-            android:background="@drawable/layout_border"
-            android:layout_height="50dp"
+            android:id="@+id/lyCode"
             style="@style/element"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             android:layout_marginTop="15dp"
-            android:id="@+id/lyCode">
+            android:background="@drawable/layout_border"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:layout_editor_absoluteX="15dp"
+            android:layout_below="@+id/tvTitle">
 
             <TextView
-                android:gravity="center_vertical"
+                android:id="@+id/tvCode"
                 style="@style/textNormal"
                 android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:text="@string/text_code"
-                android:textColor="@color/colorGrayH"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="0dp"
-                android:id="@+id/tvCode"/>
+                android:gravity="center_vertical"
+                android:text="@string/text_code"
+                android:textColor="@color/colorGrayH" />
 
             <EditText
+                android:id="@+id/etCode"
                 android:layout_width="250dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="0dp"
                 android:background="@android:color/transparent"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_remove_circle"
+                android:hint="123456"
                 android:inputType="phone"
-                app:layout_constraintRight_toRightOf="@+id/tvCode"
-                android:id="@+id/etCode"
-                android:hint="123456"/>
+                app:layout_constraintRight_toRightOf="@+id/tvCode" />
         </RelativeLayout>
 
         <Button
+            android:id="@+id/btnVerify"
             style="@style/element"
-            android:layout_height="50dp"
-            android:text="@string/btn_verify"
-            android:background="@drawable/layout_border_blue"
-            app:layout_constraintTop_toBottomOf="@+id/lyCode"
             android:layout_marginTop="15dp"
-            android:id="@+id/btnVerify"/>
+            android:background="@drawable/layout_border_blue"
+            android:text="@string/btn_verify"
+            app:layout_constraintTop_toBottomOf="@+id/lyCode"
+            tools:layout_editor_absoluteX="15dp"
+            android:layout_below="@+id/lyCode"/>
 
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

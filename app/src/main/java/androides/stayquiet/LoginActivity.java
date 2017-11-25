@@ -1,15 +1,18 @@
 package androides.stayquiet;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,10 +21,13 @@ import com.google.firebase.auth.FirebaseUser;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
-public class LoginActivity extends AppCompatActivity {
+import androides.stayquiet.tools.Tools;
 
+public class LoginActivity extends AppCompatActivity {
+    private AppCompatActivity activity;
     private Button btnLogin, btnRegister;
     private EditText etEmail, etPassword;
     private String email, password;
@@ -30,12 +36,14 @@ public class LoginActivity extends AppCompatActivity {
     private Intent intentRegister;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        activity = this;
         intentHome = new Intent(this, HomeActivity.class);
         intentRegister = new Intent(this, RegisterActivity.class);
 
@@ -43,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etLogin_password);
         btnLogin = (Button)findViewById(R.id.btnLogin_login);
         btnRegister =(Button)findViewById(R.id.btnLogin_register);
+        progressBar = (ProgressBar) findViewById(R.id.pbLogin);
+        progressBar.setVisibility(View.GONE);
+        progressBar.setIndeterminate(false);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +79,10 @@ public class LoginActivity extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                changeActivity(user);
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser != null && currentUser.getPhoneNumber() != null) {
+                    dbManager.saveProfileIntoCache(currentUser, progressBar, intentHome);
+                }
             }
         };
     }
@@ -105,20 +118,5 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return true;
-    }
-
-    private void changeActivity(FirebaseUser currentUser) {
-        if (currentUser != null && currentUser.getPhoneNumber() != null) {
-            User user = StayQuietDBManager.FirebaseUserToUser(currentUser);
-
-            Toast.makeText(getApplicationContext(), "Change: " + user,
-                    Toast.LENGTH_LONG).show();
-
-            intentHome.putExtra("user", user);
-            intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentHome);
-            finish();
-        }
     }
 }

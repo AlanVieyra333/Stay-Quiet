@@ -21,6 +21,7 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
     public static final String USER_COLUMN_IMAGE = "image";
 
     public static final String STORAGE_URL = "https://storage.googleapis.com/staging.stay-quiet.appspot.com/";
+    public static final String PHOTO_DEFAULT = "images/add_camera.png";
 
     private final String DROP_USER_TABLE = "DROP TABLE IF EXIST " + USER_TABLE;
     private final String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE +" (" +

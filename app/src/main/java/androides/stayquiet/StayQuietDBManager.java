@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+
+import androides.stayquiet.tools.ImageDownloader;
 
 /**
  * Created by developer on 15/10/17.
@@ -146,7 +149,7 @@ public class StayQuietDBManager {
                         if (task.isSuccessful()) {
                             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(name)
-                                    .setPhotoUri(Uri.parse(StayQuietDBHelper.STORAGE_URL + "images/add_camera.png"))
+                                    .setPhotoUri(Uri.parse(StayQuietDBHelper.STORAGE_URL + StayQuietDBHelper.PHOTO_DEFAULT))
                                     .build();
 
                             mAuth.getCurrentUser().updateProfile(profile);
@@ -173,33 +176,20 @@ public class StayQuietDBManager {
                 });;
     }
 
-    public static User FirebaseUserToUser(FirebaseUser currentUser) {
+    public void  saveProfileIntoCache(FirebaseUser currentUser, ProgressBar progressBar, Intent intent) {
         String name = currentUser.getDisplayName();
         String phoneNumber = currentUser.getPhoneNumber();
         String email = currentUser.getEmail();
         Uri photoUrl = currentUser.getPhotoUrl();
-        byte[] photo;
-        Bitmap bitmap;
+
+        User user = new User(name, phoneNumber, email, "", null);
 
         try {
-            bitmap = BitmapFactory.decodeStream((InputStream) new URL(photoUrl.toString()).getContent());
-            photo = bitmapToBytes(bitmap);
+            new ImageDownloader(activity, progressBar, user, intent)
+                    .execute(photoUrl);
         } catch (Exception e) {
-            photo = null;
+            Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
+                    Toast.LENGTH_LONG).show();
         }
-
-        return new User(name, phoneNumber, email, "", photo);
-    }
-
-    // convert from bitmap to byte array
-    public static byte[] bitmapToBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-        return stream.toByteArray();
-    }
-
-    // convert from byte array to bitmap
-    public static Bitmap bytesToBitmap(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 }
