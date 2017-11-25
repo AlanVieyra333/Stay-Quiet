@@ -15,9 +15,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -30,10 +34,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URL;
-
-import androides.stayquiet.tools.ImageDownloader;
-import androides.stayquiet.tools.Tools;
 import androides.stayquiet.tools.Validator;
 
 /**
@@ -86,57 +86,24 @@ public class SecurityActivity extends AppCompatActivity {
                     if(photoUri != null) {
                         progressBar.setVisibility(View.VISIBLE);
 
-                        try {
-                            StorageReference photoRef = imagesRef.child(id + ".jpg");
-                            InputStream stream = new FileInputStream(new File(photoUri));
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                            photoRef.putStream(stream)
-                                .addOnFailureListener(new OnFailureListener() {
+                        mAuth.signInWithEmailAndPassword(currentUser.getEmail(), password)
+                                .addOnCompleteListener(SecurityActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
-                                    public void onFailure(@NonNull Exception exception) {
-                                        // Handle unsuccessful uploads
-                                        Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        // Get a URL to the uploaded content
-                                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
-                                        if(downloadUrl != null) {
-                                            // Update profile
-                                            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                                                    .setDisplayName(name)
-                                                    .setPhotoUri(downloadUrl)
-                                                    .build();
-
-                                            mAuth.getCurrentUser().updateProfile(profile);
-                                            mAuth.getCurrentUser().updateEmail(email);
-                                            //mAuth.getCurrentUser().updatePhoneNumber();
-
-                                            // Save into SQLite
-                                            dbManager.saveProfileIntoCache( progressBar, intentHome);
-                                        }else {
-                                            Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
-                                                    Toast.LENGTH_LONG).show();
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Sign in success, update UI with the signed-in user's information
+                                            updatePhoto();
+                                        } else {
+                                            // If sign in fails, display a message to the user.
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(SecurityActivity.this, "Authentication failed.",
+                                                    Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
-                        } catch (Exception e){
-                            Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
-                                    Toast.LENGTH_LONG).show();
-                        }
                     }
-
-                    Uri uri = Uri.parse(StayQuietDBHelper.STORAGE_URL + StayQuietDBHelper.PHOTO_DEFAULT);
-
-                    UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(user.getName())
-                            .setPhotoUri(uri)
-                            .build();
-
-                    mAuth.getCurrentUser().updateProfile(profile);
                 }
             }
         });
@@ -163,5 +130,59 @@ public class SecurityActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private void  updatePhoto() {
+        try {
+            StorageReference photoRef = imagesRef.child(id + ".jpg");
+            InputStream stream = new FileInputStream(new File(photoUri));
+
+            photoRef.putStream(stream)
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // Get a URL to the uploaded content
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
+                    if(downloadUrl != null) {
+                        // Update profile
+                        UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(name)
+                                .setPhotoUri(downloadUrl)
+                                .build();
+
+                        mAuth.getCurrentUser().updateProfile(profile)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        mAuth.getCurrentUser().updateEmail(email)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        // Save into SQLite
+                                                        dbManager.saveProfileIntoCache( progressBar, intentHome);
+                                                    }
+                                                });;
+                                    }
+                                });
+
+                    }else {
+                        Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } catch (Exception e){
+            Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }
