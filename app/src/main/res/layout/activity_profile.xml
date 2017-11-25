@@ -133,7 +133,7 @@
                 android:background="@android:color/transparent"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_remove_circle"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 app:layout_constraintRight_toRightOf="@+id/tvPhoneNumber"
                 android:id="@+id/etPhoneNumber"/>
         </RelativeLayout>

@@ -10,11 +10,13 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
@@ -25,6 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -32,6 +36,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import androides.stayquiet.tools.ImageDownloader;
+import androides.stayquiet.tools.Tools;
 
 /**
  * Created by developer on 15/10/17.
@@ -56,10 +61,11 @@ public class StayQuietDBManager {
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        values.put(dbHelper.USER_COLUMN_ID, user.getId());
         values.put(dbHelper.USER_COLUMN_NAME, user.getName());
         values.put(dbHelper.USER_COLUMN_PHONE_NUMBER, user.getPhoneNumber());
         values.put(dbHelper.USER_COLUMN_EMAIL, user.getEmail());
-        values.put(dbHelper.USER_COLUMN_IMAGE, user.getPhoto());
+        values.put(dbHelper.USER_COLUMN_PHOTO, user.getPhoto());
 
         status = db.insert(dbHelper.USER_TABLE, null, values);
         db.close();
@@ -67,17 +73,18 @@ public class StayQuietDBManager {
         return status;
     }
 
-    public User getUser(Account account) {
+    public User getUser(String id) {
         Cursor cursor = null;
         User user = null;
         String[] columns = {
                 dbHelper.USER_COLUMN_NAME,
                 dbHelper.USER_COLUMN_PHONE_NUMBER,
                 dbHelper.USER_COLUMN_EMAIL,
-                dbHelper.USER_COLUMN_IMAGE};
+                dbHelper.USER_COLUMN_PHOTO,
+                dbHelper.USER_COLUMN_ID};
         String[] selectionArgs = {
-                account.getEmail()};
-        String selection = dbHelper.USER_COLUMN_EMAIL + " = ?";
+                id};
+        String selection = dbHelper.USER_COLUMN_ID + " = ?";
 
         db = dbHelper.getWritableDatabase();
         cursor = db.query(dbHelper.USER_TABLE, columns, selection, selectionArgs,
@@ -85,7 +92,7 @@ public class StayQuietDBManager {
 
         if (cursor.moveToFirst()){
             user = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2),
-                    "", cursor.getBlob(3));
+                    "", cursor.getBlob(3), cursor.getString(4));
         }
 
         db.close();
@@ -93,26 +100,34 @@ public class StayQuietDBManager {
         return user;
     }
 
-    public boolean existsAccount(Account account){
-        boolean existsAccount = false;
-        Cursor cursor = null;
-        String[] columns = {
-                dbHelper.USER_COLUMN_ID};
+    public boolean updateUser(User user) {
+        int status = 1;
+        ContentValues values = new ContentValues();
+
+        values.put(dbHelper.USER_COLUMN_NAME, user.getName());
+        values.put(dbHelper.USER_COLUMN_PHONE_NUMBER, user.getPhoneNumber());
+        values.put(dbHelper.USER_COLUMN_EMAIL, user.getEmail());
+        values.put(dbHelper.USER_COLUMN_PHOTO, user.getPhoto());
+
+        String selection = dbHelper.USER_COLUMN_ID + " = ?";
         String[] selectionArgs = {
-                account.getEmail()};
-        String selection = dbHelper.USER_COLUMN_EMAIL + " = ?";
+                user.getId()};
 
         db = dbHelper.getWritableDatabase();
-        cursor = db.query(dbHelper.USER_TABLE, columns, selection, selectionArgs,
-                null, null, null);
+        status = db.update(dbHelper.USER_TABLE, values, selection, selectionArgs);
+        db.close();
 
-        if (cursor.moveToFirst()){
-            existsAccount = true;
+        return status == 1;
+    }
+
+    public boolean existsUser(String id) {
+        boolean result = true;
+
+        if(getUser(id) == null) {
+            result = false;
         }
 
-        db.close();
-        cursor.close();
-        return existsAccount;
+        return result;
     }
 
     public void login(String email, String password) {
@@ -174,20 +189,64 @@ public class StayQuietDBManager {
                 });;
     }
 
-    public void  saveProfileIntoCache(FirebaseUser currentUser, ProgressBar progressBar, Intent intent) {
+    public void  saveProfileIntoCache(final ProgressBar progressBar, final Intent intent) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         String name = currentUser.getDisplayName();
         String phoneNumber = currentUser.getPhoneNumber();
         String email = currentUser.getEmail();
-        Uri photoUrl = currentUser.getPhotoUrl();
+        String id = currentUser.getUid();
 
-        User user = new User(name, phoneNumber, email, "", null);
+        final User user = new User(name, phoneNumber, email, "", null, id);
 
-        try {
+        FirebaseStorage.getInstance()
+                .getReference().child("images/" + id + ".jpg")
+                .getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        // Use the bytes to display the image
+                        progressBar.setVisibility(View.GONE);
+                        user.setPhoto(bytes);
+
+                        // Save into SQLite
+                        if(!existsUser(user.getId())) {
+                            Long status = insertUser(user);
+                            if (status != 1) {
+                                Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }else {
+                            if (!updateUser(user)) {
+                                Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        intent.putExtra("id", user.getId());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        activity.startActivity(intent);
+                        activity.finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                        progressBar.setVisibility(View.GONE);
+
+                        Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        /*try {
             new ImageDownloader(activity, progressBar, user, intent)
                     .execute(photoUrl);
         } catch (Exception e) {
             Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
                     Toast.LENGTH_LONG).show();
-        }
+        }*/
     }
 }

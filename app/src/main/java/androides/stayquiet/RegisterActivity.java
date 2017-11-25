@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
                 if (currentUser != null && currentUser.getPhoneNumber() != null) {
-                    dbManager.saveProfileIntoCache(currentUser, progressBar, intentHome);
+                    dbManager.saveProfileIntoCache(progressBar, intentHome);
                 }
             }
         };
@@ -211,7 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            dbManager.saveProfileIntoCache(currentUser, progressBar, intentHome);
+                            dbManager.saveProfileIntoCache(progressBar, intentHome);
                         }
                     }
                 })

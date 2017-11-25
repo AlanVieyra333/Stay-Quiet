@@ -1,9 +1,13 @@
 package androides.stayquiet;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,12 +30,19 @@ import androides.stayquiet.tools.Tools;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private String name, phoneNumber, email;
+    private String name, phoneNumber, email, id;
     private TextView tvNameMine, tvEmailMine, tvPhoneNumber;
     private ImageView ivPhoto;
     private Bitmap photo;
     private Intent intentLogin, intentMaps;
     private FirebaseUser currentUser;
+    private User user;
+    private StayQuietDBManager dbManager;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS = {
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +57,15 @@ public class HomeActivity extends AppCompatActivity {
         tvPhoneNumber = (TextView) findViewById(R.id.tvPhoneNumber);
         ivPhoto = (ImageView)findViewById(R.id.imageProfile);
 
+        dbManager = new StayQuietDBManager(this, null);
+
         getParams();
 
         tvNameMine.setText(name);
         tvPhoneNumber.setText(phoneNumber);
         tvEmailMine.setText(email);
+
+        checkSelfPermission();
     }
 
     @Override
@@ -72,10 +87,9 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_profile:
                 Intent intentProfile = new Intent(getApplicationContext(), ProfileActivity.class);
-                //User user = new User(name, phoneNumber, email, "", Tools.bitmapToBytes(photo));
-                User user = new User(name, phoneNumber, email, "", null);
 
-                intentProfile.putExtra("user", user);
+                intentProfile.putExtra("id", id);
+
                 startActivity(intentProfile);
                 return true;
             case R.id.menu_settings:
@@ -90,7 +104,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getParams(){
-        User user = (User) getIntent().getExtras().getSerializable("user");
+        id = getIntent().getExtras().getString("id");
+        user = dbManager.getUser(id);
 
         name = user.getName();
         phoneNumber = user.getPhoneNumber();
@@ -118,5 +133,23 @@ public class HomeActivity extends AppCompatActivity {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intentLogin);
         finish();
+    }
+
+    private void checkSelfPermission() {
+        // Check permissions
+        for(int i=0; i<PERMISSIONS.length; i++){
+            int permission = ActivityCompat.checkSelfPermission(this, PERMISSIONS[i]);
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                        this,
+                        PERMISSIONS,
+                        REQUEST_EXTERNAL_STORAGE
+                );
+
+                break;
+            }
+        }
     }
 }

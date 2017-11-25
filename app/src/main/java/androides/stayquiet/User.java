@@ -9,8 +9,18 @@ import java.io.Serializable;
  */
 
 public class User implements Account, Serializable {
-    private String name, phoneNumber, email, password;
+    private String name, phoneNumber, email, password, id;
     private byte[] photo;
+
+    public User(String name, String phoneNumber, String email, String password, byte[] photo, String id) {
+        super();
+        setName(name);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setPassword(password);
+        setPhoto(photo);
+        setId(id);
+    }
 
     public User(String name, String phoneNumber, String email, String password, byte[] photo) {
         super();
@@ -100,5 +110,13 @@ public class User implements Account, Serializable {
 
     public byte[] getPhoto() {
         return this.photo;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

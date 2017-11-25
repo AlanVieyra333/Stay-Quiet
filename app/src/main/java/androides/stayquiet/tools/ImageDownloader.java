@@ -64,15 +64,20 @@ public class ImageDownloader extends AsyncTask<Uri, Void, Bitmap> {
 
             // Save into SQLite
             StayQuietDBManager dbManager = new StayQuietDBManager(activity, null);
-            if(dbManager.getUser(user) == null) {
+            if(!dbManager.existsUser(user.getId())) {
                 Long status = dbManager.insertUser(user);
                 if (status != 1) {
                     Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
                             Toast.LENGTH_LONG).show();
                 }
+            }else {
+                if (!dbManager.updateUser(user)) {
+                    Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
+                            Toast.LENGTH_LONG).show();
+                }
             }
 
-            intent.putExtra("user", user);
+            intent.putExtra("id", user.getId());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

@@ -3,6 +3,9 @@ package androides.stayquiet;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,24 +21,31 @@ import androides.stayquiet.tools.Tools;
 import androides.stayquiet.tools.Validator;
 
 public class ProfileActivity extends AppCompatActivity {
-    private String name, phoneNumber, email;
-    private Bitmap photo;
+    private String name, phoneNumber, email, id;
     private EditText etName, etEmail, etPhoneNumber;
     private Button btnSave;
     private Intent intentSecurity;
+    private ImageView ivPhoto;
+    private User user;
+    private Uri photoUri = null;
+    private StayQuietDBManager dbManager;
+    private final int GALLERY_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        ImageView add = (ImageView) findViewById(R.id.imageProfile);
+        ivPhoto = (ImageView) findViewById(R.id.imageProfile);
         etName = (EditText) findViewById(R.id.etName);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
+        etPhoneNumber.setEnabled(false);
         btnSave = (Button)findViewById(R.id.btnSave);
 
         intentSecurity = new Intent(this, SecurityActivity.class);
+
+        dbManager = new StayQuietDBManager(this, null);
 
         getParams();
 
@@ -43,13 +53,12 @@ public class ProfileActivity extends AppCompatActivity {
         etEmail.setText(email);
         etPhoneNumber.setText(phoneNumber);
 
-        //add.setImageBitmap(photo);
-
-        add.setOnClickListener(new View.OnClickListener() {
+        ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Cambiar foto",
-                        Toast.LENGTH_LONG).show();
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
             }
         });
 
@@ -59,23 +68,52 @@ public class ProfileActivity extends AppCompatActivity {
                 getValues();
 
                 if(isValid()){
-                    User user = new User(name, phoneNumber, email, "", Tools.bitmapToBytes(photo));
+                    intentSecurity.putExtra("id", id);
+                    intentSecurity.putExtra("photoUri", Tools.getPathFromURI(ProfileActivity.this, photoUri));
+                    intentSecurity.putExtra("name", name);
+                    intentSecurity.putExtra("email", email);
+                    intentSecurity.putExtra("phoneNumber", phoneNumber);
 
-                    intentSecurity.putExtra("user", user);
                     startActivity(intentSecurity);
                 }
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (reqCode == GALLERY_REQUEST) {
+                try {
+                    photoUri = data.getData();
+                    Bitmap photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                    ivPhoto.setImageBitmap(photo);
+                } catch (Exception e) {
+                    Toast.makeText(this, R.string.MSJ1_6, Toast.LENGTH_LONG).show();
+                }
+            }
+        }else {
+            Toast.makeText(this, R.string.MSJ1_6,Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void getParams(){
-        User user = (User) getIntent().getExtras().getSerializable("user");
+        id = getIntent().getExtras().getString("id");
+        user = dbManager.getUser(id);
 
         name = user.getName();
         phoneNumber = user.getPhoneNumber();
+        phoneNumber = phoneNumber.substring(3, phoneNumber.length());
         email = user.getEmail();
+
         if(user.getPhoto() != null) {
-            //photo = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
+            Bitmap photo = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
+            ivPhoto.setImageBitmap(photo);
+        } else{
+            Toast.makeText(getApplicationContext(), R.string.MSJ1_6,
+                    Toast.LENGTH_LONG).show();
         }
     }
 

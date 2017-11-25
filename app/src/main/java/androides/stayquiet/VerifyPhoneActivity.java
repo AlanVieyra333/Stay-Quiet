@@ -96,7 +96,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            dbManager.saveProfileIntoCache(currentUser, progressBar,intentHome);
+                            dbManager.saveProfileIntoCache(progressBar,intentHome);
                         }
                     }
                 })
