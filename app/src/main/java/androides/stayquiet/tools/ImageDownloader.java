@@ -16,6 +16,7 @@ import java.net.URL;
 import androides.stayquiet.LoginActivity;
 import androides.stayquiet.R;
 import androides.stayquiet.StayQuietDBHelper;
+import androides.stayquiet.StayQuietDBManager;
 import androides.stayquiet.User;
 
 /**
@@ -60,6 +61,16 @@ public class ImageDownloader extends AsyncTask<Uri, Void, Bitmap> {
 
         if (image != null) {
             user.setPhoto(Tools.bitmapToBytes(image));
+
+            // Save into SQLite
+            StayQuietDBManager dbManager = new StayQuietDBManager(activity, null);
+            if(dbManager.getUser(user) == null) {
+                Long status = dbManager.insertUser(user);
+                if (status != 1) {
+                    Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
+                            Toast.LENGTH_LONG).show();
+                }
+            }
 
             intent.putExtra("user", user);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |

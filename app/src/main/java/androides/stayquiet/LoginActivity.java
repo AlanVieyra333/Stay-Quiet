@@ -81,7 +81,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                 if (currentUser != null && currentUser.getPhoneNumber() != null) {
-                    dbManager.saveProfileIntoCache(currentUser, progressBar, intentHome);
+                    User user = dbManager.getUser(new User(currentUser.getEmail()));
+
+                    if(user == null) {
+                        dbManager.saveProfileIntoCache(currentUser, progressBar, intentHome);
+                    } else {
+                        intentHome.putExtra("user", user);
+                        intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        activity.startActivity(intentHome);
+                        activity.finish();
+                    }
                 }
             }
         };

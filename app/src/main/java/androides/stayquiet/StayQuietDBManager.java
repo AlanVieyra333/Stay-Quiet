@@ -59,7 +59,7 @@ public class StayQuietDBManager {
         values.put(dbHelper.USER_COLUMN_NAME, user.getName());
         values.put(dbHelper.USER_COLUMN_PHONE_NUMBER, user.getPhoneNumber());
         values.put(dbHelper.USER_COLUMN_EMAIL, user.getEmail());
-        values.put(dbHelper.USER_COLUMN_PASSWORD, user.getPassword());
+        values.put(dbHelper.USER_COLUMN_IMAGE, user.getPhoto());
 
         status = db.insert(dbHelper.USER_TABLE, null, values);
         db.close();
@@ -76,10 +76,8 @@ public class StayQuietDBManager {
                 dbHelper.USER_COLUMN_EMAIL,
                 dbHelper.USER_COLUMN_IMAGE};
         String[] selectionArgs = {
-                account.getEmail(),
-                account.getPassword()};
-        String selection = dbHelper.USER_COLUMN_EMAIL + " = ? AND " +
-                dbHelper.USER_COLUMN_PASSWORD + " = ?";
+                account.getEmail()};
+        String selection = dbHelper.USER_COLUMN_EMAIL + " = ?";
 
         db = dbHelper.getWritableDatabase();
         cursor = db.query(dbHelper.USER_TABLE, columns, selection, selectionArgs,

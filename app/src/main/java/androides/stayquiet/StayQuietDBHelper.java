@@ -24,12 +24,11 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
     public static final String PHOTO_DEFAULT = "images/add_camera.png";
 
     private final String DROP_USER_TABLE = "DROP TABLE IF EXIST " + USER_TABLE;
-    private final String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE +" (" +
+    private final String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE + " (" +
             USER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             USER_COLUMN_NAME + " TEXT NOT NULL," +
             USER_COLUMN_PHONE_NUMBER + " TEXT NOT NULL," +
             USER_COLUMN_EMAIL + " TEXT NOT NULL," +
-            USER_COLUMN_PASSWORD + " TEXT NOT NULL," +
             USER_COLUMN_IMAGE + " BLOB" +
             ")";
 

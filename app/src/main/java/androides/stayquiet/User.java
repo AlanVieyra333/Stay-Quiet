@@ -21,12 +21,12 @@ public class User implements Account, Serializable {
         setPhoto(photo);
     }
 
-    public User(String email, String password) {
+    public User(String email) {
         super();
         setName("");
         setPhoneNumber("");
         setEmail(email);
-        setPassword(password);
+        setPassword("");
     }
 
     public User() {
@@ -61,7 +61,6 @@ public class User implements Account, Serializable {
         return this.email;
     }
 
-    @Override
     public void setPassword(String password) {
         if(password != null)
             this.password = password;
@@ -69,7 +68,6 @@ public class User implements Account, Serializable {
             this.password = "";
     }
 
-    @Override
     public String getPassword() {
         return this.password;
     }

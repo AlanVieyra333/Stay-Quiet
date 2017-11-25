@@ -7,6 +7,4 @@ package androides.stayquiet;
 public interface Account {
     void setEmail(String email);
     String getEmail();
-    void setPassword(String password);
-    String getPassword();
 }
