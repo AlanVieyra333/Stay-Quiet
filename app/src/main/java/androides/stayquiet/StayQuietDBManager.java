@@ -235,7 +235,6 @@ public class StayQuietDBManager {
                     public void onFailure(@NonNull Exception exception) {
                         // Handle any errors
                         progressBar.setVisibility(View.GONE);
-
                         Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_6,
                                 Toast.LENGTH_LONG).show();
                     }

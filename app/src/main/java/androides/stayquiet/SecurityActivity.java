@@ -98,7 +98,7 @@ public class SecurityActivity extends AppCompatActivity {
                                         } else {
                                             // If sign in fails, display a message to the user.
                                             progressBar.setVisibility(View.GONE);
-                                            Toast.makeText(SecurityActivity.this, "Authentication failed.",
+                                            Toast.makeText(SecurityActivity.this, R.string.MSJ1_9,
                                                     Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -147,38 +147,56 @@ public class SecurityActivity extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // Get a URL to the uploaded content
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get a URL to the uploaded content
+                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                    if(downloadUrl != null) {
-                        // Update profile
-                        UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(name)
-                                .setPhotoUri(downloadUrl)
-                                .build();
+                            if(downloadUrl != null) {
+                                // Update profile
+                                UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(name)
+                                        .setPhotoUri(downloadUrl)
+                                        .build();
 
-                        mAuth.getCurrentUser().updateProfile(profile)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        mAuth.getCurrentUser().updateEmail(email)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        // Save into SQLite
-                                                        dbManager.saveProfileIntoCache( progressBar, intentHome);
-                                                    }
-                                                });;
-                                    }
-                                });
+                                mAuth.getCurrentUser().updateProfile(profile)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                mAuth.getCurrentUser().updateEmail(email)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                // Save into SQLite
+                                                                dbManager.saveProfileIntoCache( progressBar, intentHome);
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception exception) {
+                                                                // Handle unsuccessful uploads
+                                                                progressBar.setVisibility(View.GONE);
+                                                                Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception exception) {
+                                                // Handle unsuccessful uploads
+                                                progressBar.setVisibility(View.GONE);
+                                                Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        });
 
-                    }else {
-                        Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
+                            }else {
+                                Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
             });
         } catch (Exception e){
             Toast.makeText(SecurityActivity.this, R.string.MSJ1_6,
