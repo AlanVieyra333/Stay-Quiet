@@ -3,10 +3,11 @@
 %--------Se importan las librerías que usaremos
 \usepackage{cdtBook}
 \usepackage{usecases}
+%\usepackage{cdtAnalisis}
 
 %-------- Datos del documento
 \title{SOFTWARE ENGINEERING FOR MOBILE DEVICES}
-\subtitle{Stay Quiet}
+\subtitle{Stay Quiet - Avance de proyecto}
 \author{Androides}
 \organization{Escuela Superior de Cómputo, IPN}
 
@@ -17,9 +18,18 @@
 \tableofcontents
 \mainmatter
 %%=========================================================
+\chapter{Plan Ejecutivo}
+\cfinput{Plan/PlanEjecutivo}
+\newpage
+%%=========================================================
 \chapter{Modelo de negocios}
 \cfinput{brReglas}
 \newpage
+%%=========================================================
+\chapter{Arquitectura}
+\cfinput{Arquitectura/Arquitectura}
+\newpage
+
 %%=========================================================
 \chapter{Modelo de comportamiento}
 
@@ -39,9 +49,12 @@
 	%\cfinput{cu/CU19}
 	\cfinput{cu/CU20}
 	\cfinput{cu/CU21}	
-
+	
+	\cfinput{messages/msg}
 \newpage
+%%=========================================================
 \chapter{Diseño de interfaz de usuario}
+
 	\cfinput{pantallas/IU1.1}
 	\cfinput{pantallas/IU1.2}
 	\cfinput{pantallas/IU1.3}	
@@ -50,6 +63,11 @@
 	\cfinput{pantallas/IU1.6}
 	\cfinput{pantallas/IU1.8}
 	\cfinput{pantallas/IU1.9}
-\newpage	
-\cfinput{messages/msg}
+
+	\cfinput{pantallas/Mapa}
+		
+\newpage
+%%=========================================================	
+
+%%=========================================================
 \end{document}
