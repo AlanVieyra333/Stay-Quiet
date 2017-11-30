@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -17,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import androides.stayquiet.R;
 import androides.stayquiet.StayQuietDBHelper;
 import androides.stayquiet.User;
 
@@ -49,5 +52,21 @@ public class Tools {
             cursor.close();
         }
         return result;
+    }
+
+    public static void showMessage(AppCompatActivity activity, int message) {
+        Tools.hideProgressbar(activity);
+        Toast.makeText(activity.getApplicationContext(), message,
+                Toast.LENGTH_LONG).show();
+    }
+
+    public static void showProgressbar(AppCompatActivity activity) {
+        if (activity.findViewById(R.id.progressBar) != null)
+            activity.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+    }
+
+    public static void hideProgressbar(AppCompatActivity activity) {
+        if (activity.findViewById(R.id.progressBar) != null)
+            activity.findViewById(R.id.progressBar).setVisibility(View.GONE);
     }
 }

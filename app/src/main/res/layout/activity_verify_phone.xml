@@ -14,7 +14,7 @@
         tools:layout_editor_absoluteX="8dp">
 
         <ProgressBar
-            android:id="@+id/pbVerify"
+            android:id="@+id/progressBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"

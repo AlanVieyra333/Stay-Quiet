@@ -31,7 +31,8 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".RegisterActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:parentActivityName=".LoginActivity"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,17 +48,21 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:launchMode="singleTask"
             android:parentActivityName=".HomeActivity" />
-        <activity android:name=".VerifyPhoneActivity" />
+        <activity android:name=".VerifyPhoneActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName=".RegisterActivity"/>
         <activity
             android:name=".SecurityActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".ProfileActivity" />
+        <activity android:name=".EditProtectedActivity"></activity>
     </application>
 
 </manifest>

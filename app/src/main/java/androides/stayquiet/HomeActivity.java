@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private User user;
     private StayQuietDBManager dbManager;
+    private FirebaseManager firebaseManager;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS = {
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         tvPhoneNumber = (TextView) findViewById(R.id.tvPhoneNumber);
         ivPhoto = (ImageView)findViewById(R.id.imageProfile);
 
-        dbManager = new StayQuietDBManager(this, null);
+        dbManager = new StayQuietDBManager(this);
 
         getParams();
 
@@ -66,6 +67,8 @@ public class HomeActivity extends AppCompatActivity {
         tvEmailMine.setText(email);
 
         checkSelfPermission();
+
+        firebaseManager = new FirebaseManager(this);
     }
 
     @Override
@@ -96,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
                 // Change it.
                 return true;
             case R.id.menu_close_session:
-                logout();
+                firebaseManager.logout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -114,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
             photo = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
             ivPhoto.setImageBitmap(photo);
         } else{
-            logout();
+            firebaseManager.logout();
         }
     }
 
@@ -125,14 +128,6 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intentLogin);
             finish();
         }
-    }
-
-    private void logout() {
-        FirebaseAuth.getInstance().signOut();
-        intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intentLogin);
-        finish();
     }
 
     private void checkSelfPermission() {
