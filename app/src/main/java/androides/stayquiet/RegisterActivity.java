@@ -67,8 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                     dbManager.signUp(user, mCallbacks);
                 }
 
-                etPassword.setText("");
-                etPasswordConf.setText("");
+
             }
         });
 
@@ -103,19 +102,13 @@ public class RegisterActivity extends AppCompatActivity {
     private void getValues() {
         name = etFirstName.getText().toString();
         phoneNumber = etPhoneNumber.getText().toString();
-        phoneNumberConf = etPhoneNumberConf.getText().toString();
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
-        passwordConf = etPasswordConf.getText().toString();
     }
 
     private  boolean validateForm() {
-        if (name.compareTo("") == 0 || phoneNumber.compareTo("") == 0 || phoneNumberConf.compareTo("") == 0
-                || email.compareTo("") == 0 || password.compareTo("") == 0 || passwordConf.compareTo("") == 0) {
-            Toast.makeText(getApplicationContext(), "ERROR. Campos incompletos.",
-                    Toast.LENGTH_LONG).show();
-            return false;
-        } else if (!(validName(name))) {
+
+        if (!(validName(name))) {
             Toast.makeText(getApplicationContext(), "ERROR. Solo se permiten letras",
                     Toast.LENGTH_LONG).show();
             return false;
@@ -163,9 +156,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean validPassword(String password){
-        String regex ="(/^(?=.*[a-z]).+$/)(/^(?=.*[A-Z]).+$/)(/^(?=.*[0-9_\\W]).+$/)";
-       // boolean valid = password.matches(regex);
-        return true;
+        String regex ="^.*(?!.*\\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\=\\¡\\£\\_\\+\\`\\~\\.\\,\\<\\>\\/\\?\\;\\:\\'\\\"\\\\\\|\\[\\]\\{\\}]).*$";
+       boolean valid = password.matches(regex);
+        return valid;
     }
 
     public boolean validEmail(String email){

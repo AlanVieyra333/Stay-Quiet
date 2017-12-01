@@ -11,7 +11,8 @@
         android:id="@+id/pbRegister"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView"
@@ -25,7 +26,9 @@
         android:textColor="@color/colorAccent"
         android:textColorLink="@color/colorAccent"
         android:textSize="36sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/etRegister_FirstName"
@@ -38,7 +41,9 @@
         android:hint="Nombre"
         android:inputType="textPersonName"
         android:textAlignment="textStart"
-        android:layout_below="@+id/textView"/>
+        android:layout_marginTop="43dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/etRegister_email"
@@ -50,31 +55,23 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:layout_below="@+id/etRegister_FirstName"/>
+        android:layout_below="@+id/etRegister_FirstName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp" />
 
     <EditText
         android:id="@+id/etRegister_phoneNumber"
         style="@style/element"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etRegister_email"
         android:layout_marginLeft="80dp"
         android:layout_weight="0.05"
         android:ems="10"
         android:hint="Numero celular"
-        android:inputType="phone" />
-
-    <EditText
-        android:id="@+id/etRegister_phoneNumberConf"
-        style="@style/element"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_weight="0.05"
-        android:ems="10"
-        android:hint="Repite Numero"
         android:inputType="phone"
-        android:layout_below="@+id/etRegister_phoneNumber"/>
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/etRegister_email"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/etRegister_password"
@@ -85,20 +82,11 @@
         android:layout_weight="0.05"
         android:ems="10"
         android:hint="contraseña"
-        android:inputType="textPassword"
-        android:layout_below="@+id/etRegister_phoneNumberConf"/>
+        android:inputType=""
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/etRegister_phoneNumber"
+        android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:id="@+id/etRegister_passwordConf"
-        style="@style/element"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_weight="0.05"
-        android:ems="10"
-        android:hint="repetir Contraseña"
-        android:inputType="textPassword"
-        android:layout_below="@+id/etRegister_password"/>
 
     <Button
         android:id="@+id/btnRegister_save"
@@ -106,9 +94,10 @@
         android:layout_width="197dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="20dp"
         android:background="@android:color/background_light"
         android:text="Registrar"
         android:textColor="@color/colorAccent"
-        android:layout_below="@+id/etRegister_passwordConf"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/etRegister_phoneNumber"
+        android:layout_marginBottom="70dp" />
 </RelativeLayout>
