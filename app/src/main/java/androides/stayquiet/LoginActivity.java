@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -25,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import androides.stayquiet.tools.Tools;
+import androides.stayquiet.tools.Validator;
 
 public class LoginActivity extends AppCompatActivity {
     private AppCompatActivity activity;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private Intent intentHome;
     private Intent intentRegister;
     private FirebaseAuth mAuth;
+    private FirebaseManager firebaseManager;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressBar progressBar;
 
@@ -52,8 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button)findViewById(R.id.btnLogin_login);
         btnRegister =(Button)findViewById(R.id.btnLogin_register);
         progressBar = (ProgressBar) findViewById(R.id.pbLogin);
-        progressBar.setVisibility(View.GONE);
-        progressBar.setIndeterminate(false);
+        progressBar.setVisibility(ProgressBar.GONE);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 getValues();
 
                 if(isValid()){
-                    dbManager.login(email, password);
+                    firebaseManager.login(email, password);
                 }
             }
         });
@@ -70,20 +72,30 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(intentRegister);
-                finish();
             }
         });
 
+        dbManager = new StayQuietDBManager(this);
         mAuth = FirebaseAuth.getInstance();
-        dbManager = new StayQuietDBManager(this, mAuth);
+        firebaseManager = new FirebaseManager(this);
+        firebaseManager.setCallback(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Tools.hideProgressbar(LoginActivity.this);
+                if(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() == null) {
+                    Tools.showMessage(LoginActivity.this, R.string.MSJ1_6);
+                    firebaseManager.logout();
+                }
+            }
+        });
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
                 if (currentUser != null && currentUser.getPhoneNumber() != null) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    dbManager.saveProfileIntoCache(progressBar, intentHome);
+                    dbManager.saveProfileIntoCache(intentHome);
                 }
             }
         };
@@ -110,12 +122,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isValid() {
         if (email.isEmpty() || password.isEmpty()) {    // RN1,1
-            Toast.makeText(getApplicationContext(), R.string.MSJ1_1,
-                    Toast.LENGTH_LONG).show();
+            Tools.showMessage(this, R.string.MSJ1_1);
             return false;
-        }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {    // RN1,2
-            Toast.makeText(getApplicationContext(), R.string.MSJ1_10,
-                    Toast.LENGTH_LONG).show();
+        }else if(!Validator.emailIsValid(email)) {    // RN1,2
+            Tools.showMessage(this, R.string.MSJ1_10);
             return false;
         }
 

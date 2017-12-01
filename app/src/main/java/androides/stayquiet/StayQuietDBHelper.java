@@ -10,17 +10,22 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class StayQuietDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "StayQuiet";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     public static final String USER_TABLE = "user";
     public static final String USER_COLUMN_ID = "id";
     public static final String USER_COLUMN_NAME = "name";
-    public static final String USER_COLUMN_PHONE_NUMBER = "phoneNumber";
     public static final String USER_COLUMN_EMAIL = "email";
+    public static final String USER_COLUMN_PHONE_NUMBER = "phoneNumber";
     public static final String USER_COLUMN_PHOTO = "photo";
 
-    public static final String STORAGE_URL = "https://storage.googleapis.com/stay-quiet.appspot.com/";
-    public static final String PHOTO_DEFAULT = "images/default.png";
+    public static final String PROTECTION_TABLE = "protection";
+    public static final String PROTECTION_COLUMN_ID = "id";
+    public static final String PROTECTION_COLUMN_PROTECTOR = "protector";
+    public static final String PROTECTION_COLUMN_PROTECTED = "protected";
+
+    public static final String URL_IMAGES = "images/";
+    public static final String PHOTO_DEFAULT = "default.png";
 
     private final String DROP_USER_TABLE = "DROP TABLE IF EXIST " + USER_TABLE;
     private final String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE + " (" +
@@ -31,6 +36,12 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
             USER_COLUMN_PHOTO + " BLOB" +
             ")";
 
+    private final String CREATE_PROTECTION_TABLE = "CREATE TABLE " + PROTECTION_TABLE + " (" +
+            PROTECTION_COLUMN_ID + " TEXT NOT NULL PRIMARY KEY," +
+            PROTECTION_COLUMN_PROTECTOR + " TEXT NOT NULL," +
+            PROTECTION_COLUMN_PROTECTED + " TEXT NOT NULL" +
+            ")";
+
     public StayQuietDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -38,6 +49,7 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_USER_TABLE);
+        sqLiteDatabase.execSQL(CREATE_PROTECTION_TABLE);
     }
 
     @Override

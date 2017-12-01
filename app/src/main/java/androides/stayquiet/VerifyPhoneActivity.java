@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,8 +29,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     private Button btnVerify;
     private Intent intentHome;
     private String code, verificationId;
-    private FirebaseAuth mAuth;
-    private AppCompatActivity activity;
+    private FirebaseManager firebaseManager;
     private StayQuietDBManager dbManager;
     private ProgressBar progressBar;
 
@@ -40,13 +40,11 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
         intentHome = new Intent(this, HomeActivity.class);
 
-        mAuth = FirebaseAuth.getInstance();
-        activity = this;
-        dbManager = new StayQuietDBManager(activity, mAuth);
+        dbManager = new StayQuietDBManager(this);
 
         etCode = (EditText) findViewById(R.id.etCode);
         btnVerify = (Button) findViewById(R.id.btnVerify);
-        progressBar = (ProgressBar) findViewById(R.id.pbVerify);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         progressBar.setIndeterminate(false);
 
@@ -59,8 +57,16 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
                 if(isValid()){
                     final PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-                    associate(credential);
+                    firebaseManager.associatePhoneNumber(credential);
                 }
+            }
+        });
+
+        firebaseManager = new FirebaseManager(this);
+        firebaseManager.setCallback(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                dbManager.saveProfileIntoCache(intentHome);
             }
         });
     }
@@ -85,27 +91,5 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         String regex = "[0-9][0-9][0-9][0-9][0-9][0-9]" ;
 
         return  code.matches(regex);
-    }
-
-    private void associate(PhoneAuthCredential credential) {
-        // Update data profile.
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        currentUser.updatePhoneNumber(credential)
-                .addOnCompleteListener(activity, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            dbManager.saveProfileIntoCache(progressBar,intentHome);
-                        }
-                    }
-                })
-                .addOnFailureListener(activity, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(activity.getApplicationContext(), R.string.MSJ1_31,
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 }

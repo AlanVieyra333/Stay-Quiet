@@ -9,8 +9,25 @@ import java.io.Serializable;
  */
 
 public class User implements Account, Serializable {
-    private String name, phoneNumber, email, password, id;
+    private String name;
+    private String phoneNumber;
+    private String email;
+    private String password;
+    private String id;
+
+    private String photoUrl;
     private byte[] photo;
+
+    public User(String name, String phoneNumber, String email, String password, byte[] photo, String id, String photoUrl) {
+        super();
+        setName(name);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setPassword(password);
+        setPhoto(photo);
+        setId(id);
+        setPhotoUrl(photoUrl);
+    }
 
     public User(String name, String phoneNumber, String email, String password, byte[] photo, String id) {
         super();
@@ -20,31 +37,18 @@ public class User implements Account, Serializable {
         setPassword(password);
         setPhoto(photo);
         setId(id);
+        setPhotoUrl("");
     }
 
-    public User(String name, String phoneNumber, String email, String password, byte[] photo) {
+    public User(String name, String phoneNumber, String email, String password) {
         super();
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setPassword(password);
-        setPhoto(photo);
-    }
-
-    public User(String email) {
-        super();
-        setName("");
-        setPhoneNumber("");
-        setEmail(email);
-        setPassword("");
-    }
-
-    public User() {
-        super();
-        setName("");
-        setPhoneNumber("");
-        setEmail("");
-        setPassword("");
+        setPhoto(null);
+        setId("");
+        setPhotoUrl("");
     }
 
     @Override
@@ -118,5 +122,13 @@ public class User implements Account, Serializable {
 
     public String getId() {
         return this.id;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }
