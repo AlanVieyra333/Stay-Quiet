@@ -44,7 +44,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
         etCode = (EditText) findViewById(R.id.etCode);
         btnVerify = (Button) findViewById(R.id.btnVerify);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.pbVerify);
         progressBar.setVisibility(View.GONE);
         progressBar.setIndeterminate(false);
 

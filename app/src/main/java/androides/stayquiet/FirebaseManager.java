@@ -169,7 +169,7 @@ public class FirebaseManager {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        setCurrentUser(getmAuth().getCurrentUser());
+                        setCurrentUser(authResult.getUser());
                         updateProfile(getUser());
                     }
                 })

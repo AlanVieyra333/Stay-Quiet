@@ -43,7 +43,6 @@
             android:hint="@string/text_code"
             android:imeOptions="actionDone"
             android:inputType="phone"
-            android:textColor="@android:color/background_light"
             android:drawableRight="@android:drawable/ic_menu_close_clear_cancel"/>
 
     </android.support.design.widget.TextInputLayout>
