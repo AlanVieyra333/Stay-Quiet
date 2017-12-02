@@ -56,6 +56,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                 getValues();
 
                 if(isValid()){
+                    btnVerify.setEnabled(false);
                     final PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
                     firebaseManager.associatePhoneNumber(credential);
                 }
