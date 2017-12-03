@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,8 +31,9 @@ import androides.stayquiet.tools.Validator;
 
 public class LoginActivity extends AppCompatActivity {
     private AppCompatActivity activity;
-    private Button btnLogin, btnRegister;
+    private Button btnLogin, btnRegister, btnForgot;
     private EditText etEmail, etPassword;
+    private TextInputLayout tilEmail, tilPassword;
     private String email, password;
     private StayQuietDBManager dbManager;
     private Intent intentHome;
@@ -39,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseManager firebaseManager;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +51,13 @@ public class LoginActivity extends AppCompatActivity {
         intentHome = new Intent(this, HomeActivity.class);
         intentRegister = new Intent(this, RegisterActivity.class);
 
-        etEmail = (EditText) findViewById(R.id.etLogin_email);
-        etPassword = (EditText) findViewById(R.id.etLogin_password);
-        btnLogin = (Button)findViewById(R.id.btnLogin_login);
-        btnRegister =(Button)findViewById(R.id.btnLogin_register);
-        progressBar = (ProgressBar) findViewById(R.id.pbLogin);
-        progressBar.setVisibility(ProgressBar.GONE);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        btnLogin = (Button)findViewById(R.id.btnLogin);
+        btnRegister =(Button)findViewById(R.id.btnRegister);
+        btnForgot =(Button)findViewById(R.id.btnForgot);
+        tilEmail = findViewById(R.id.lyEmail);
+        tilPassword = findViewById(R.id.lyPassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +101,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
+
+        Tools.hideProgressbar(this);
     }
 
     @Override
@@ -121,14 +125,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isValid() {
-        if (email.isEmpty() || password.isEmpty()) {    // RN1,1
-            Tools.showMessage(this, R.string.MSJ1_1);
-            return false;
-        }else if(!Validator.emailIsValid(email)) {    // RN1,2
-            Tools.showMessage(this, R.string.MSJ1_10);
-            return false;
+        boolean isValid = true;
+
+        if (email.isEmpty()) {
+            Tools.showTextError(this, tilEmail, R.string.MSJ1_1);
+            isValid = false;
+        } else if(!Validator.emailIsValid(email)) {    // RN1,2;
+            Tools.showTextError(this, tilEmail, R.string.MSJ1_10);
+            isValid = false;
+        } else {
+            Tools.hideTextError(this, tilEmail);
         }
 
-        return true;
+        if (password.isEmpty()) {    // RN1,1
+            Tools.showTextError(this, tilPassword, R.string.MSJ1_1);
+            isValid = false;
+        } else {
+            Tools.hideTextError(this, tilPassword);
+        }
+
+        return isValid;
     }
 }

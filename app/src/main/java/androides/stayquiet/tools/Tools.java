@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -62,11 +63,19 @@ public class Tools {
 
     public static void showProgressbar(AppCompatActivity activity) {
         if (activity.findViewById(R.id.progressBar) != null)
-            activity.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.progressBar).setVisibility(ProgressBar.VISIBLE);
     }
 
     public static void hideProgressbar(AppCompatActivity activity) {
         if (activity.findViewById(R.id.progressBar) != null)
-            activity.findViewById(R.id.progressBar).setVisibility(View.GONE);
+            activity.findViewById(R.id.progressBar).setVisibility(ProgressBar.GONE);
+    }
+
+    public static void showTextError(AppCompatActivity activity, TextInputLayout element, int message) {
+        element.setError(activity.getResources().getString(message));
+    }
+
+    public static void hideTextError(AppCompatActivity activity, TextInputLayout element) {
+        element.setErrorEnabled(false);
     }
 }

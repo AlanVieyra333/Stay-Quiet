@@ -52,8 +52,11 @@
     <style name="editText">
         <item name="android:background">@drawable/layout_border</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
-        <item name="android:drawableRight">@android:drawable/ic_menu_close_clear_cancel</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="button">
+        <item name="android:background">@drawable/layout_border_blue</item>
     </style>
 </resources>

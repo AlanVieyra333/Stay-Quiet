@@ -6,7 +6,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context="androides.stayquiet.ProfileActivity">
-    <RelativeLayout
+    
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -16,29 +17,44 @@
             android:layout_marginTop="20dp"
             android:text="@string/text_activity_profile_1"
             android:textAlignment="center"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="parent"/>
 
         <LinearLayout
             style="@style/divider"
             android:layout_marginTop="8dp"
-            android:layout_below="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             android:id="@+id/divider"/>
 
         <ImageView
             android:id="@+id/imageProfile"
             android:layout_width="121dp"
             android:layout_height="121dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_below="@id/divider"
-            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
             android:clickable="true"
-            android:src="@drawable/boy" />
+            android:src="@drawable/boy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lyNickName"
+            style="@style/element"
+            app:layout_constraintTop_toBottomOf="@+id/imageProfile">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etNickName"
+                style="@style/editText"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:hint="@string/text_nickname"/>
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/lyName"
             style="@style/element"
-            android:layout_below="@+id/imageProfile">
+            app:layout_constraintTop_toBottomOf="@+id/lyNickName">
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/etName"
                 style="@style/editText"
@@ -50,7 +66,7 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/lyEmail"
             style="@style/element"
-            android:layout_below="@+id/lyName">
+            app:layout_constraintTop_toBottomOf="@+id/lyName">
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/etEmail"
                 style="@style/editText"
@@ -62,7 +78,7 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/lyPhoneNumber"
             style="@style/element"
-            android:layout_below="@+id/lyEmail">
+            app:layout_constraintTop_toBottomOf="@+id/lyEmail">
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/etPhoneNumber"
                 style="@style/editText"
@@ -74,8 +90,8 @@
         <Button
             android:id="@+id/btnSave"
             style="@style/element"
-            android:layout_below="@+id/lyPhoneNumber"
             android:background="@drawable/layout_border_blue"
+            app:layout_constraintTop_toBottomOf="@+id/lyPhoneNumber"
             android:text="@string/btn_save" />
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 </ScrollView>
