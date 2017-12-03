@@ -9,7 +9,7 @@
     <string name="text_signup">REGISTRAR</string>
     <string name="text_forgot">¿Olvidaste la contraseña?</string>
     <string name="text_remember">Recordar contraseña</string>
-    <string name="text_nickname">Nombre de usuario</string>
+    <string name="text_username">Nombre de usuario</string>
     <string name="text_name">Nombre</string>
     <string name="text_email">Correo Electrónico</string>
     <string name="text_phoneNumber">Número de Celular</string>

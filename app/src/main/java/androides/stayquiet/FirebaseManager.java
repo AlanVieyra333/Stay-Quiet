@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,6 +44,8 @@ public class FirebaseManager {
     private User user;
     private OnSuccessListener<Void> callback;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     public FirebaseManager(AppCompatActivity activity) {
         setActivity(activity);
@@ -50,6 +54,8 @@ public class FirebaseManager {
         setCurrentUser(getmAuth().getCurrentUser());
         setUser(null);
         setCallback(null);
+        setDatabase(FirebaseDatabase.getInstance());
+        setDatabaseReference(getDatabase().getReference());
         setmCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
@@ -129,6 +135,23 @@ public class FirebaseManager {
     public void setmCallbacks(PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks) {
         this.mCallbacks = mCallbacks;
     }
+
+    public FirebaseDatabase getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(FirebaseDatabase database) {
+        this.database = database;
+    }
+
+    public DatabaseReference getDatabaseReference() {
+        return databaseReference;
+    }
+
+    public void setDatabaseReference(DatabaseReference databaseReference) {
+        this.databaseReference = databaseReference;
+    }
+
     /*  -----------------------------------------------------------------------------------   */
     public void login(String email, String password) {
         Tools.showProgressbar(getActivity());
@@ -323,5 +346,9 @@ public class FirebaseManager {
                         Tools.showMessage(getActivity(), R.string.MSJ1_31);
                     }
                 });
+    }
+
+    public void writeData() {
+
     }
 }

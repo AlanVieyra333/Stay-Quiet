@@ -5,9 +5,14 @@ package androides.stayquiet.tools;
  */
 
 public class Validator {
+    private static String regexpUsername = "^[a-zA-Z]+[0-9]*[a-zA-Z]*";
     private static String regexpName = "^[a-zA-Z\\s]+";
     private static String regexpPhoneNumber = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]";
     private static String regexpPassword = "(/^(?=.*[a-z]).+$/)(/^(?=.*[A-Z]).+$/)(/^(?=.*[0-9_\\W]).+$/)";
+
+    public static boolean usernameIsValid(String input) {
+        return input.matches(regexpUsername);
+    }
 
     public static boolean nameIsValid(String input) {
         return input.matches(regexpName);
