@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="androides.stayquiet.SecurityActivity">
+    tools:context=".SecurityActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <ProgressBar
-            android:id="@+id/pbSecurity"
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 
         <TextView
             android:id="@+id/tvTitle"
@@ -20,56 +28,47 @@
             android:text="@string/text_activity_security_1"
             android:textAlignment="center"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="15dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
             android:id="@+id/ivSecurity"
             android:layout_width="129dp"
             android:layout_height="87dp"
-            android:layout_below="@+id/tvTitle"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@mipmap/ic_shield"
-            tools:layout_editor_absoluteY="71dp" />
+            app:srcCompat="@mipmap/ic_shield" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/lyPassword"
-        android:background="@drawable/layout_border"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/element"
-        android:layout_below="@+id/ivSecurity"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:textColor="@android:color/background_light"
-        android:textColorHint="@android:color/darker_gray"
-        app:passwordToggleContentDescription="@string/text_password"
-        app:passwordToggleEnabled = "true"
-        app:passwordToggleTint="@android:color/darker_gray">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lyPassword"
+            style="@style/element"
+            android:textColorHint="@android:color/darker_gray"
+            app:passwordToggleEnabled = "true"
+            app:passwordToggleTint="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/ivSecurity">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/text_password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:textColor="@android:color/background_light"/>
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etPassword"
+                style="@style/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/ic_lock_black"
+                android:drawablePadding="10dp"/>
 
-    </android.support.design.widget.TextInputLayout>
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnContinue"
             style="@style/element"
-            android:layout_height="50dp"
-            android:layout_marginTop="32dp"
             android:background="@drawable/layout_border_blue"
             android:text="@string/btn_continue"
-            app:layout_constraintTop_toBottomOf="@+id/lyCode"
-            tools:layout_editor_absoluteX="15dp"
-            android:layout_below="@+id/lyPassword"/>
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@+id/lyPassword"/>
 
-</RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

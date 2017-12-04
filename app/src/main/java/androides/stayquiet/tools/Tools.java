@@ -42,20 +42,30 @@ public class Tools {
     }
 
     public static String getPathFromURI(AppCompatActivity activity, Uri contentURI) {
-        String result;
-        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) { // Source is Dropbox or other similar local file path
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
+        String result = null;
+
+        if (contentURI != null) {
+            Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+            if (cursor == null) { // Source is Dropbox or other similar local file path
+                result = contentURI.getPath();
+            } else {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                result = cursor.getString(idx);
+                cursor.close();
+            }
         }
+
         return result;
     }
 
     public static void showMessage(AppCompatActivity activity, int message) {
+        Tools.hideProgressbar(activity);
+        Toast.makeText(activity.getApplicationContext(), message,
+                Toast.LENGTH_LONG).show();
+    }
+
+    public static void showMessage(AppCompatActivity activity, String message) {
         Tools.hideProgressbar(activity);
         Toast.makeText(activity.getApplicationContext(), message,
                 Toast.LENGTH_LONG).show();

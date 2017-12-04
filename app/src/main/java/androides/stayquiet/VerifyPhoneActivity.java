@@ -22,13 +22,14 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import androides.stayquiet.tools.Tools;
+import androides.stayquiet.tools.Validator;
 
 public class VerifyPhoneActivity extends AppCompatActivity {
 
     private EditText etCode;
     private Button btnVerify;
     private Intent intentHome;
-    private String code, verificationId;
+    private String code, verificationId, phoneNumber;
     private FirebaseManager firebaseManager;
     private StayQuietDBManager dbManager;
     private ProgressBar progressBar;
@@ -53,12 +54,12 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnVerify.setEnabled(false);
                 getValues();
 
                 if(isValid()){
-                    btnVerify.setEnabled(false);
                     final PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-                    firebaseManager.associatePhoneNumber(credential);
+                    firebaseManager.associatePhoneNumber(credential, phoneNumber);
                 }
             }
         });
@@ -67,6 +68,12 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         firebaseManager.setCallback(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                firebaseManager.setCallback(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        btnVerify.setEnabled(true);
+                    }
+                });
                 dbManager.saveProfileIntoCache(intentHome);
             }
         });
@@ -74,6 +81,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
     private void getParams(){
         verificationId = getIntent().getExtras().getString("verificationId");
+        phoneNumber = getIntent().getExtras().getString("phoneNumber");
     }
 
     private void getValues() {
@@ -81,16 +89,12 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     }
 
     private boolean isValid() {
-        if(validateCode(code)) {
-            return true;
+        boolean isValid = true;
+
+        if(!Validator.codeIsValid(code)) {
+            isValid = false;
         }
 
-        return false;
-    }
-
-    private boolean validateCode(String code){
-        String regex = "[0-9][0-9][0-9][0-9][0-9][0-9]" ;
-
-        return  code.matches(regex);
+        return isValid;
     }
 }

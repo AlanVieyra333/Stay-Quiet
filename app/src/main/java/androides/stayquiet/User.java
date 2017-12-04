@@ -8,52 +8,41 @@ import java.io.Serializable;
  * Created by developer on 15/10/17.
  */
 
-public class User implements Account, Serializable {
+public class User implements Serializable {
+    private String id;
+    private String username;
     private String name;
     private String phoneNumber;
     private String email;
     private String password;
-    private String id;
-
     private String photoUrl;
     private byte[] photo;
 
-    public User(String name, String phoneNumber, String email, String password, byte[] photo, String id, String photoUrl) {
+    public User() {
+        this(null, null, null, null, null);
+    }
+
+    public User(String username, String name, String phoneNumber, String email, String password) {
+        this(null, username, name, phoneNumber, email, password, null, null);
+    }
+
+    public User(String id, String username, String name, String phoneNumber, String email, String password, String photoUrl, byte[] photo) {
         super();
+        setId(id);
+        setUsername(username);
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setPassword(password);
-        setPhoto(photo);
-        setId(id);
         setPhotoUrl(photoUrl);
-    }
-
-    public User(String name, String phoneNumber, String email, String password, byte[] photo, String id) {
-        super();
-        setName(name);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
-        setPassword(password);
         setPhoto(photo);
-        setId(id);
-        setPhotoUrl("");
-    }
-
-    public User(String name, String phoneNumber, String email, String password) {
-        super();
-        setName(name);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
-        setPassword(password);
-        setPhoto(null);
-        setId("");
-        setPhotoUrl("");
     }
 
     @Override
     public String toString() {
         String toString = "";
+        toString += getId() + ", ";
+        toString += getUsername() + ", ";
         toString += getName() + ", ";
         toString += getPhoneNumber() + ", ";
         toString += getEmail() + ", ";
@@ -62,28 +51,26 @@ public class User implements Account, Serializable {
         return toString;
     }
 
-    @Override
-    public void setEmail(String email) {
-        if(email != null)
-            this.email = email;
+    public void setId(String id) {
+        if(id != null)
+            this.id = id;
         else
-            this.email = "";
+            this.id = "";
     }
 
-    @Override
-    public String getEmail() {
-        return this.email;
+    public String getId() {
+        return this.id;
     }
 
-    public void setPassword(String password) {
-        if(password != null)
-            this.password = password;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        if(username != null)
+            this.username = username;
         else
-            this.password = "";
-    }
-
-    public String getPassword() {
-        return this.password;
+            this.username = "";
     }
 
     public void setName(String name) {
@@ -108,20 +95,26 @@ public class User implements Account, Serializable {
         return this.phoneNumber;
     }
 
-    public void setPhoto(byte[]  photo) {
-        this.photo = photo;
+    public void setEmail(String email) {
+        if(email != null)
+            this.email = email;
+        else
+            this.email = "";
     }
 
-    public byte[] getPhoto() {
-        return this.photo;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPassword(String password) {
+        if(password != null)
+            this.password = password;
+        else
+            this.password = "";
     }
 
-    public String getId() {
-        return this.id;
+    public String getPassword() {
+        return this.password;
     }
 
     public String getPhotoUrl() {
@@ -129,6 +122,17 @@ public class User implements Account, Serializable {
     }
 
     public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+        if(photoUrl != null)
+            this.photoUrl = photoUrl;
+        else
+            this.photoUrl = "";
+    }
+
+    public void setPhoto(byte[]  photo) {
+        this.photo = photo;
+    }
+
+    public byte[] getPhoto() {
+        return this.photo;
     }
 }

@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 
@@ -43,7 +42,6 @@ public class ProfileActivity extends AppCompatActivity {
         etName = (EditText) findViewById(R.id.etName);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
-        etPhoneNumber.setEnabled(false);
         btnSave = (Button)findViewById(R.id.btnSave);
         tilUsername = findViewById(R.id.lyUsername);
         tilName = findViewById(R.id.lyName);
@@ -76,15 +74,18 @@ public class ProfileActivity extends AppCompatActivity {
 
                 if(isValid()){
                     intentSecurity.putExtra("id", id);
-                    intentSecurity.putExtra("photoUri", Tools.getPathFromURI(ProfileActivity.this, photoUri));
+                    intentSecurity.putExtra("username", username);
                     intentSecurity.putExtra("name", name);
-                    intentSecurity.putExtra("email", email);
                     intentSecurity.putExtra("phoneNumber", phoneNumber);
+                    intentSecurity.putExtra("photoUri", Tools.getPathFromURI(ProfileActivity.this, photoUri));
+                    intentSecurity.putExtra("email", email);
 
                     startActivity(intentSecurity);
                 }
             }
         });
+
+        Tools.hideProgressbar(this);
     }
 
     @Override
@@ -98,11 +99,11 @@ public class ProfileActivity extends AppCompatActivity {
                     Bitmap photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
                     ivPhoto.setImageBitmap(photo);
                 } catch (Exception e) {
-                    Toast.makeText(this, R.string.MSJ1_6, Toast.LENGTH_LONG).show();
+                    Tools.showMessage(this, R.string.MSJ1_6);
                 }
             }
         }else {
-            Toast.makeText(this, R.string.MSJ1_6,Toast.LENGTH_LONG).show();
+            Tools.showMessage(this, R.string.MSJ1_6);
         }
     }
 
@@ -119,8 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
             Bitmap photo = Tools.bytesToBitmap(user.getPhoto());
             ivPhoto.setImageBitmap(photo);
         } else{
-            Toast.makeText(getApplicationContext(), R.string.MSJ1_6,
-                    Toast.LENGTH_LONG).show();
+            Tools.showMessage(this, R.string.MSJ1_6);
         }
     }
 

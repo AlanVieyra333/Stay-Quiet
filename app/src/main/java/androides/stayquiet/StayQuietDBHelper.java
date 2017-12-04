@@ -10,14 +10,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class StayQuietDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "StayQuiet";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
 
     public static final String USER_TABLE = "user";
     public static final String USER_COLUMN_ID = "id";
+    public static final String USER_COLUMN_USERNAME = "username";
     public static final String USER_COLUMN_NAME = "name";
     public static final String USER_COLUMN_EMAIL = "email";
     public static final String USER_COLUMN_PHONE_NUMBER = "phoneNumber";
     public static final String USER_COLUMN_PHOTO = "photo";
+    public static final String USER_COLUMN_PHOTO_URL = "photoUrl";
 
     public static final String PROTECTION_TABLE = "protection";
     public static final String PROTECTION_COLUMN_ID = "id";
@@ -30,6 +32,7 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
     private final String DROP_USER_TABLE = "DROP TABLE IF EXIST " + USER_TABLE;
     private final String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE + " (" +
             USER_COLUMN_ID + " TEXT NOT NULL PRIMARY KEY," +
+            USER_COLUMN_USERNAME + " TEXT NOT NULL," +
             USER_COLUMN_NAME + " TEXT NOT NULL," +
             USER_COLUMN_PHONE_NUMBER + " TEXT NOT NULL," +
             USER_COLUMN_EMAIL + " TEXT NOT NULL," +
