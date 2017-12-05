@@ -38,6 +38,7 @@ public class StayQuietDBManager {
         ContentValues values = new ContentValues();
 
         values.put(dbHelper.USER_COLUMN_ID, user.getId());
+        values.put(dbHelper.USER_COLUMN_USERNAME, user.getUsername());
         values.put(dbHelper.USER_COLUMN_NAME, user.getName());
         values.put(dbHelper.USER_COLUMN_PHONE_NUMBER, user.getPhoneNumber());
         values.put(dbHelper.USER_COLUMN_EMAIL, user.getEmail());
@@ -53,11 +54,12 @@ public class StayQuietDBManager {
         Cursor cursor = null;
         User user = null;
         String[] columns = {
+                dbHelper.USER_COLUMN_ID,
+                dbHelper.USER_COLUMN_USERNAME,
                 dbHelper.USER_COLUMN_NAME,
                 dbHelper.USER_COLUMN_PHONE_NUMBER,
                 dbHelper.USER_COLUMN_EMAIL,
-                dbHelper.USER_COLUMN_PHOTO,
-                dbHelper.USER_COLUMN_ID};
+                dbHelper.USER_COLUMN_PHOTO};
         String[] selectionArgs = {
                 id};
         String selection = dbHelper.USER_COLUMN_ID + " = ?";
@@ -68,7 +70,8 @@ public class StayQuietDBManager {
 
         if (cursor.moveToFirst()){
             user = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2),
-                    "", cursor.getBlob(3), cursor.getString(4));
+                    cursor.getString(3), cursor.getString(4), null, null,
+                    cursor.getBlob(5));
         }
 
         db.close();
@@ -110,12 +113,13 @@ public class StayQuietDBManager {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         String id = currentUser.getUid();
+        String username = "";
         String name = currentUser.getDisplayName();
         String phoneNumber = currentUser.getPhoneNumber();
         String email = currentUser.getEmail();
         final String photoUri = currentUser.getPhotoUrl().toString();
 
-        final User user = new User(name, phoneNumber, email, "", null, id);
+        final User user = new User(id, username, name, phoneNumber, email, null, photoUri, null);
 
         Tools.showProgressbar(activity);
         FirebaseStorage.getInstance()
@@ -126,23 +130,28 @@ public class StayQuietDBManager {
                     public void onSuccess(byte[] bytes) {
                         // Use the bytes to display the image
                         user.setPhoto(bytes);
+                        boolean operationSucces = true;
 
                         // Save into SQLite
                         if(!existsUser(user.getId())) {
                             Long status = insertUser(user);
                             if (status != 1) {
                                 Tools.showMessage(activity, R.string.MSJ1_6);
+                                operationSucces = false;
                             }
                         }else if (!updateUser(user)) {
                             Tools.showMessage(activity, R.string.MSJ1_6);
+                            operationSucces = false;
                         }
 
-                        intent.putExtra("id", user.getId());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        if(operationSucces) {
+                            intent.putExtra("id", user.getId());
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                        activity.startActivity(intent);
-                        activity.finish();
+                            activity.startActivity(intent);
+                            activity.finish();
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -30,10 +30,9 @@ public class SecurityActivity extends AppCompatActivity {
 
     private EditText etPassword;
     private Button btnContinue;
-    private ProgressBar progressBar;
     private Intent intentHome;
     private User user;
-    private String name, email, phoneNumber, password, id;
+    private String id, username, name, email, phoneNumber, password;
     private String photoUri;
     private StayQuietDBManager dbManager;
     private FirebaseManager firebaseManager;
@@ -47,9 +46,6 @@ public class SecurityActivity extends AppCompatActivity {
 
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnContinue = (Button) findViewById(R.id.btnContinue);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
-        progressBar.setIndeterminate(false);
 
         getParams();
 
@@ -78,15 +74,18 @@ public class SecurityActivity extends AppCompatActivity {
                 firebaseManager.updateProfile(user);
             }
         });
+
+        Tools.hideProgressbar(this);
     }
 
     private void getParams(){
         id = getIntent().getExtras().getString("id");
-        photoUri = getIntent().getExtras().getString("photoUri");
+        username = getIntent().getExtras().getString("username");
         name = getIntent().getExtras().getString("name");
-        email = getIntent().getExtras().getString("email");
         phoneNumber = getIntent().getExtras().getString("phoneNumber");
-        user = new User(name, phoneNumber, email, "", null, id, photoUri);
+        email = getIntent().getExtras().getString("email");
+        photoUri = getIntent().getExtras().getString("photoUri");
+        user = new User(id, username, name, phoneNumber, email, null, photoUri, null);
     }
 
     private void getValues() {

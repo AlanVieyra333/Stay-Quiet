@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -41,16 +42,20 @@ public class Tools {
     }
 
     public static String getPathFromURI(AppCompatActivity activity, Uri contentURI) {
-        String result;
-        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) { // Source is Dropbox or other similar local file path
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
+        String result = null;
+
+        if (contentURI != null) {
+            Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+            if (cursor == null) { // Source is Dropbox or other similar local file path
+                result = contentURI.getPath();
+            } else {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                result = cursor.getString(idx);
+                cursor.close();
+            }
         }
+
         return result;
     }
 
@@ -60,13 +65,27 @@ public class Tools {
                 Toast.LENGTH_LONG).show();
     }
 
+    public static void showMessage(AppCompatActivity activity, String message) {
+        Tools.hideProgressbar(activity);
+        Toast.makeText(activity.getApplicationContext(), message,
+                Toast.LENGTH_LONG).show();
+    }
+
     public static void showProgressbar(AppCompatActivity activity) {
         if (activity.findViewById(R.id.progressBar) != null)
-            activity.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.progressBar).setVisibility(ProgressBar.VISIBLE);
     }
 
     public static void hideProgressbar(AppCompatActivity activity) {
         if (activity.findViewById(R.id.progressBar) != null)
-            activity.findViewById(R.id.progressBar).setVisibility(View.GONE);
+            activity.findViewById(R.id.progressBar).setVisibility(ProgressBar.GONE);
+    }
+
+    public static void showTextError(AppCompatActivity activity, TextInputLayout element, int message) {
+        element.setError(activity.getResources().getString(message));
+    }
+
+    public static void hideTextError(AppCompatActivity activity, TextInputLayout element) {
+        element.setErrorEnabled(false);
     }
 }

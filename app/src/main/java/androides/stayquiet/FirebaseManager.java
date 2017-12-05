@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,6 +44,8 @@ public class FirebaseManager {
     private User user;
     private OnSuccessListener<Void> callback;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     public FirebaseManager(AppCompatActivity activity) {
         setActivity(activity);
@@ -50,11 +54,13 @@ public class FirebaseManager {
         setCurrentUser(getmAuth().getCurrentUser());
         setUser(null);
         setCallback(null);
+        setDatabase(FirebaseDatabase.getInstance());
+        setDatabaseReference(getDatabase().getReference());
         setmCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-                associatePhoneNumber(credential);
+                associatePhoneNumber(credential, getUser().getPhoneNumber());
             }
 
             @Override
@@ -66,6 +72,7 @@ public class FirebaseManager {
             public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
                 Intent intentVerifyPhone = new Intent(getActivity(), VerifyPhoneActivity.class);
                 intentVerifyPhone.putExtra("verificationId", verificationId);
+                intentVerifyPhone.putExtra("phoneNumber", getUser().getPhoneNumber());
 
                 Tools.hideProgressbar(getActivity());
                 getActivity().startActivity(intentVerifyPhone);
@@ -129,6 +136,24 @@ public class FirebaseManager {
     public void setmCallbacks(PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks) {
         this.mCallbacks = mCallbacks;
     }
+
+    public FirebaseDatabase getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(FirebaseDatabase database) {
+        this.database = database;
+    }
+
+    public DatabaseReference getDatabaseReference() {
+        return databaseReference
+                .child(StayQuietDBHelper.USER_TABLE)
+                .child(getUser().getId());
+    }
+
+    public void setDatabaseReference(DatabaseReference databaseReference) {
+        this.databaseReference = databaseReference;
+    }
     /*  -----------------------------------------------------------------------------------   */
     public void login(String email, String password) {
         Tools.showProgressbar(getActivity());
@@ -190,7 +215,7 @@ public class FirebaseManager {
         updateName(getUser().getName());
     }
 
-    public void updateName(String name) {
+    public void updateName(final String name) {
         if(name != null && name != "" && name != getCurrentUser().getDisplayName()) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setDisplayName(name)
@@ -201,7 +226,21 @@ public class FirebaseManager {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            updateEmail(getUser().getEmail());
+                            getDatabaseReference()
+                                    .child(StayQuietDBHelper.USER_COLUMN_NAME)
+                                    .setValue(name)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            updateEmail(getUser().getEmail());
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Tools.showMessage(getActivity(), R.string.MSJ1_6);
+                                        }
+                                    });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -215,14 +254,28 @@ public class FirebaseManager {
         }
     }
 
-    public void updateEmail(String email) {
+    public void updateEmail(final String email) {
         if(email != null && email != "" && email != getCurrentUser().getEmail()) {
             Tools.showProgressbar(getActivity());
             getCurrentUser(). updateEmail(email)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            updatePhoto(getUser().getPhotoUrl());
+                            getDatabaseReference()
+                                    .child(StayQuietDBHelper.USER_COLUMN_EMAIL)
+                                    .setValue(email)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            updatePhoto(getUser().getPhotoUrl());
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Tools.showMessage(getActivity(), R.string.MSJ1_6);
+                                        }
+                                    });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -274,9 +327,9 @@ public class FirebaseManager {
         }
     }
 
-    public void updatePhotoUrl(String downloadUrl) {
+    public void updatePhotoUrl(final String photoUrl) {
         UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                .setPhotoUri(Uri.parse(downloadUrl))
+                .setPhotoUri(Uri.parse(photoUrl))
                 .build();
 
         Tools.showProgressbar(getActivity());
@@ -284,7 +337,21 @@ public class FirebaseManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updatePhoneNumber(getUser().getPhoneNumber());
+                        getDatabaseReference()
+                                .child(StayQuietDBHelper.USER_COLUMN_PHOTO_URL)
+                                .setValue(photoUrl)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        updatePhoneNumber(getUser().getPhoneNumber());
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Tools.showMessage(getActivity(), R.string.MSJ1_6);
+                                    }
+                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -296,7 +363,7 @@ public class FirebaseManager {
     }
 
     public void updatePhoneNumber(String phoneNumber) {
-        if(phoneNumber != null && phoneNumber != ""  && ("+52" + phoneNumber) != getCurrentUser().getPhoneNumber()) {
+        if(phoneNumber != null && phoneNumber != ""  && !("+52" + phoneNumber).equals(getCurrentUser().getPhoneNumber())) {
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
                     "+52" + phoneNumber,    // Phone number to verify
                     1,                      // Timeout duration
@@ -308,13 +375,44 @@ public class FirebaseManager {
         }
     }
 
-    public void associatePhoneNumber(PhoneAuthCredential credential) {
+    public void associatePhoneNumber(PhoneAuthCredential credential, final String phoneNumber) {
         Tools.showProgressbar(getActivity());
         getCurrentUser().updatePhoneNumber(credential)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        getCallback().onSuccess(aVoid);
+                        getDatabaseReference()
+                                .child(StayQuietDBHelper.USER_COLUMN_PHONE_NUMBER)
+                                .setValue(phoneNumber)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        getCallback().onSuccess(aVoid);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Tools.showMessage(getActivity(), R.string.MSJ1_6);
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Tools.showMessage(getActivity(), R.string.MSJ1_31);
+                    }
+                });
+    }
+
+    public void createUserDB() {
+        getDatabaseReference()
+                .setValue(getUser())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

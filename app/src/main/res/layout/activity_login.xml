@@ -1,116 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context="androides.stayquiet.LoginActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000"
+    tools:context=".LoginActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <ProgressBar
-            android:id="@+id/pbLogin"
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-
-        <Button
-            android:id="@+id/btnLogin_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="ENTRAR"
-            android:textColor="@color/colorAccent"
-            android:background="#000000"
-            android:layout_below="@+id/checkBox"
-            android:layout_centerHorizontal="true" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/ivLogo"
             android:layout_width="215dip"
             android:layout_height="95dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="7dp"
-            app:srcCompat="@drawable/logo" />
+            android:layout_marginTop="15dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/lyLogin_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageView4"
-            android:layout_alignEnd="@+id/imageView4"
-            android:layout_below="@+id/imageView4"
-            android:ems="10"
-            android:textColor="@android:color/background_light"
-            android:textColorHint="@android:color/darker_gray">
+            android:id="@+id/lyEmail"
+            style="@style/element"
+            android:layout_marginTop="15dp"
+            android:textColorHint="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/ivLogo">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/etLogin_email"
+                <EditText
+                    android:id="@+id/etEmail"
+                    style="@style/editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/text_email"
+                    android:textColor="@android:color/background_light"
+                    android:drawableStart="@drawable/ic_username_white"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/text_username"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@android:color/background_light"/>
+                    android:inputType="textEmailAddress"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/lyLogin_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageView4"
-            android:layout_alignEnd="@+id/imageView4"
-            android:layout_below="@+id/lyLogin_email"
-            android:ems="10"
-            android:textColor="@android:color/background_light"
+            android:id="@+id/lyPassword"
+            style="@style/element"
             android:textColorHint="@android:color/darker_gray"
-            app:passwordToggleContentDescription="@string/text_password"
-            app:passwordToggleEnabled = "true"
-            app:passwordToggleTint="@android:color/darker_gray">
+            app:passwordToggleEnabled = "true"            app:passwordToggleTint="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/lyEmail">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/etLogin_password"
+                    android:id="@+id/etPassword"
+                    style="@style/editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/text_password"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
-                    android:textColor="@android:color/background_light"/>
+                    android:textColor="@android:color/background_light"
+                    android:drawableStart="@drawable/ic_lock_white"
+                    android:drawablePadding="10dp"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/chbxRemember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Recordar contrasenia"
+            android:text="@string/text_remember"
             android:textColor="#696969"
             android:textColorLink="@color/colorAccent"
-            android:layout_below="@+id/lyLogin_password"
-            android:layout_alignEnd="@+id/imageView4" />
+            app:layout_constraintTop_toBottomOf="@+id/lyPassword"
+            app:layout_constraintEnd_toEndOf="@+id/lyPassword"/>
 
         <Button
-            android:id="@+id/btnLogin_register"
+            android:id="@+id/btnLogin"
+            style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button7"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="8dp"
+            android:text="ENTRAR"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/ivLogo"
+            app:layout_constraintStart_toStartOf="@+id/ivLogo"
+            app:layout_constraintTop_toBottomOf="@+id/chbxRemember"/>
+
+        <Button
+            android:id="@+id/btnForgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="#000000"
+            android:text="@string/text_forgot"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="@+id/ivLogo"
+            app:layout_constraintStart_toStartOf="@+id/ivLogo"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            style="@style/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
             android:text="REGISTRATE"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/ivLogo"
+            app:layout_constraintStart_toStartOf="@+id/ivLogo"
+            app:layout_constraintTop_toBottomOf="@+id/btnForgot"/>
 
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#000000"
-            android:text="Olvidaste la contrasena"
-            android:textColor="#FFFFFF"
-            android:layout_below="@+id/btnLogin_login"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp" />
-
-</RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

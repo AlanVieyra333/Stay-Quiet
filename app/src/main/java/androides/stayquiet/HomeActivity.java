@@ -59,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         ivPhoto = (ImageView)findViewById(R.id.imageProfile);
 
         dbManager = new StayQuietDBManager(this);
+        firebaseManager = new FirebaseManager(this);
 
         getParams();
 
@@ -67,8 +68,6 @@ public class HomeActivity extends AppCompatActivity {
         tvEmailMine.setText(email);
 
         checkSelfPermission();
-
-        firebaseManager = new FirebaseManager(this);
     }
 
     @Override

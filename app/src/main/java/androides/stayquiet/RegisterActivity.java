@@ -29,8 +29,8 @@ import androides.stayquiet.tools.Tools;
 public class RegisterActivity extends AppCompatActivity {
 
     private Button btnSave;
-    private EditText etFirstName, etLastName, etPhoneNumber, etEmail, etPassword, etPhoneNumberConf, etPasswordConf;
-    private String name, phoneNumber, email, password, phoneNumberConf, passwordConf;
+    private EditText etUsername, etName, etLastName, etPhoneNumber, etEmail, etPassword, etPhoneNumberConf, etPasswordConf;
+    private String username, name, phoneNumber, email, password, phoneNumberConf, passwordConf;
     private StayQuietDBManager dbManager;
     private Intent intentHome, intentVerifyPhone;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -45,7 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
         intentHome = new Intent(this, HomeActivity.class);
         intentVerifyPhone = new Intent(this, VerifyPhoneActivity.class);
 
-        etFirstName = (EditText) findViewById(R.id.etRegister_FirstName);
+        etUsername = findViewById(R.id.etUsername);
+        etName = (EditText) findViewById(R.id.etName);
         etPhoneNumber = (EditText) findViewById(R.id.etRegister_phoneNumber);
         etPhoneNumberConf = (EditText) findViewById(R.id.etRegister_phoneNumberConf);
         etEmail = (EditText) findViewById(R.id.etRegister_email);
@@ -62,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                 getValues();
 
                 if ( validateForm()) {
-                    User user = new User(name, phoneNumber, email, password);
+                    User user = new User(username, name, phoneNumber, email, password);
 
                     firebaseManager.signUp(user);
                 }
@@ -102,7 +103,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void getValues() {
-        name = etFirstName.getText().toString();
+        username = etUsername.getText().toString();
+        name = etName.getText().toString();
         phoneNumber = etPhoneNumber.getText().toString();
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
