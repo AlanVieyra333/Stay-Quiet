@@ -45,13 +45,11 @@ public class RegisterActivity extends AppCompatActivity {
         intentHome = new Intent(this, HomeActivity.class);
         intentVerifyPhone = new Intent(this, VerifyPhoneActivity.class);
 
-        etUsername = findViewById(R.id.etUsername);
+        etUsername = findViewById(R.id.etUserName);
         etName = (EditText) findViewById(R.id.etName);
         etPhoneNumber = (EditText) findViewById(R.id.etRegister_phoneNumber);
-        etPhoneNumberConf = (EditText) findViewById(R.id.etRegister_phoneNumberConf);
         etEmail = (EditText) findViewById(R.id.etRegister_email);
-        etPassword = (EditText) findViewById(R.id.etRegister_password);
-        etPasswordConf = (EditText) findViewById(R.id.etRegister_passwordConf);
+        etPassword = (EditText) findViewById(R.id.etPassword);
         btnSave = (Button) findViewById(R.id.btnRegister_save);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
@@ -130,14 +128,6 @@ public class RegisterActivity extends AppCompatActivity {
             return  false;
         }else if(!(validEmail(email))){
             Toast.makeText(getApplicationContext(), "ERROR.El formato de correo incorrecto, Solo: example@mail.com.",
-                    Toast.LENGTH_LONG).show();
-            return  false;
-        }else if((phoneNumber.compareTo(phoneNumberConf) != 0)){
-            Toast.makeText(getApplicationContext(), "ERROR. No coincide el Numero.",
-                    Toast.LENGTH_LONG).show();
-            return  false;
-        }else if( password.compareTo(passwordConf) != 0){
-            Toast.makeText(getApplicationContext(), "ERROR. No coincide la contraseña.",
                     Toast.LENGTH_LONG).show();
             return  false;
         }else{
