@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private Intent intentHome;
     private Intent intentRegister;
     private FirebaseManager firebaseManager;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private SessionManager session;
 
     @Override

@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -172,44 +173,53 @@ public class FirebaseManager {
      * @param username Nombre de usuario.
      * @param password Contraseña.
      */
-    public void login(String username, String password) {
+    public void login(String username, final String password) {
         Tools.showProgressbar(getActivity());
 
         setUser(new User(username, password));
 
         getDatabaseReference().child(getUser().getUsername())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                setUser(dataSnapshot.getValue(User.class));
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        setUser(dataSnapshot.getValue(User.class));
+                        User user = getUser();
 
-                getmAuth().signInWithEmailAndPassword(getUser().getEmail(), getUser().getPassword())
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                setCurrentUser(authResult.getUser());
-                                getCallback().onSuccess(null);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                if(e.getMessage().indexOf("user") != -1)
-                                    Tools.showMessage(getActivity(), R.string.MSJ1_7);
-                                else
-                                    Tools.showMessage(getActivity(), R.string.MSJ1_6);
-                            }
-                        });
-            }
+                        if(getUser() != null) {
+                            getUser().setPassword(password);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                if(databaseError.toString().indexOf("user") != -1)
-                    Tools.showMessage(getActivity(), R.string.MSJ1_7);
-                else
-                    Tools.showMessage(getActivity(), R.string.MSJ1_6);
-            }
-        });
+                            String email = getUser().getEmail();
+                            String password = getUser().getPassword();
+                            getmAuth().signInWithEmailAndPassword(email, password)
+                                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                        @Override
+                                        public void onSuccess(AuthResult authResult) {
+                                            setCurrentUser(authResult.getUser());
+                                            getCallback().onSuccess(null);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            if (e.getMessage().indexOf("user") != -1)
+                                                Tools.showMessage(getActivity(), R.string.MSJ1_7);
+                                            else
+                                                Tools.showMessage(getActivity(), R.string.MSJ1_6);
+                                        }
+                                    });
+                        } else {
+                            Tools.showMessage(getActivity(), R.string.MSJ1_7);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        if(databaseError.toString().indexOf("user") != -1)
+                            Tools.showMessage(getActivity(), R.string.MSJ1_7);
+                        else
+                            Tools.showMessage(getActivity(), R.string.MSJ1_6);
+                    }
+                });
     }
 
     public void logout() {

@@ -30,7 +30,7 @@ import androides.stayquiet.tools.Tools;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private String name, phoneNumber, email, id;
+    private String username, name, phoneNumber, email, id;
     private TextView tvNameMine, tvEmailMine, tvPhoneNumber;
     private ImageView ivPhoto;
     private Bitmap photo;
@@ -84,13 +84,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        changeActivity(currentUser);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_profile:
@@ -111,28 +104,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getParams(){
-        //user = (User) getIntent().getExtras().get("user");
+        user = dbManager.getUser(user.getId());
 
-        id = user.getId();
-        user = dbManager.getUser(id);
-
+        username = user.getUsername();
         name = user.getName();
         phoneNumber = user.getPhoneNumber();
         email = user.getEmail();
+
         if(user.getPhoto() != null) {
-            photo = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
+            Bitmap photo = Tools.bytesToBitmap(user.getPhoto());
             ivPhoto.setImageBitmap(photo);
         } else{
-            firebaseManager.logout();
-        }
-    }
-
-    private void changeActivity(FirebaseUser currentUser) {
-        if (currentUser == null) {
-            intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentLogin);
-            finish();
+            Tools.showMessage(this, R.string.MSJ1_6);
         }
     }
 
