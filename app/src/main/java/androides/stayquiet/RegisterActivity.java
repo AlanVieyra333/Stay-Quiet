@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
                 if (currentUser != null && currentUser.getPhoneNumber() != null) {
-                    dbManager.saveProfileIntoCache(user, intentHome);
+                    dbManager.saveProfileIntoCache(user, intentHome, false);
                 }
             }
         };

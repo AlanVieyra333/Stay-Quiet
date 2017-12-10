@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import androides.stayquiet.tools.Tools;
 import androides.stayquiet.tools.Validator;
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegister, btnForgot;
     private EditText etUsername, etPassword;
     private TextInputLayout tilUsername, tilPassword;
+    private CheckBox chbxRemember;
     private String username, password;
     private StayQuietDBManager dbManager;
     private Intent intentHome;
@@ -66,6 +69,12 @@ public class LoginActivity extends AppCompatActivity {
         btnForgot =(Button)findViewById(R.id.btnForgot);
         tilUsername = findViewById(R.id.lyUsername);
         tilPassword = findViewById(R.id.lyPassword);
+        chbxRemember = findViewById(R.id.chbxRemember);
+
+        getParams();
+
+        etUsername.setText(username);
+        etPassword.setText(password);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     Tools.showMessage(LoginActivity.this, R.string.MSJ1_6);
                     firebaseManager.logout();
                 } else {
-                    dbManager.saveProfileIntoCache(firebaseManager.getUser(), intentHome);
+                    dbManager.saveProfileIntoCache(firebaseManager.getUser(), intentHome, chbxRemember.isChecked());
                 }
             }
         });
@@ -163,5 +172,25 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return isValid;
+    }
+
+    private void getParams() {
+        try {
+            username = getIntent().getExtras().getString("username");
+            password = getIntent().getExtras().getString("password");
+
+            if (username == null) {
+                username = "";
+                chbxRemember.setChecked(false);
+            } else {
+                chbxRemember.setChecked(true);
+            }
+
+            if (password == null) {
+                password = "";
+            }
+        } catch(Exception e) {
+            chbxRemember.setChecked(false);
+        }
     }
 }

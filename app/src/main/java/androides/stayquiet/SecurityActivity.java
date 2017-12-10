@@ -36,11 +36,16 @@ public class SecurityActivity extends AppCompatActivity {
     private String photoUri;
     private StayQuietDBManager dbManager;
     private FirebaseManager firebaseManager;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
+
+        // Session data.
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
 
         intentHome = new Intent(this, HomeActivity.class);
 
@@ -68,7 +73,7 @@ public class SecurityActivity extends AppCompatActivity {
                 firebaseManager.setCallback(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        dbManager.saveProfileIntoCache(firebaseManager.getUser(),intentHome);
+                        dbManager.saveProfileIntoCache(firebaseManager.getUser(),intentHome, session.getReminder());
                     }
                 });
                 firebaseManager.updateProfile(user);

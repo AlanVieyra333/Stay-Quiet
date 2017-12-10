@@ -182,7 +182,6 @@ public class FirebaseManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 setUser(dataSnapshot.getValue(User.class));
-                Tools.showMessage(getActivity(), dataSnapshot.getKey() + " : " + getUser());
 
                 getmAuth().signInWithEmailAndPassword(getUser().getEmail(), getUser().getPassword())
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {

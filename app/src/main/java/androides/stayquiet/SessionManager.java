@@ -18,6 +18,7 @@ public class SessionManager {
 
     private static final String PREF_NAME = "StayQuietPref";        // Sharedpref file name
     private static final String IS_LOGIN = "IsLoggedIn";            // All Shared Preferences Keys
+    private static final String REMEMBER = "remember";
 
     // Constructor
     public SessionManager(Context context){
@@ -44,6 +45,17 @@ public class SessionManager {
 
         // commit changes
         editor.commit();
+    }
+
+    /**
+     * Add a flag for remember the username and password.
+     */
+    public void setReminder(boolean remember) {
+        editor.putBoolean(REMEMBER, remember);
+    }
+
+    public boolean getReminder() {
+        return pref.getBoolean(REMEMBER, false);
     }
 
     /**
@@ -90,12 +102,18 @@ public class SessionManager {
      * Clear session details
      * */
     public void logoutUser(){
+        // After logout redirect user to Loing Activity
+        Intent i = new Intent(_context, LoginActivity.class);
+        boolean remember = pref.getBoolean(REMEMBER, false);
+
+        if(remember) {
+            i.putExtra("username", pref.getString(StayQuietDBHelper.USER_COLUMN_USERNAME, null));
+            i.putExtra("password", pref.getString(StayQuietDBHelper.USER_COLUMN_PASSWORD, null));
+        }
+
         // Clearing all data from Shared Preferences
         editor.clear();
         editor.commit();
-
-        // After logout redirect user to Loing Activity
-        Intent i = new Intent(_context, LoginActivity.class);
 
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -109,8 +109,9 @@ public class StayQuietDBManager {
         return result;
     }
 
-    public void  saveProfileIntoCache(final User user, final Intent intent) {
+    public void  saveProfileIntoCache(final User user, final Intent intent, boolean remember) {
         SessionManager session = new SessionManager(activity.getApplicationContext());
+        session.setReminder(remember);
         session.createLoginSession(user);
 
         Tools.showProgressbar(activity);

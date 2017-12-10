@@ -69,7 +69,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         firebaseManager.setCallback(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                dbManager.saveProfileIntoCache(user, intentHome);
+                dbManager.saveProfileIntoCache(user, intentHome, false);
             }
         });
     }
