@@ -96,8 +96,6 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menu_profile:
                 Intent intentProfile = new Intent(getApplicationContext(), ProfileActivity.class);
 
-                intentProfile.putExtra("id", id);
-
                 startActivity(intentProfile);
                 return true;
             case R.id.menu_settings:

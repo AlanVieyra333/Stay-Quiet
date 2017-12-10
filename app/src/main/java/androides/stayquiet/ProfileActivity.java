@@ -31,11 +31,17 @@ public class ProfileActivity extends AppCompatActivity {
     private Uri photoUri = null;
     private StayQuietDBManager dbManager;
     private final int GALLERY_REQUEST = 1;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        // Session data.
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+        user = session.getUser();
 
         ivPhoto = (ImageView) findViewById(R.id.imageProfile);
         etUsername = findViewById(R.id.etUsername);
@@ -54,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         getParams();
 
+        etUsername.setText(username);
         etName.setText(name);
         etEmail.setText(email);
         etPhoneNumber.setText(phoneNumber);
@@ -73,12 +80,10 @@ public class ProfileActivity extends AppCompatActivity {
                 getValues();
 
                 if(isValid()){
-                    intentSecurity.putExtra("id", id);
-                    intentSecurity.putExtra("username", username);
                     intentSecurity.putExtra("name", name);
+                    intentSecurity.putExtra("email", email);
                     intentSecurity.putExtra("phoneNumber", phoneNumber);
                     intentSecurity.putExtra("photoUri", Tools.getPathFromURI(ProfileActivity.this, photoUri));
-                    intentSecurity.putExtra("email", email);
 
                     startActivity(intentSecurity);
                 }
@@ -102,18 +107,15 @@ public class ProfileActivity extends AppCompatActivity {
                     Tools.showMessage(this, R.string.MSJ1_6);
                 }
             }
-        }else {
-            Tools.showMessage(this, R.string.MSJ1_6);
         }
     }
 
     private void getParams(){
-        id = getIntent().getExtras().getString("id");
-        user = dbManager.getUser(id);
+        user = dbManager.getUser(user.getId());
 
+        username = user.getUsername();
         name = user.getName();
         phoneNumber = user.getPhoneNumber();
-        phoneNumber = phoneNumber.substring(3, phoneNumber.length());
         email = user.getEmail();
 
         if(user.getPhoto() != null) {
@@ -176,6 +178,15 @@ public class ProfileActivity extends AppCompatActivity {
             isValid = false;
         } else {
             Tools.hideTextError(this, tilPhoneNumber);
+        }
+
+        // Same data.
+        if (name.equals(session.getUser().getName()) &&
+                email.equals(session.getUser().getEmail()) &&
+                phoneNumber.equals(session.getUser().getPhoneNumber()) &&
+                photoUri == null) {
+            Tools.showMessage(this, R.string.MSJ1_35);
+            isValid = false;
         }
 
         return isValid;

@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private StayQuietDBManager dbManager;
     private Intent intentHome;
     private Intent intentRegister;
-    private FirebaseAuth mAuth;
     private FirebaseManager firebaseManager;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private SessionManager session;
@@ -95,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         dbManager = new StayQuietDBManager(this);
-        mAuth = FirebaseAuth.getInstance();
         firebaseManager = new FirebaseManager(this);
         firebaseManager.setCallback(new OnSuccessListener<Void>() {
             @Override
@@ -110,40 +108,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-
-                if (currentUser != null){
-                    if (!currentUser.getPhoneNumber().equals("")) {
-                        intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                        startActivity(intentHome);
-                        finish();
-                    } else {
-                        firebaseManager.logout();
-                    }
-                }
-            }
-        };
-
         Tools.hideProgressbar(this);
     }
 
     @Override
     protected  void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
 
     private void getValues() {

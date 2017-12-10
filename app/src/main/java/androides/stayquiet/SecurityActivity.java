@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -29,11 +30,11 @@ import androides.stayquiet.tools.Validator;
 public class SecurityActivity extends AppCompatActivity {
 
     private EditText etPassword;
+    private TextInputLayout tilPassword;
     private Button btnContinue;
     private Intent intentHome;
     private User user;
-    private String id, username, name, email, phoneNumber, password;
-    private String photoUri;
+    private String password;
     private StayQuietDBManager dbManager;
     private FirebaseManager firebaseManager;
     private SessionManager session;
@@ -51,6 +52,7 @@ public class SecurityActivity extends AppCompatActivity {
 
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnContinue = (Button) findViewById(R.id.btnContinue);
+        tilPassword = findViewById(R.id.lyPassword);
 
         getParams();
 
@@ -60,7 +62,7 @@ public class SecurityActivity extends AppCompatActivity {
                 getValues();
 
                 if(isValid()){
-                    firebaseManager.login(FirebaseAuth.getInstance().getCurrentUser().getEmail(), password);
+                    firebaseManager.login(user.getUsername(), password);
                 }
             }
         });
@@ -73,7 +75,7 @@ public class SecurityActivity extends AppCompatActivity {
                 firebaseManager.setCallback(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        dbManager.saveProfileIntoCache(firebaseManager.getUser(),intentHome, session.getReminder());
+                        dbManager.saveProfileIntoCache(firebaseManager.getUser(), intentHome, session.getReminder());
                     }
                 });
                 firebaseManager.updateProfile(user);
@@ -84,13 +86,12 @@ public class SecurityActivity extends AppCompatActivity {
     }
 
     private void getParams(){
-        id = getIntent().getExtras().getString("id");
-        username = getIntent().getExtras().getString("username");
-        name = getIntent().getExtras().getString("name");
-        phoneNumber = getIntent().getExtras().getString("phoneNumber");
-        email = getIntent().getExtras().getString("email");
-        photoUri = getIntent().getExtras().getString("photoUri");
-        user = new User(id, username, name, phoneNumber, email, null, photoUri, null);
+        user = session.getUser();
+
+        user.setName(getIntent().getExtras().getString("name"));
+        user.setPhoneNumber(getIntent().getExtras().getString("phoneNumber"));
+        user.setEmail(getIntent().getExtras().getString("email"));
+        user.setPhotoUrl(getIntent().getExtras().getString("photoUri"));
     }
 
     private void getValues() {
@@ -98,11 +99,23 @@ public class SecurityActivity extends AppCompatActivity {
     }
 
     private boolean isValid() {
-        if(!Validator.passwordIsValid(password)) {
-            Tools.showMessage(this, R.string.MSJ1_4);
-            return false;
+        boolean isValid = true;
+
+        if (password.isEmpty()) {
+            Tools.showTextError(this, tilPassword, R.string.MSJ1_1);
+            isValid = false;
+        } else if(!Validator.passwordIsValid(password)) {
+            Tools.showTextError(this, tilPassword, R.string.MSJ1_4);
+            isValid = false;
+        } else {
+            Tools.hideTextError(this, tilPassword);
+
+            if (!password.equals(session.getUser().getPassword())) {
+                Tools.showMessage(this, R.string.MSJ1_7);
+                isValid = false;
+            }
         }
 
-        return true;
+        return isValid;
     }
 }

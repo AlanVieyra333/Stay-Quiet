@@ -49,7 +49,7 @@
             app:passwordToggleTint="@android:color/darker_gray"
             app:layout_constraintTop_toBottomOf="@+id/ivSecurity">
 
-            <android.support.design.widget.TextInputEditText
+            <EditText
                 android:id="@+id/etPassword"
                 style="@style/editText"
                 android:layout_width="match_parent"

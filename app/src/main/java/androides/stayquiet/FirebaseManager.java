@@ -261,7 +261,7 @@ public class FirebaseManager {
     }
 
     public void updateName(final String name) {
-        if(name != null && name != "" && name != getCurrentUser().getDisplayName()) {
+        if(name != null && !name.equals("") && !name.equals(getCurrentUser().getDisplayName())) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setDisplayName(name)
                     .build();
@@ -271,6 +271,8 @@ public class FirebaseManager {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            getUser().setName(name);
+
                             getDatabaseReference()
                                     .child(getUser().getUsername())
                                     .child(StayQuietDBHelper.USER_COLUMN_NAME)
@@ -301,12 +303,15 @@ public class FirebaseManager {
     }
 
     public void updateEmail(final String email) {
-        if(email != null && email != "" && email != getCurrentUser().getEmail()) {
+        String currentEmail = getCurrentUser().getEmail();
+        if(email != null && !email.equals("") && !email.equals(currentEmail)) {
             Tools.showProgressbar(getActivity());
-            getCurrentUser(). updateEmail(email)
+            getCurrentUser().updateEmail(email)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            getUser().setEmail(email);
+
                             getDatabaseReference()
                                     .child(getUser().getUsername())
                                     .child(StayQuietDBHelper.USER_COLUMN_EMAIL)
@@ -337,13 +342,13 @@ public class FirebaseManager {
     }
 
     public void updatePhoto(String photoUri) {
-        if(photoUri != null && photoUri != "" && photoUri != getCurrentUser().getPhotoUrl().toString()) {
+        if(photoUri != null && !photoUri.equals("") && !photoUri.equals(getCurrentUser().getPhotoUrl().toString())) {
             String uid = getCurrentUser().getUid();
             final String url = StayQuietDBHelper.URL_IMAGES + uid + ".jpg";
 
             try {
                 StorageReference photoRef = getStorage().getReference().child(url);
-                InputStream stream = new FileInputStream(new File(photoUri));
+                final InputStream stream = new FileInputStream(new File(photoUri));
 
                 Tools.showProgressbar(getActivity());
                 photoRef.putStream(stream)
@@ -370,6 +375,7 @@ public class FirebaseManager {
             String url = StayQuietDBHelper.URL_IMAGES + StayQuietDBHelper.PHOTO_DEFAULT;
             updatePhotoUrl(url);
         }else {
+            getUser().setPhotoUrl(getCurrentUser().getPhotoUrl().toString());
             updatePhoneNumber(getUser().getPhoneNumber());
         }
     }
@@ -384,6 +390,8 @@ public class FirebaseManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        getUser().setPhotoUrl(photoUrl);
+
                         getDatabaseReference()
                                 .child(getUser().getUsername())
                                 .child(StayQuietDBHelper.USER_COLUMN_PHOTO_URL)
@@ -412,9 +420,12 @@ public class FirebaseManager {
     }
 
     public void updatePhoneNumber(String phoneNumber) {
-        if(phoneNumber != null && phoneNumber != ""  && !("+52" + phoneNumber).equals(getCurrentUser().getPhoneNumber())) {
+        phoneNumber = "+52" + phoneNumber;
+        String currentPhoneNumber = getCurrentUser().getPhoneNumber();
+
+        if(phoneNumber != null && !phoneNumber.equals("")  && !phoneNumber.equals(currentPhoneNumber)) {
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                    "+52" + phoneNumber,    // Phone number to verify
+                    phoneNumber,    // Phone number to verify
                     1,                      // Timeout duration
                     TimeUnit.MINUTES,       // Unit of timeout
                     getActivity(),          // Activity (for callback binding)
@@ -430,6 +441,8 @@ public class FirebaseManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        getUser().setPhoneNumber(phoneNumber);
+
                         getDatabaseReference()
                                 .child(getUser().getUsername())
                                 .child(StayQuietDBHelper.USER_COLUMN_PHONE_NUMBER)

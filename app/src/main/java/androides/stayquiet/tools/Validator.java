@@ -8,7 +8,7 @@ public class Validator {
     private static String regexpUsername = "^[a-zA-Z]+[0-9]*[a-zA-Z]*";
     private static String regexpName = "^[a-zA-Z\\s]+";
     private static String regexpPhoneNumber = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]";
-    private static String regexpPassword = "(/^(?=.*[a-z]).+$/)(/^(?=.*[A-Z]).+$/)(/^(?=.*[0-9_\\W]).+$/)";
+    private static String regexpPassword = "^.*(?!.*\\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\=\\¡\\£\\_\\+\\`\\~\\.\\,\\<\\>\\/\\?\\;\\:\\'\\\"\\\\\\|\\[\\]\\{\\}]).*$";
     private static String regexpCode = "[0-9][0-9][0-9][0-9][0-9][0-9]";
 
     public static boolean usernameIsValid(String input) {
@@ -28,8 +28,7 @@ public class Validator {
     }
 
     public static boolean passwordIsValid(String input) {
-        //return input.matches(regexpPassword);
-        return true;
+        return input.matches(regexpPassword) && (input.length() >= 8 && input.length() <= 16 );
     }
 
     public static boolean codeIsValid(String input){
