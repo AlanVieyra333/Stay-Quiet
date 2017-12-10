@@ -18,8 +18,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -34,8 +37,9 @@ import androides.stayquiet.tools.Tools;
 
 /**
  * Created by developer on 26/11/17.
+ *
+ * @author author Alan Vieyra
  */
-
 public class FirebaseManager {
     private AppCompatActivity activity;
     private FirebaseAuth mAuth;
@@ -73,6 +77,8 @@ public class FirebaseManager {
                 Intent intentVerifyPhone = new Intent(getActivity(), VerifyPhoneActivity.class);
                 intentVerifyPhone.putExtra("verificationId", verificationId);
                 intentVerifyPhone.putExtra("phoneNumber", getUser().getPhoneNumber());
+                getUser().setPhoto(null);
+                intentVerifyPhone.putExtra("user", getUser());
 
                 Tools.hideProgressbar(getActivity());
                 getActivity().startActivity(intentVerifyPhone);
@@ -147,45 +153,78 @@ public class FirebaseManager {
 
     public DatabaseReference getDatabaseReference() {
         return databaseReference
-                .child(StayQuietDBHelper.USER_TABLE)
-                .child(getUser().getId());
+                .child(StayQuietDBHelper.USER_TABLE);
     }
 
     public void setDatabaseReference(DatabaseReference databaseReference) {
         this.databaseReference = databaseReference;
     }
     /*  -----------------------------------------------------------------------------------   */
-    public void login(String email, String password) {
+    /**
+     * Método para iniciar sesion con un nombre de usuario y contraseña.
+     * Crea un objeto User.
+     * Se hace una petición a la BD de firebase con el nombre de usuario ingresado, para obtener
+     * su correo.
+     * Despues se autentica a firebase con su email y contraseña.
+     * Finalmente se ejecuta el callback que se haya establecido desde fuera del objeto. (Esto se
+     * hace debido a que las funciones anteriores son asícronas)
+     *
+     * @param username Nombre de usuario.
+     * @param password Contraseña.
+     */
+    public void login(String username, String password) {
         Tools.showProgressbar(getActivity());
-        getmAuth().signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        setCurrentUser(authResult.getUser());
-                        getCallback().onSuccess(null);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if(e.getMessage().indexOf("user") != -1)
-                            Tools.showMessage(getActivity(), R.string.MSJ1_7);
-                        else
-                            Tools.showMessage(getActivity(), R.string.MSJ1_6);
-                    }
-                });
+
+        setUser(new User(username, password));
+
+        getDatabaseReference().child(getUser().getUsername())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                setUser(dataSnapshot.getValue(User.class));
+                Tools.showMessage(getActivity(), dataSnapshot.getKey() + " : " + getUser());
+
+                getmAuth().signInWithEmailAndPassword(getUser().getEmail(), getUser().getPassword())
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                setCurrentUser(authResult.getUser());
+                                getCallback().onSuccess(null);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                if(e.getMessage().indexOf("user") != -1)
+                                    Tools.showMessage(getActivity(), R.string.MSJ1_7);
+                                else
+                                    Tools.showMessage(getActivity(), R.string.MSJ1_6);
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                if(databaseError.toString().indexOf("user") != -1)
+                    Tools.showMessage(getActivity(), R.string.MSJ1_7);
+                else
+                    Tools.showMessage(getActivity(), R.string.MSJ1_6);
+            }
+        });
     }
 
     public void logout() {
         getmAuth().signOut();
-        Intent intentLogin = new Intent(getActivity(), LoginActivity.class);
-
-        intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        getActivity().startActivity(intentLogin);
-        getActivity().finish();
     }
 
+    /**
+     * Método para registrar un usuario.
+     * Crea un usuario en firebase para autenticacion con email y pass.
+     * Despues guarda todo el usuario en la base de datos de firebase.
+     * Despues actualiza el perfil. (Para actualizar los datos en el usuario authFirebase)
+     *
+     * @param user Usuario a registrar.
+     */
     public void signUp(User user) {
         setUser(user);
 
@@ -195,7 +234,14 @@ public class FirebaseManager {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         setCurrentUser(authResult.getUser());
-                        updateProfile(getUser());
+                        getUser().setId(getCurrentUser().getUid());     // Save id user.
+
+                        createUserDBFirebase(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                updateProfile(getUser());
+                            }
+                        });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -227,6 +273,7 @@ public class FirebaseManager {
                         @Override
                         public void onSuccess(Void aVoid) {
                             getDatabaseReference()
+                                    .child(getUser().getUsername())
                                     .child(StayQuietDBHelper.USER_COLUMN_NAME)
                                     .setValue(name)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -262,6 +309,7 @@ public class FirebaseManager {
                         @Override
                         public void onSuccess(Void aVoid) {
                             getDatabaseReference()
+                                    .child(getUser().getUsername())
                                     .child(StayQuietDBHelper.USER_COLUMN_EMAIL)
                                     .setValue(email)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -289,7 +337,7 @@ public class FirebaseManager {
         }
     }
 
-    public void  updatePhoto(String photoUri) {
+    public void updatePhoto(String photoUri) {
         if(photoUri != null && photoUri != "" && photoUri != getCurrentUser().getPhotoUrl().toString()) {
             String uid = getCurrentUser().getUid();
             final String url = StayQuietDBHelper.URL_IMAGES + uid + ".jpg";
@@ -319,7 +367,7 @@ public class FirebaseManager {
             } catch (Exception e) {
                 Tools.showMessage(getActivity(), R.string.MSJ1_6);
             }
-        }else if(getCurrentUser().getPhotoUrl() == null || getCurrentUser().getPhotoUrl().toString() == "") {    // Default photo.
+        }else if(getCurrentUser().getPhotoUrl() == null || getCurrentUser().getPhotoUrl().toString().equals("")) {    // Default photo.
             String url = StayQuietDBHelper.URL_IMAGES + StayQuietDBHelper.PHOTO_DEFAULT;
             updatePhotoUrl(url);
         }else {
@@ -338,11 +386,13 @@ public class FirebaseManager {
                     @Override
                     public void onSuccess(Void aVoid) {
                         getDatabaseReference()
+                                .child(getUser().getUsername())
                                 .child(StayQuietDBHelper.USER_COLUMN_PHOTO_URL)
                                 .setValue(photoUrl)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+                                        getUser().setPhotoUrl(photoUrl);
                                         updatePhoneNumber(getUser().getPhoneNumber());
                                     }
                                 })
@@ -382,6 +432,7 @@ public class FirebaseManager {
                     @Override
                     public void onSuccess(Void aVoid) {
                         getDatabaseReference()
+                                .child(getUser().getUsername())
                                 .child(StayQuietDBHelper.USER_COLUMN_PHONE_NUMBER)
                                 .setValue(phoneNumber)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -406,19 +457,15 @@ public class FirebaseManager {
                 });
     }
 
-    public void createUserDB() {
+    public void createUserDBFirebase(OnSuccessListener<Void> onSuccessListener) {
         getDatabaseReference()
+                .child(getUser().getUsername())
                 .setValue(getUser())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                })
+                .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Tools.showMessage(getActivity(), R.string.MSJ1_31);
+                        Tools.showMessage(getActivity(), R.string.MSJ1_6);
                     }
                 });
     }

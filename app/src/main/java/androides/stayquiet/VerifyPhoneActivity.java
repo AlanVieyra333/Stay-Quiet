@@ -33,6 +33,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     private FirebaseManager firebaseManager;
     private StayQuietDBManager dbManager;
     private ProgressBar progressBar;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,6 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnVerify.setEnabled(false);
                 getValues();
 
                 if(isValid()){
@@ -65,16 +65,11 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         });
 
         firebaseManager = new FirebaseManager(this);
+        firebaseManager.setUser(user);
         firebaseManager.setCallback(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                firebaseManager.setCallback(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        btnVerify.setEnabled(true);
-                    }
-                });
-                dbManager.saveProfileIntoCache(intentHome);
+                dbManager.saveProfileIntoCache(user, intentHome);
             }
         });
     }
@@ -82,6 +77,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     private void getParams(){
         verificationId = getIntent().getExtras().getString("verificationId");
         phoneNumber = getIntent().getExtras().getString("phoneNumber");
+        user = (User) getIntent().getExtras().get("user");
     }
 
     private void getValues() {

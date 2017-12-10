@@ -30,33 +30,41 @@ import androides.stayquiet.tools.Tools;
 import androides.stayquiet.tools.Validator;
 
 public class LoginActivity extends AppCompatActivity {
-    private AppCompatActivity activity;
     private Button btnLogin, btnRegister, btnForgot;
-    private EditText etEmail, etPassword;
-    private TextInputLayout tilEmail, tilPassword;
-    private String email, password;
+    private EditText etUsername, etPassword;
+    private TextInputLayout tilUsername, tilPassword;
+    private String username, password;
     private StayQuietDBManager dbManager;
     private Intent intentHome;
     private Intent intentRegister;
     private FirebaseAuth mAuth;
     private FirebaseManager firebaseManager;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        activity = this;
-        intentHome = new Intent(this, HomeActivity.class);
-        intentRegister = new Intent(this, RegisterActivity.class);
+        intentHome = new Intent(getApplicationContext(), HomeActivity.class);
+        intentRegister = new Intent(getApplicationContext(), RegisterActivity.class);
 
-        etEmail = (EditText) findViewById(R.id.etEmail);
+        session = new SessionManager(getApplicationContext());
+        if(session.isLoggedIn()) {
+            intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            startActivity(intentHome);
+            finish();
+        }
+
+        etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnRegister =(Button)findViewById(R.id.btnRegister);
         btnForgot =(Button)findViewById(R.id.btnForgot);
-        tilEmail = findViewById(R.id.lyEmail);
+        tilUsername = findViewById(R.id.lyUsername);
         tilPassword = findViewById(R.id.lyPassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 getValues();
 
                 if(isValid()){
-                    firebaseManager.login(email, password);
+                    firebaseManager.login(username, password);
                 }
             }
         });
@@ -87,6 +95,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() == null) {
                     Tools.showMessage(LoginActivity.this, R.string.MSJ1_6);
                     firebaseManager.logout();
+                } else {
+                    dbManager.saveProfileIntoCache(firebaseManager.getUser(), intentHome);
                 }
             }
         });
@@ -96,8 +106,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-                if (currentUser != null && currentUser.getPhoneNumber() != null) {
-                    dbManager.saveProfileIntoCache(intentHome);
+                if (currentUser != null){
+                    if (!currentUser.getPhoneNumber().equals("")) {
+                        intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intentHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        startActivity(intentHome);
+                        finish();
+                    } else {
+                        firebaseManager.logout();
+                    }
                 }
             }
         };
@@ -120,21 +138,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getValues() {
-        email = etEmail.getText().toString();
+        username = etUsername.getText().toString();
         password = etPassword.getText().toString();
     }
 
     private boolean isValid() {
         boolean isValid = true;
 
-        if (email.isEmpty()) {
-            Tools.showTextError(this, tilEmail, R.string.MSJ1_1);
+        if (username.isEmpty()) {
+            Tools.showTextError(this, tilUsername, R.string.MSJ1_1);
             isValid = false;
-        } else if(!Validator.emailIsValid(email)) {    // RN1,2;
-            Tools.showTextError(this, tilEmail, R.string.MSJ1_10);
+        } else if(!Validator.usernameIsValid(username)) {    // RN1,2;
+            Tools.showTextError(this, tilUsername, R.string.MSJ1_2);
             isValid = false;
         } else {
-            Tools.hideTextError(this, tilEmail);
+            Tools.hideTextError(this, tilUsername);
         }
 
         if (password.isEmpty()) {    // RN1,1

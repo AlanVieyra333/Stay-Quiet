@@ -44,11 +44,17 @@ public class HomeActivity extends AppCompatActivity {
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.ACCESS_FINE_LOCATION
     };
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // Session data.
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+        user = session.getUser();
 
         intentMaps = new Intent(this, MapsActivity.class);
         intentLogin = new Intent(this, LoginActivity.class);
@@ -99,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_close_session:
                 firebaseManager.logout();
+                session.logoutUser();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -106,7 +113,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getParams(){
-        id = getIntent().getExtras().getString("id");
+        //user = (User) getIntent().getExtras().get("user");
+
+        id = user.getId();
         user = dbManager.getUser(id);
 
         name = user.getName();

@@ -68,7 +68,7 @@ public class SecurityActivity extends AppCompatActivity {
                 firebaseManager.setCallback(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        dbManager.saveProfileIntoCache(intentHome);
+                        dbManager.saveProfileIntoCache(firebaseManager.getUser(),intentHome);
                     }
                 });
                 firebaseManager.updateProfile(user);

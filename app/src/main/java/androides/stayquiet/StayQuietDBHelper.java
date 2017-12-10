@@ -20,6 +20,7 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
     public static final String USER_COLUMN_PHONE_NUMBER = "phoneNumber";
     public static final String USER_COLUMN_PHOTO = "photo";
     public static final String USER_COLUMN_PHOTO_URL = "photoUrl";
+    public static final String USER_COLUMN_PASSWORD = "password";
 
     public static final String PROTECTION_TABLE = "protection";
     public static final String PROTECTION_COLUMN_ID = "id";

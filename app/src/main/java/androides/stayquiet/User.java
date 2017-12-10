@@ -18,6 +18,10 @@ public class User implements Serializable {
     private String photoUrl;
     private byte[] photo;
 
+    public User(String username, String password) {
+        this(username, null, null, null, password);
+    }
+
     public User() {
         this(null, null, null, null, null);
     }

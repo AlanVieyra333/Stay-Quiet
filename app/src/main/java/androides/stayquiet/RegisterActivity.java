@@ -36,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseManager firebaseManager;
     private ProgressBar progressBar;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                 getValues();
 
                 if ( validateForm()) {
-                    User user = new User(username, name, phoneNumber, email, password);
+                    user = new User(username, name, phoneNumber, email, password);
 
                     firebaseManager.signUp(user);
                 }
@@ -78,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
                 if (currentUser != null && currentUser.getPhoneNumber() != null) {
-                    dbManager.saveProfileIntoCache(intentHome);
+                    dbManager.saveProfileIntoCache(user, intentHome);
                 }
             }
         };

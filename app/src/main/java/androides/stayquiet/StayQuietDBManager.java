@@ -109,21 +109,13 @@ public class StayQuietDBManager {
         return result;
     }
 
-    public void  saveProfileIntoCache(final Intent intent) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        String id = currentUser.getUid();
-        String username = "";
-        String name = currentUser.getDisplayName();
-        String phoneNumber = currentUser.getPhoneNumber();
-        String email = currentUser.getEmail();
-        final String photoUri = currentUser.getPhotoUrl().toString();
-
-        final User user = new User(id, username, name, phoneNumber, email, null, photoUri, null);
+    public void  saveProfileIntoCache(final User user, final Intent intent) {
+        SessionManager session = new SessionManager(activity.getApplicationContext());
+        session.createLoginSession(user);
 
         Tools.showProgressbar(activity);
         FirebaseStorage.getInstance()
-                .getReference().child(photoUri)
+                .getReference().child(user.getPhotoUrl())
                 .getBytes(Long.MAX_VALUE)
                 .addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -145,9 +137,8 @@ public class StayQuietDBManager {
                         }
 
                         if(operationSucces) {
-                            intent.putExtra("id", user.getId());
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                             activity.startActivity(intent);
                             activity.finish();
@@ -157,10 +148,6 @@ public class StayQuietDBManager {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-
-                        Toast.makeText(activity.getApplicationContext(),
-                                photoUri.toString() + " : " + exception.toString(),
-                                Toast.LENGTH_LONG).show();
                         Tools.showMessage(activity, R.string.MSJ1_6);
                     }
                 });
