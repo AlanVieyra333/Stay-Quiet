@@ -1,0 +1,56 @@
+\begin{UseCase}{CU-06}{Agregar}{
+	Se describe el comportamiento y funcionamiento de la aplicación para agregar un contacto.
+}
+		\UCitem{Actor}{Usuario}
+		\UCitem{Propósito}{Agregar un contacto al catalogo de contactos}
+		\UCitem{Entradas}{
+			Se ingresa la información:
+			\begin{itemize}
+				\item Nombre de usuario.
+			\end{itemize}
+		 }
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ-01}{Campos Incompletos}
+				\item \MSGref{MSJ-06}{Error en conexión}
+				\item \MSGref{MSJ-14}{Nombre de usuario no existe}
+			\end{itemize}
+		}
+		\UCitem{Precondiciones}{
+			El usuario tendrá el nombre de usuario del contacto a agregar.
+		}
+		\UCitem{Postcondiciones}{
+			El usuario podrá consultar al recién agregado contacto.
+		}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Salas Hernández Abiran Natanael
+			\end{itemize}
+		}
+	\end{UseCase}
+	%-------------------------------------- COMIENZA descripción Trayectoria Crear
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso Reproducir el \UCref{CU-01}{Iniciar Sesión}
+		\UCpaso[\UCactor] Pulsa en el icono \IUbutton{AgregarContacto}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-07}{Agregar Contacto}.
+		\UCpaso[\UCactor] Captura el nombre de usuario del contacto.
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{AGREGAR} de la pantalla.
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN-01}{Campos nulos}. \Trayref{A}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN-03}{Usuario registrado}. \Trayref{B} \Trayref{C}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-03}{Home} con el usuario Protegido en lista.
+	\end{UCtrayectoria}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{A}{Condición: Faltan datos en el formulario.}
+		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ-01}{Campos Incompletos}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{B}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ-06}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 4 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{C}{Condición: El nombre de usuario no existe}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ-14}{Nombre de usuario no existe}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso 4 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}

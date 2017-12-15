@@ -1,73 +1,133 @@
 \section{Catalogo de Mensajes}
 
-	\begin{Message}{MSJ1.1}{Campos Incompletos}
+	\begin{Message}{MSJ-01}{Campos Incompletos}
 		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar cuando no se han proporcionado todos los datos que el sistema necesita.
-		\MSGitem[Redacción: ] ERROR. Campos incompletos.
+		\MSGitem[Redacción: ] Campos incompletos.
 	\end{Message}
 
-	\begin{Message}{MSJ1.2}{Formato de nombre incorrecto}
+	\begin{Message}{MSJ-02}{Formato de nombre incorrecto}
 		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
-		\MSGitem[Redacción: ] ERROR. Solo se permiten letras.
+		\MSGitem[Redacción: ] Solo se permiten letras.
 	\end{Message}
 
-		\begin{Message}{MSJ1.3}{Formato de teléfono incorrecto}
+		\begin{Message}{MSJ-03}{Formato de teléfono incorrecto}
 		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
-		\MSGitem[Redacción: ] ERROR. Solo se permiten números.
+		\MSGitem[Redacción: ] Solo se permiten números.
 	\end{Message}
 
-	\begin{Message}{MSJ1.4}{Formato de contraseña incorrecto}
+	\begin{Message}{MSJ-04}{Formato de contraseña incorrecto}
 		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
-		\MSGitem[Redacción: ] ERROR. La contraseña es débil.
+		\MSGitem[Redacción: ] La contraseña es débil.
 	\end{Message}
 
-	\begin{Message}{MSJ1.5}{Contraseña no coincide}
+	\begin{Message}{MSJ-05}{Contraseña no coincide}
 		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar al actor que la contraseña no coincide.
-		\MSGitem[Redacción: ] ERROR. No coincide la contraseña.
+		\MSGitem[Redacción: ] No coincide la contraseña.
 		\end{Message}
 
-	\begin{Message}{MSJ1.6}{Error en conexión}
+	\begin{Message}{MSJ-06}{Error en conexión}
 		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar al actor que no hay conexión en ese momento con la base de datos.
-		\MSGitem[Redacción: ] ERROR. No se puede conectar a la base de datos.
+		\MSGitem[Redacción: ] No se puede conectar a la base de datos.
 	\end{Message}
 
-	\begin{Message}{MSJ1.7}{Autentificación}
+	\begin{Message}{MSJ-07}{Autentificación}
 		\MSGitem[Tipo:] Advertencia
 		\MSGitem[Objetivo: ] Notificar al actor que el correo electrónico o la contraseña son inválidos.
-		\MSGitem[Redacción: ] Advertencia. Correo electrónico y/o contraseña incorrectos.
+		\MSGitem[Redacción: ] Correo electrónico y/o contraseña incorrectos.
 	\end{Message}
 
-	\begin{Message}{MSJ1.8}{Datos utilizados}
+	\begin{Message}{MSJ-08}{Datos utilizados}
 		\MSGitem[Tipo:] Error
 		\MSGitem[Objetivo: ] Notificar al actor que el correo y/o teléfono capturados anteriormente ya están registrados.
-		\MSGitem[Redacción: ] ERROR. Correo y/o teléfono ya han sido registrados anteriormente.
+		\MSGitem[Redacción: ] Correo y/o teléfono ya han sido registrados anteriormente.
 	\end{Message}
 
-	\begin{Message}{MSJ1.9}{Contraseña incorrecta}
+	\begin{Message}{MSJ-09}{Contraseña incorrecta}
 		\MSGitem[Tipo:] Advertencia
 		\MSGitem[Objetivo: ] Notificar al actor que la contraseña es incorrecta.
-		\MSGitem[Redacción: ] Advertencia. Contraseña incorrecta.
+		\MSGitem[Redacción: ] Contraseña incorrecta.
 	\end{Message}
 
-	\begin{Message}{MSJ1.10}{Formato de correo incorrecto}
+	\begin{Message}{MSJ-10}{Formato de correo incorrecto}
 	\MSGitem[Tipo:] Error
 	\MSGitem[Objetivo: ] Notificar al actor que el formato es incorrecto.
-	\MSGitem[Redacción: ] ERROR. Solo el formato de correo incorrecto: example@mail.com .
+	\MSGitem[Redacción: ] Formato de correo incorrecto: example@mail.com .
 	\end{Message}
 
-	\begin{Message}{MSJ1.11}{Envío correo}
+	\begin{Message}{MSJ-11}{Envío correo}
 	\MSGitem[Tipo:] Afirmación
 	\MSGitem[Objetivo: ] Notificar al actor que se le envió un correo.
-	\MSGitem[Redacción: ] Confirmación. Se envió un correo con tus datos. 
+	\MSGitem[Redacción: ] Se envió un correo con tus datos. 
 	\end{Message}
 	
-		\begin{Message}{MSJ1.12}{Cambio contraseña}
+	\begin{Message}{MSJ-12}{Cambio contraseña}
 	\MSGitem[Tipo:] Afirmación
-	\MSGitem[Objetivo: ] Notificar al actor que el cambio fue un exito.
-	\MSGitem[Redacción: ] Confirmación. Se a guardado tu nueva contraseña con éxito. 
+	\MSGitem[Objetivo: ] Notificar al actor que el cambio fue un éxito.
+	\MSGitem[Redacción: ] Se a guardado tu nueva contraseña con éxito. 
 	\end{Message}
+	
+	\begin{Message}{MSJ-13}{Nombre de usuario existente}
+	\MSGitem[Tipo:] Error
+	\MSGitem[Objetivo: ] Notificar al actor que el el nombre de usuario ya existe.
+	\MSGitem[Redacción: ] El nombre de usuario ya ha sido elegido. 
+	\end{Message}
+
+	\begin{Message}{MSJ-14}{Nombre de usuario no existe}
+	\MSGitem[Tipo:] Error
+	\MSGitem[Objetivo: ] Notificar al actor que el el nombre de usuario no existe.
+	\MSGitem[Redacción: ] El nombre de usuario no existe. 
+	\end{Message}	
+	
+	\begin{Message}{MSJ-15}{Formato de nombre de usuario incorrecto}
+	\MSGitem[Tipo:] Error
+	\MSGitem[Objetivo: ] Notificar al actor que el nombre de usuario debe incluir números y letras. 
+	\MSGitem[Redacción: ] Debe incluir letras y números. 
+	\end{Message}
+	
+	\begin{Message}{MSJ-16}{Solicitud enviada}
+	\MSGitem[Tipo:] Afirmación
+	\MSGitem[Objetivo: ] Notificar al actor que la solicitud de ubicación a sido enviada. 
+	\MSGitem[Redacción: ] La solicitud a sido enviada. 
+	\end{Message}
+	
+	\begin{Message}{MSJ-17}{Solicitud aceptada}
+	\MSGitem[Tipo:] Notificación
+	\MSGitem[Objetivo: ] Notificar al actor que la solicitud de ubicación a sido aceptada. 
+	\MSGitem[Redacción: ] La petición a sido aceptada, por favor espere. 
+	\end{Message}
+	
+	\begin{Message}{MSJ-18}{Solicitud rechazada}
+	\MSGitem[Tipo:] Notificación
+	\MSGitem[Objetivo: ] Notificar al actor que la solicitud de ubicación a sido rechazada. 
+	\MSGitem[Redacción: ] La peticion a sido rechazada, inténtelo más tarde. 
+	\end{Message}
+	
+	\begin{Message}{MSJ-19}{Operación cancelada}
+	\MSGitem[Tipo:] Notificación
+	\MSGitem[Objetivo: ] Notificar al actor que la reciente acción se cancelo. 
+	\MSGitem[Redacción: ] Operación cancelada. 
+	\end{Message}
+	
+	\begin{Message}{MSJ-20}{Rango Marcado}
+	\MSGitem[Tipo:] Notificación
+	\MSGitem[Objetivo: ] Notificar al actor que el rango ya a sido marcado para su monitoreo. 
+	\MSGitem[Redacción: ] Ruta marcada con éxito. 
+	\end{Message}
+	
+	\begin{Message}{MSJ-21}{Rango fuera de parámetros}
+	\MSGitem[Tipo:] Notificación
+	\MSGitem[Objetivo: ] Notificar al actor que el rango es menor a 20 metros o que es mayor a 1 kilómetro. 
+	\MSGitem[Redacción: ] El rango debe estar entre 20 metros y 1 kilómetro. 
+	\end{Message}
+	
+	\begin{Message}{MSJ-22}{Contacto fuera de rango}
+	\MSGitem[Tipo:] Alarma
+	\MSGitem[Objetivo: ] Notificar al actor que el contacto esta fuera del rango. 
+	\MSGitem[Redacción: ] ALERTA!! CONTACTO FUERA DEL RANGO. 
+	\end{Message}	

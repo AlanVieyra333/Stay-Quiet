@@ -1,0 +1,38 @@
+\begin{UseCase}{CU-11}{Cerrar Sesión}{
+	Se describe el comportamiento y funcionamiento de la aplicación para cerrar sesión de la aplicación.
+}
+		\UCitem{Actor}{Usuario}
+		\UCitem{Propósito}{
+		Cerrar sesión de la aplicación
+		}
+		\UCitem{Entradas}{
+			Ninguna
+		 }
+		\UCitem{Salidas}{
+			Ninguna
+		}
+		\UCitem{Precondiciones}{El usuario debió haber iniciado sesión en la aplicación.
+		}
+		\UCitem{Postcondiciones}{
+			El usuario no podrá acceder hasta ingresar de nuevo sus credenciales de ingreso.
+		}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Salas Hernández Abiran Natanael
+			\end{itemize}
+		}
+	\end{UseCase}
+	%-------------------------------------- COMIENZA descripción Trayectoria Crear
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso Reproducir el \UCref{CU-01}{Iniciar Sesión}.
+		\UCpaso[\UCactor] Pulsa en el menú superior derecho.
+		\UCpaso[\UCsist] Despliega el menú con tres opciones \IUbutton{Perfil},\IUbutton{Seguridad} y \IUbutton{Cerrar Sesión}.
+		\UCpaso[\UCactor] Pulsa en el  \IUbutton{Cerrar Sesión}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-01}{Iniciar Sesión}.\Trayref{A}
+	\end{UCtrayectoria}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{A}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ-06}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 2 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+

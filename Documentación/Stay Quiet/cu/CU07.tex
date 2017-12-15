@@ -1,0 +1,43 @@
+\begin{UseCase}{CU-07}{Información}{
+	Se describe el comportamiento y funcionamiento de la aplicación para visualizar la información de un contacto.
+}
+		\UCitem{Actor}{Usuario}
+		\UCitem{Propósito}{Ver la información de un contacto}
+		\UCitem{Entradas}{
+			Se ingresa la información:
+			\begin{itemize}
+				\item Ninguno
+			\end{itemize}
+		 }
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item Ninguno
+			\end{itemize}
+		}
+		\UCitem{Precondiciones}{
+			El usuario deberá haber agregado a un contacto.
+		}
+		\UCitem{Postcondiciones}{
+			El usuario podrá consultar la información del contacto.
+		}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Salas Hernández Abiran Natanael
+			\end{itemize}
+		}
+	\end{UseCase}
+	%-------------------------------------- COMIENZA descripción Trayectoria Crear
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso Reproducir el \UCref{CU-01}{Iniciar Sesión}
+		\UCpaso[\UCactor] Selecciona de la lista, al contacto deseado y presiona el botón \IUbutton{Información}. \Trayref{A} \Trayref{B}
+		\UCpaso[\UCsist] Despliega una carpeta hacia abajo con la información del contacto.
+	\end{UCtrayectoria}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{A}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ-06}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 4 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{B}{Condición: No existen contactos}
+		\UCpaso[\UCsist] Reproducir el \UCref{CU-06}{Agregar}. \Trayref{Principal}
+	\end{UCtrayectoriaA}

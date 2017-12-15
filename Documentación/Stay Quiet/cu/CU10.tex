@@ -1,0 +1,52 @@
+\begin{UseCase}{CU-10}{Monitoreo}{
+	Se describe el comportamiento y funcionamiento de la aplicación para empezar a monitorear a un contacto.}
+		\UCitem{Actor}{Usuario}
+		\UCitem{Propósito}{Empezar el monitoreo del contacto.}
+		\UCitem{Entradas}{Ninguno}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ-22}{Contacto fuera de rango}
+				\item Alarma junto con vibraciones.
+			\end{itemize}
+			}
+		\UCitem{Precondiciones}{
+		El usuario a marcado el rango de monitoreo.	
+		}
+		\UCitem{Postcondiciones}{
+		El usuario tendrá el control del monitoreo del contacto.
+		}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Salas Hernández Abiran Natanael
+			\end{itemize}
+			}
+	\end{UseCase}
+	%---------------------				Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Reproduce el \UCref{CU-09}{Definir rango}
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{PLAY}.
+		\UCpaso[\UCsist] Empieza el monitoreo del contacto. \Trayref{A} \Trayref{B} \Trayref{C}
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{STOP}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-10}{Mapa Monitor}
+	\end{UCtrayectoria}
+	%--------------------				Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{A}{Condición: Contacto fuera del rango}
+		\UCpaso[\UCsist] Muestra el mensaje \MSGref{MSJ-22}{Contacto fuera de rango}		
+		\UCpaso[\UCactor] Desliza la opción \IUbutton{ALARMA} para detener la alarma
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-09}{Mapa Inicial}.
+	\end{UCtrayectoriaA}
+
+	%---------------------				Trayectoria ALTERNATIVA B
+	\begin{UCtrayectoriaA}{B}{Condición: Contacto fuera de rango con opción a llamar al contacto}
+		\UCpaso[\UCsist] Muestra el mensaje \MSGref{MSJ-22}{Contacto fuera de rango}
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{Llamada}.
+		\UCpaso[\UCsist] Realiza la llamada al teléfono del contacto.
+	\end{UCtrayectoriaA}
+
+	%---------------------				Trayectoria ALTERNATIVA C
+	\begin{UCtrayectoriaA}{B}{Condición: Contacto fuera de rango con opción a mandar un mensaje al contacto}
+		\UCpaso[\UCsist] Muestra el mensaje \MSGref{MSJ-22}{Contacto fuera de rango}
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{Mensaje}.
+		\UCpaso[\UCactor] Captura el mensaje y lo envía.
+		\UCpaso[\UCsist] Envía el mensaje al teléfono del contacto.
+	\end{UCtrayectoriaA}

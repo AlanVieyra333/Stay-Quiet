@@ -1,0 +1,41 @@
+\begin{UseCase}{CU-09}{Definir rango}{
+	Se describe el comportamiento y funcionamiento de la aplicación para definir el rango de protección para el contacto.}
+		\UCitem{Actor}{Usuario}
+		\UCitem{Propósito}{Definir un rango de protección para el contacto por parte del usuario.}
+		\UCitem{Entradas}{Rango}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ-21}{Rango fuera de parámetros}
+			\end{itemize}
+			}
+		\UCitem{Precondiciones}{
+		El usuario tiene la ubicación del contacto.	
+		}
+		\UCitem{Postcondiciones}{
+		El usuario podrá definir el rango de protección para el contacto.
+		}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Salas Hernández Abiran Natanael
+			\end{itemize}
+			}
+	\end{UseCase}
+	%---------------------				Trayectoria 	P R I N C I P A L
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso[\UCsist] Reproduce el \UCref{CU-08}{Ubicación}
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{RANGO}.
+		\UCpaso[\UCactor] Ingresa el rango a monitorear con los parámetros de la regla de negocio \BRref{RN-07}{Parámetros de rango}. \Trayref{B}
+		\UCpaso[\UCactor] Pulsa en el botón \IUbutton{OK} \Trayref{A}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-09}{Mapa Inicial} con en el rango seleccionado. 
+	\end{UCtrayectoria}
+	%--------------------				Trayectoria ALTERNATIVA A
+	\begin{UCtrayectoriaA}{A}{Condición: Usuario ha cancelado la operación}
+		\UCpaso[\UCactor] Pulsó la opción \IUbutton{Cancelar}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-09}{Mapa Inicial}.
+	\end{UCtrayectoriaA}
+
+	%---------------------				Trayectoria ALTERNATIVA B
+	\begin{UCtrayectoriaA}{B}{Condición: El rango ingresado no cumple con los parámetros}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ-21}{Rango fuera de parámetros}
+		\UCpaso[\UCsist] Regresa al paso 3 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}

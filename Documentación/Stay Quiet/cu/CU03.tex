@@ -1,0 +1,85 @@
+\begin{UseCase}{CU-03}{Editar}{
+	Se describe el comportamiento y funcionamiento de la aplicación para la modificación de los datos del usuario.
+}
+		\UCitem{Actor}{Usuario}
+		\UCitem{Propósito}{
+		Poder actualizar, modificar los datos del usuario
+		}
+		\UCitem{Entradas}{
+			Seleccionar el campo a modificar:
+			\begin{itemize}
+				\item Nombre.
+				\item Correo Electrónico.
+				\item Numero de Celular.
+			\end{itemize}
+		 }
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ-01}{Campos Incompletos}
+				\item \MSGref{MSJ-02}{Formato de nombre incorrecto}
+				\item \MSGref{MSJ-03}{Formato de teléfono incorrecto}
+				\item \MSGref{MSJ-06}{Error en conexión}
+				\item \MSGref{MSJ-08}{Datos utilizados}
+				\item \MSGref{MSJ-09}{Contraseña incorrecta}
+				\item \MSGref{MSJ-10}{Formato de correo incorrecto}
+			\end{itemize}
+		}
+		\UCitem{Precondiciones}{
+		El usuario debe estar registrado en el sistema.
+		}
+		\UCitem{Postcondiciones}{
+			El usuario podrá ver sus modificaciones.
+		}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Salas Hernández Abiran Natanael
+			\end{itemize}
+		}
+	\end{UseCase}
+	%-------------------------------------- COMIENZA descripción Trayectoria Crear
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso Reproducir el \UCref{CU-01}{Iniciar Sesión}
+		\UCpaso[\UCactor] Pulsa en el menú superior derecho.
+		\UCpaso[\UCsist] Despliega el menú con tres opciones \IUbutton{Perfil},\IUbutton{Seguridad} y \IUbutton{Cerrar Sesión}.
+		\UCpaso[\UCactor] Pulsa en el  \IUbutton{Perfil}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-04}{Perfil}.
+		\UCpaso[\UCactor] Selecciona el campo a modificar.
+		\UCpaso[\UCactor] Pulsa en el  \IUbutton{GUARDAR}.
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN-01}{Campos nulos}. \Trayref{A}
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN-02}{Formato general de registro}. \Trayref{B}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-05}{Seguridad}.
+		\UCpaso[\UCactor] Captura su contraseña en la pantalla.
+		\UCpaso[\UCactor] Pulsa en el  \IUbutton{CONTINUAR}.
+		\UCpaso[\UCsist] Realiza los cambios con los datos ingresados. \Trayref{C} \Trayref{D} \Trayref{E}
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-03}{Home}.
+	\end{UCtrayectoria}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{A}{Condición: Faltan datos en el formulario.}
+		\UCpaso[\UCsist] Muestra mensaje \MSGref{MSJ-01}{Campos Incompletos}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{B}{Condición: El actor captura la información de manera incorrecta.}
+		\UCpaso[\UCsist] Dependiendo del error sera el mensaje:
+			\begin{itemize}
+			\item \MSGref{MSJ-02}{Formato de nombre incorrecto}
+			\item \MSGref{MSJ-03}{Formato de teléfono incorrecto}
+			\item \MSGref{MSJ-10}{Formato de correo incorrecto}
+			\end{itemize}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{C}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ-06}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 5 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{D}{Condición: Contraseña incorrecta}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ-09}{Contraseña incorrecta}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso anterior de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{E}{Condición: Usuario ya registrado y/o correo y/o teléfono ya utilizados}
+		\UCpaso[\UCsist] El sistema mostrará el mensaje \MSGref{MSJ-08}{Datos utilizados}
+		\UCpaso[\UCsist] Continúa trayectoria en el paso 6 de la trayectoria  principal que invocó esta trayectoria alternativa. \Trayref{Principal}
+	\end{UCtrayectoriaA}

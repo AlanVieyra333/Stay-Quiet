@@ -1,0 +1,50 @@
+\begin{UseCase}{CU-08}{Ubicación}{
+	Se describe el comportamiento y funcionamiento de la aplicación para la solicitud de ubicación de un contacto.
+}
+		\UCitem{Actor}{Usuario}
+		\UCitem{Propósito}{Pedir la autorización de un contacto de su ubicación}
+		\UCitem{Entradas}{
+			Ninguno
+			}
+		\UCitem{Salidas}{
+			\begin{itemize}
+				\item \MSGref{MSJ-16}{Solicitud enviada}
+				\item \MSGref{MSJ-17}{Solicitud aceptada}
+				\item \MSGref{MSJ-18}{Solicitud rechazada}
+			\end{itemize}
+		}
+		\UCitem{Precondiciones}{
+			El usuario deberá haber agregado a un contacto.
+		}
+		\UCitem{Postcondiciones}{
+			El usuario podrá conocer la ubicación del contacto.
+		}
+		\UCitem{Autor}{
+			\begin{itemize}
+				\item Salas Hernández Abiran Natanael
+			\end{itemize}
+		}
+	\end{UseCase}
+	%-------------------------------------- COMIENZA descripción Trayectoria Crear
+	\begin{UCtrayectoria}{Principal}
+		\UCpaso Reproducir el \UCref{CU-01}{Iniciar Sesión}
+		\UCpaso[\UCactor] Selecciona de la lista, al contacto deseado y presiona el botón \IUbutton{Ubicación}. \Trayref{A} \Trayref{B}
+		\UCpaso[\UCsist] Enviara la solicitud y mostrará el mensaje \MSGref{MSJ-16}{Solicitud enviada}.
+		\UCpaso[\UCsist] Verifica la regla de negocio \BRref{RN-06}{Peticion de ubicacion}. \Trayref{C}
+		\UCpaso[\UCsist] Notificará el estatus de la solicitud aceptada mostrando el mensaje \MSGref{MSJ-17}{Solicitud aceptada}.
+		\UCpaso[\UCsist] Despliega la pantalla \IUref{IU-09}{Mapa Inicial} y mostrará la ubicación del contacto.
+	\end{UCtrayectoria}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{A}{Condición: Falló la conexión en la base de datos}
+		\UCpaso[\UCsist] Mostrará el mensaje \MSGref{MSJ-06}{Error en conexión}
+		\UCpaso[\UCsist] Regresa al paso 4 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{B}{Condición: No existen contactos}
+		\UCpaso[\UCsist] Reproducir el \UCref{CU-06}{Agregar}. \Trayref{Principal}
+	\end{UCtrayectoriaA}
+	%-------------------------------------Trayectoras alternativas
+	\begin{UCtrayectoriaA}{C}{Condición: Solicitud rechazada}
+		\UCpaso[\UCsist] Mostrará el mensaje \MSGref{MSJ-18}{Solicitud rechazada}
+		\UCpaso[\UCsist] Regresa al paso 2 de la trayectoria principal. \Trayref{Principal}
+	\end{UCtrayectoriaA}	

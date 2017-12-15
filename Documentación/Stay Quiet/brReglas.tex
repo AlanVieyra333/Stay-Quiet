@@ -1,11 +1,11 @@
 \section{Reglas de Negocio}
 
-\begin{BussinesRule}{RN1.1}{Campos nulos}
+\begin{BussinesRule}{RN-01}{Campos nulos}
 	\BRitem[Descripción:] Ningún dato en el formulario puede ser nulo.
 	\BRitem[Nivel:] Obligatorio.
 \end{BussinesRule}
 
-\begin{BussinesRule}{RN1.2}{Formato general de registro}
+\begin{BussinesRule}{RN-02}{Formato general de registro}
 	\BRitem[Nombre:] Formato del nombre.
 	\BRitem[Descripción:] El nombre esta compuesto por:
 		\begin{itemize}
@@ -14,6 +14,14 @@
 		Todo el nombre debe estar compuesto por letras.
 		Ejemplo 
 		Nombre: Luis Ángel Martínez Gómez.
+	\BRitem[Nivel:] Obligatorio.\\\\
+
+	\BRitem[Teléfono:] Formato de nombre de usuario.
+	\BRitem[Descripción:] Debe de temer números y letras mayúsculas y/o minúsculas.
+		Ejemplo
+		Nombre: Abiran
+		Correo: abisaher@gmail.com
+		NombreUsuario: Abiran55
 	\BRitem[Nivel:] Obligatorio.\\\\
 
 	\BRitem[Teléfono:] Formato del teléfono.
@@ -43,12 +51,33 @@
 	\BRitem[Nivel:] Obligatorio.\\\\
 \end{BussinesRule}
 
-\begin{BussinesRule}{RN1.3}{Usuario registrado}
+\begin{BussinesRule}{RN-03}{Usuario registrado}
 	\BRitem[Descripción:] Verificar que el usuario este dado de alta en la aplicación.
 	\BRitem[Nivel:] Obligatorio.
 \end{BussinesRule}
 
-\begin{BussinesRule}{RN1.4}{Checkbox}
+\begin{BussinesRule}{RN-04}{Checkbox}
 	\BRitem[Descripción:] Verificar que el usuario quiera guardar sus credenciales en el login y entrar automáticamente a la aplicación.
 	\BRitem[Nivel:] Opcional
 \end{BussinesRule}
+
+\begin{BussinesRule}{RN-05}{Nombre de usuario único}
+	\BRitem[Descripción:] El nombre de usuario sera único para cada uno de los usuarios de la aplicación móvil. Por lo tanto no existirá otro usuario con el mismo nombre de usuario.
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+\begin{BussinesRule}{RN-06}{Peticion de ubicacion}
+	\BRitem[Descripción:] El usuario a quien se le pedirá su ubicación debe dar su consentimiento para dar su ubicación.
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+\begin{BussinesRule}{RN-07}{Parámetros de rango}
+	\BRitem[Descripción:] El usuario podrá marcar un rango mínimo de 20 metros y un máximo de 1 kilómetro.
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
+\begin{BussinesRule}{RN-08}{Contacto fuera del rango}
+	\BRitem[Descripción:] Se le notificara al usuario cuando el contacto este fuera del rango marcado. Esto mediante de alertas donde se parara hasta que el usuario lo desactive.
+	\BRitem[Nivel:] Obligatorio
+\end{BussinesRule}
+
