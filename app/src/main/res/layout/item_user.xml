@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/llyImageProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/image_bg"
+        android:layout_marginRight="5dip"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/ivImageProfile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/boy"
+            android:background="@drawable/image_bg"/>
+
+    </LinearLayout>
+
+    <RelativeLayout android:id="@+id/llyDataProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/llyImageProfile"
+        android:layout_alignTop="@+id/llyImageProfile"
+        android:layout_alignBottom="@+id/llyImageProfile">
+
+        <!-- Name of protected -->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="#040404"
+            android:typeface="sans"
+            android:textSize="15dip"
+            android:textStyle="bold"/>
+
+        <!-- Last location -->
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:layout_marginTop="1dip"
+            android:text="Last ubication."
+            android:textColor="#343434"
+            android:textSize="10dip" />
+    </RelativeLayout>
+
+    <!-- Icon Info -->
+    <ImageView
+        android:id="@+id/icon_info"
+        android:src="@drawable/ic_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/icon_delete"
+        android:layout_centerVertical="true"/>
+
+    <!-- Icon delete -->
+    <ImageView
+        android:id="@+id/icon_delete"
+        android:src="@drawable/ic_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"/>
+
+</RelativeLayout>

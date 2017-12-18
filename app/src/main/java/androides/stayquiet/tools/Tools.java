@@ -7,22 +7,12 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseUser;
-
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import androides.stayquiet.R;
-import androides.stayquiet.StayQuietDBHelper;
-import androides.stayquiet.User;
 
 /**
  * Created by developer on 23/11/17.

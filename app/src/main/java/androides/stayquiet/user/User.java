@@ -1,8 +1,8 @@
-package androides.stayquiet;
-
-import android.graphics.Bitmap;
+package androides.stayquiet.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by developer on 15/10/17.
@@ -17,20 +17,21 @@ public class User implements Serializable {
     private String password;
     private String photoUrl;
     private byte[] photo;
-
-    public User(String username, String password) {
-        this(username, null, null, null, password);
-    }
+    private List<Protected> protecteds;
 
     public User() {
         this(null, null, null, null, null);
     }
 
-    public User(String username, String name, String phoneNumber, String email, String password) {
-        this(null, username, name, phoneNumber, email, password, null, null);
+    public User(String username, String password) {
+        this(username, null, null, null, password);
     }
 
-    public User(String id, String username, String name, String phoneNumber, String email, String password, String photoUrl, byte[] photo) {
+    public User(String username, String name, String phoneNumber, String email, String password) {
+        this(null, username, name, phoneNumber, email, password, null, null, new ArrayList<Protected>());
+    }
+
+    public User(String id, String username, String name, String phoneNumber, String email, String password, String photoUrl, byte[] photo, List<Protected> protecteds) {
         super();
         setId(id);
         setUsername(username);
@@ -40,6 +41,7 @@ public class User implements Serializable {
         setPassword(password);
         setPhotoUrl(photoUrl);
         setPhoto(photo);
+        setProtecteds(protecteds);
     }
 
     @Override
@@ -138,5 +140,17 @@ public class User implements Serializable {
 
     public byte[] getPhoto() {
         return this.photo;
+    }
+
+    public List<Protected> getProtecteds() {
+        return protecteds;
+    }
+
+    public void setProtecteds(List<Protected> protecteds) {
+        this.protecteds = protecteds;
+    }
+
+    public void addProtected(Protected myProtected) {
+        this.protecteds.add(myProtected);
     }
 }

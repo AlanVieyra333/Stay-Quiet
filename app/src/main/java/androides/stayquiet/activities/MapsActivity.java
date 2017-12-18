@@ -1,4 +1,4 @@
-package androides.stayquiet;
+package androides.stayquiet.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -27,6 +27,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import androides.stayquiet.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 

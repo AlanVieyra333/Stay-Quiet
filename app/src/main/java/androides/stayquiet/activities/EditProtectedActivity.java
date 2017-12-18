@@ -1,8 +1,7 @@
-package androides.stayquiet;
+package androides.stayquiet.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androides.stayquiet.R;
+import androides.stayquiet.database.StayQuietDBManager;
+import androides.stayquiet.user.User;
 import androides.stayquiet.tools.Tools;
 import androides.stayquiet.tools.Validator;
 

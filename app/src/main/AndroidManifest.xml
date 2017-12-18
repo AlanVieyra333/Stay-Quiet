@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity"
+        <activity android:name=".activities.LoginActivity"
             android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,12 +28,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
+            android:label="REGISTRO"
             android:launchMode="singleTask"
-            android:parentActivityName=".LoginActivity"/>
+            android:parentActivityName=".activities.LoginActivity"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,23 +48,24 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"
             android:launchMode="singleTask"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".activities.HomeActivity"/>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".activities.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:launchMode="singleTask"
-            android:parentActivityName=".HomeActivity" />
-        <activity android:name=".VerifyPhoneActivity"
+            android:parentActivityName=".activities.HomeActivity" />
+        <activity android:name=".activities.VerifyPhoneActivity"
             android:launchMode="singleTask"
-            android:parentActivityName=".RegisterActivity"/>
+            android:parentActivityName=".activities.RegisterActivity"/>
         <activity
-            android:name=".SecurityActivity"
+            android:name=".activities.SecurityActivity"
+            android:label="SEGURIDAD"
             android:launchMode="singleTask"
-            android:parentActivityName=".ProfileActivity" />
-        <activity android:name=".EditProtectedActivity"></activity>
+            android:parentActivityName=".activities.ProfileActivity" />
+        <activity android:name=".activities.EditProtectedActivity"></activity>
     </application>
 
 </manifest>

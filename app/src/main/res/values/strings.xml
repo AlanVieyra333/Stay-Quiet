@@ -23,6 +23,7 @@
     <string name="text_activity_recovery_2">Ingresa tu correo electronico para que te enviemos la contraseña</string>
     <string name="text_activity_change_1">Ingresa contraseña</string>
     <string name="text_activity_edit_protected_1">Modifica los datos de tu protegido.</string>
+    <string name="text_add_protected">Escribe el nombre de usuario a agregar.</string>
     <string name="text_pwd">Contraseña anterior</string>
     <string name="text_pwd_1">Nueva contraseña</string>
     <string name="text_pwd_2">Confirmar contraseña</string>
@@ -31,6 +32,7 @@
     <string name="btn_verify">VERIFICAR</string>
     <string name="btn_continue">CONTINUAR</string>
     <string name="btn_recovery">SIGUIENTE</string>
+    <string name="btn_add">AGREGAR</string>
     <string name="MSJ1.1">ERROR. Campos incompletos.</string>
     <string name="MSJ1.2">ERROR. Solo se permiten letras.</string>
     <string name="MSJ1.3">ERROR. Solo se permiten números.</string>

@@ -1,12 +1,9 @@
-package androides.stayquiet;
+package androides.stayquiet.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,8 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import java.io.InputStream;
-
+import androides.stayquiet.R;
+import androides.stayquiet.database.SessionManager;
+import androides.stayquiet.database.StayQuietDBManager;
+import androides.stayquiet.user.User;
 import androides.stayquiet.tools.Tools;
 import androides.stayquiet.tools.Validator;
 

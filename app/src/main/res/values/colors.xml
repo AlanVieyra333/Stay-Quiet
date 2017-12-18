@@ -3,6 +3,8 @@
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#0077c7</color>
+    <color name="colorAccentLigth">#0098ff</color>
+    <color name="colorAccentHard">#00558e</color>
     <color name="colorCircleSecure">#461cc427</color>
     <color name="colorCircleSecureBorder">#1cc427</color>
     <color name="colorCircleDanger">#46c41c1c</color>

@@ -1,4 +1,4 @@
-package androides.stayquiet;
+package androides.stayquiet.user;
 
 /**
  * Created by developer on 9/10/17.

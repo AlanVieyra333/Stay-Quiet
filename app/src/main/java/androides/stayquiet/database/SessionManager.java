@@ -1,14 +1,16 @@
-package androides.stayquiet;
+package androides.stayquiet.database;
 
 /**
  * Created by developer on 9/12/17.
  */
 
-import java.util.HashMap;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import androides.stayquiet.user.User;
+import androides.stayquiet.activities.LoginActivity;
 
 public class SessionManager {
     SharedPreferences pref;                 // Shared Preferences
@@ -113,6 +115,7 @@ public class SessionManager {
 
         // Clearing all data from Shared Preferences
         editor.clear();
+        editor.putBoolean(IS_LOGIN, false);
         editor.commit();
 
         // Closing all the Activities

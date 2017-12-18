@@ -1,4 +1,4 @@
-package androides.stayquiet;
+package androides.stayquiet.database;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -6,16 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.ArrayList;
+
+import androides.stayquiet.R;
+import androides.stayquiet.user.Protected;
+import androides.stayquiet.user.User;
 import androides.stayquiet.tools.Tools;
 
 /**
@@ -71,7 +71,7 @@ public class StayQuietDBManager {
         if (cursor.moveToFirst()){
             user = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2),
                     cursor.getString(3), cursor.getString(4), null, null,
-                    cursor.getBlob(5));
+                    cursor.getBlob(5), new ArrayList<Protected>());
         }
 
         db.close();
