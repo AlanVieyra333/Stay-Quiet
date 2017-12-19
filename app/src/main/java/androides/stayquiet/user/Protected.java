@@ -17,6 +17,22 @@ public class Protected {
         setCanWatch(canWatch);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        boolean result = false;
+
+        if (object == null || object.getClass() != getClass()) {
+            result = false;
+        } else {
+            Protected auxProtected = (Protected) object;
+            if (getUsername().equals(auxProtected.getUsername())) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
     public String getUsername() {
         return username;
     }

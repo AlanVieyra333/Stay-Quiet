@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -52,6 +53,11 @@ public class Tools {
     public static void showMessage(AppCompatActivity activity, int message) {
         Tools.hideProgressbar(activity);
         Toast.makeText(activity.getApplicationContext(), message,
+                Toast.LENGTH_LONG).show();
+    }
+
+    public static void showMessage(View activity, String message) {
+        Toast.makeText(activity.getContext(), message,
                 Toast.LENGTH_LONG).show();
     }
 

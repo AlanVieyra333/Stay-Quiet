@@ -16,6 +16,7 @@ import androides.stayquiet.database.FirebaseManager;
 import androides.stayquiet.R;
 import androides.stayquiet.database.SessionManager;
 import androides.stayquiet.database.StayQuietDBManager;
+import androides.stayquiet.services.LocationService;
 import androides.stayquiet.tools.Tools;
 import androides.stayquiet.tools.Validator;
 
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Intent intentRegister;
     private FirebaseManager firebaseManager;
     private SessionManager session;
+    private AppCompatActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intentHome);
             finish();
         }
+
+        activity = this;
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);

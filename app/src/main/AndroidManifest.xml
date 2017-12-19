@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity"
+        <activity
+            android:name=".activities.LoginActivity"
             android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,7 @@
             android:name=".activities.RegisterActivity"
             android:label="REGISTRO"
             android:launchMode="singleTask"
-            android:parentActivityName=".activities.LoginActivity"/>
+            android:parentActivityName=".activities.LoginActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -51,21 +52,27 @@
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"
             android:launchMode="singleTask"
-            android:parentActivityName=".activities.HomeActivity"/>
+            android:parentActivityName=".activities.HomeActivity" />
         <activity
             android:name=".activities.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:launchMode="singleTask"
             android:parentActivityName=".activities.HomeActivity" />
-        <activity android:name=".activities.VerifyPhoneActivity"
+        <activity
+            android:name=".activities.VerifyPhoneActivity"
             android:launchMode="singleTask"
-            android:parentActivityName=".activities.RegisterActivity"/>
+            android:parentActivityName=".activities.RegisterActivity" />
         <activity
             android:name=".activities.SecurityActivity"
             android:label="SEGURIDAD"
             android:launchMode="singleTask"
             android:parentActivityName=".activities.ProfileActivity" />
-        <activity android:name=".activities.EditProtectedActivity"></activity>
+        <activity android:name=".activities.EditProtectedActivity" />
+
+        <service
+            android:name=".services.LocationService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

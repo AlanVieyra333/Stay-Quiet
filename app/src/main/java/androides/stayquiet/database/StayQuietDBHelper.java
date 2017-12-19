@@ -27,6 +27,11 @@ public class StayQuietDBHelper extends SQLiteOpenHelper {
     public static final String PROTECTION_COLUMN_PROTECTOR = "protector";
     public static final String PROTECTION_COLUMN_PROTECTED = "protected";
 
+    public static final String LOCATION_TABLE = "location";
+    public static final String LOCATION_COLUMN_ID = "id";
+    public static final String LOCATION_COLUMN_LONGITUDE = "longitude";
+    public static final String LOCATION_COLUMN_LATITUDE = "latitude";
+
     public static final String URL_IMAGES = "images/";
     public static final String PHOTO_DEFAULT = "default.png";
 

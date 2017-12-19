@@ -1,5 +1,7 @@
 package androides.stayquiet.user;
 
+import android.location.Location;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ public class User implements Serializable {
     private String photoUrl;
     private byte[] photo;
     private List<Protected> protecteds;
+    private Location location;
 
     public User() {
         this(null, null, null, null, null);
@@ -55,6 +58,22 @@ public class User implements Serializable {
         toString += getPassword();
 
         return toString;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        boolean result = false;
+
+        if (object == null || object.getClass() != getClass()) {
+            result = false;
+        } else {
+            User user = (User) object;
+            if (getUsername().equals(user.getUsername())) {
+                result = true;
+            }
+        }
+
+        return result;
     }
 
     public void setId(String id) {
@@ -152,5 +171,24 @@ public class User implements Serializable {
 
     public void addProtected(Protected myProtected) {
         this.protecteds.add(myProtected);
+    }
+
+    public void removeProtected(Protected myProtected) {
+        this.protecteds.remove(myProtected);
+    }
+
+    public Protected getProtected(String username) {
+        Protected auxProtected = new Protected(username, false);
+        int index = this.protecteds.indexOf(auxProtected);
+
+        return getProtecteds().get(index);
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

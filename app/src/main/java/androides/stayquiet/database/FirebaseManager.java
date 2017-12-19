@@ -50,6 +50,10 @@ public class FirebaseManager {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
+    public FirebaseManager() {
+        this(null);
+    }
+
     public FirebaseManager(AppCompatActivity activity) {
         setActivity(activity);
         setmAuth(FirebaseAuth.getInstance());
@@ -163,6 +167,11 @@ public class FirebaseManager {
     public DatabaseReference getDBReferenceProtection() {
         return getDatabaseReference()
                 .child(StayQuietDBHelper.PROTECTION_TABLE);
+    }
+
+    public DatabaseReference getDBReferenceLocation() {
+        return getDatabaseReference()
+                .child(StayQuietDBHelper.LOCATION_TABLE);
     }
 
     public void setDatabaseReference(DatabaseReference databaseReference) {

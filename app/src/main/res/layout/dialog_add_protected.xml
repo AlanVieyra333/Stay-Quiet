@@ -25,7 +25,7 @@
             style="@style/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/background_light"
+            android:textColor="@android:color/background_dark"
             android:drawableStart="@drawable/ic_username_black"
             android:drawablePadding="10dp"
             android:hint="@string/text_username"

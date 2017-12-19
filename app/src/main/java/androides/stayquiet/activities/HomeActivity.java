@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -24,10 +26,10 @@ import androides.stayquiet.R;
 import androides.stayquiet.database.FirebaseManager;
 import androides.stayquiet.database.SessionManager;
 import androides.stayquiet.database.StayQuietDBManager;
+import androides.stayquiet.services.LocationService;
 import androides.stayquiet.tools.Tools;
 import androides.stayquiet.user.Protected;
 import androides.stayquiet.user.User;
-import androides.stayquiet.user.UsersAdapter;
 
 public class HomeActivity extends AppCompatActivity implements AddProtectedDialog.addProtectedDialogListener{
 
@@ -46,6 +48,7 @@ public class HomeActivity extends AppCompatActivity implements AddProtectedDialo
             android.Manifest.permission.ACCESS_FINE_LOCATION
     };
     private SessionManager session;
+    private AppCompatActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,11 @@ public class HomeActivity extends AppCompatActivity implements AddProtectedDialo
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
         user = session.getUser();
+
+        activity = this;
+        // Start Service of location.
+        Intent intent = new Intent(activity, LocationService.class);
+        startService(intent);
 
         intentMaps = new Intent(this, MapsActivity.class);
         intentLogin = new Intent(this, LoginActivity.class);
@@ -151,6 +159,7 @@ public class HomeActivity extends AppCompatActivity implements AddProtectedDialo
 
     private void getProtected() {
         final ArrayList<User> listProtected = new ArrayList<User>();
+        //listProtected.add(user);
 
         final UsersAdapter usersAdapter = new UsersAdapter(this, listProtected);
 
@@ -177,12 +186,27 @@ public class HomeActivity extends AppCompatActivity implements AddProtectedDialo
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Protected currentProtected = dataSnapshot.getValue(Protected.class);
 
+                user.getProtected(currentProtected.getUsername()).setCanWatch(currentProtected.getCanWatch());
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Protected oldProtected = dataSnapshot.getValue(Protected.class);
 
+                OnSuccessListener<Void> callback = new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        listProtected.remove(firebaseManager.getUser());
+                        usersAdapter.notifyDataSetChanged();
+                    }
+                };
+
+                firebaseManager.setCallback(callback);
+                firebaseManager.findUserByUsername(oldProtected.getUsername());
+
+                user.removeProtected(oldProtected);
             }
 
             @Override
@@ -195,6 +219,17 @@ public class HomeActivity extends AppCompatActivity implements AddProtectedDialo
 
             }
         });
+
+        lvProtected.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                // Open map.
+                intentMaps.putExtra("userProtected", listProtected.get(arg2));
+                activity.startActivity(intentMaps);
+            }
+
+        });
     }
 
     private void askUsername() {
@@ -204,16 +239,34 @@ public class HomeActivity extends AppCompatActivity implements AddProtectedDialo
 
     @Override
     public void applyText(String username) {
-        Protected newProtected = new Protected(username, false);
+        firebaseManager.getDBReferenceUser()
+                .child(username)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User userProtected = dataSnapshot.getValue(User.class);
 
-        firebaseManager.getDBReferenceProtection().child(user.getUsername())
-                .child("" + (user.getProtecteds().size() + 1))
-                .child("username")
-                .setValue(newProtected.getUsername());
+                        if (userProtected != null) {
+                            Protected newProtected = new Protected(userProtected.getUsername(), false);
 
-        firebaseManager.getDBReferenceProtection().child(user.getUsername())
-                .child("" + (user.getProtecteds().size() + 1))
-                .child("canWatch")
-                .setValue(newProtected.getCanWatch());
+                            firebaseManager.getDBReferenceProtection().child(user.getUsername())
+                                    .child(newProtected.getUsername())
+                                    .child("username")
+                                    .setValue(newProtected.getUsername());
+
+                            firebaseManager.getDBReferenceProtection().child(user.getUsername())
+                                    .child(newProtected.getUsername())
+                                    .child("canWatch")
+                                    .setValue(newProtected.getCanWatch());
+                        } else {
+                            Tools.showMessage(activity, "El usuario no existe.");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Tools.showMessage(activity, R.string.MSJ1_6);
+                    }
+                });
     }
 }

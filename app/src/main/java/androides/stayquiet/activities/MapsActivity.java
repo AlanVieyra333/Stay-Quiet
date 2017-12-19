@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import androides.stayquiet.R;
+import androides.stayquiet.user.User;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -38,19 +39,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static final float DEFAULT_ZOOM = 16;
     private  LatLng defaultLocation, protectedLocation;
     private double protectedRadius;
+    private User userProtected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        getParams();
+
         // Location configuration.
         defaultLocation = new LatLng(19.5044509,-99.1471405);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
         protectedLocation = new LatLng(19.5034901,-99.1474623);
         protectedRadius = 100;
     }
@@ -193,5 +199,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     99);
         }
+    }
+
+    private void getParams() {
+        userProtected = (User) getIntent().getExtras().get("userProtected");
     }
 }
